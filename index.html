@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width">
+		<style>
+			:root {
+				--v_cutoff : 24px;
+				--h_cutoff : 0px;
+				--bi_h : 32px;
+				--bi_w : 32px;
+			}
+			#title_img {
+				position : absolute;
+				--width : 75vw;
+				width : var(--width);
+				left : 14%;
+        		top : 40%;
+				z-index : 1;
+			}
+			#block_holder {
+				//width : 100%;
+				//height : 100%;
+				overflow : hidden;
+			}
+			body {
+				overflow : hidden;
+			}
+			.ts_im {
+				position : absolute;
+				height : 200vh;
+				width : var(--width,200vw);
+				left : 0%;
+				top : 0%;
+				animation : v_scroll 20s infinite linear;
+			}
+			@keyframes v_scroll {
+				0% {
+					transform : translate(var(--start_x,0%), var(--start_y,-5vh));
+					//width : var(--width,100vw);
+				}
+				100% {
+					transform : translate(var(--end_x,0%), var(--end_y,-100vh));
+					//width : calc(2 * var(--width,100vw));
+				}
+			}
+		</style>
+	</head>
+	<body style="background-color: #222222;">
+		<audio id="music" src="audios/titlescreenmusic.mp3" loop></audio>
+		
+		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-9 * var(--bi_h));background : url(sprites/wall_1.png) repeat;" hidden></div>
+		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-1 * var(--bi_h));background : url(sprites/wall_2.png) repeat;" hidden></div>
+		<img src="sprites/titlescreen.png" id="title_img">
+		<a id="link" href="./play.html"></a>
+		<!--<img src="sprites/goawaylol.gif" style="width:100vmin;z-index:50;" id="go"> -->
+		<script>
+			document.addEventListener("keydown", function (e) {document.getElementById("link").click()});
+			let n = 0;
+			let n2 = 0;
+			let n3 = 0;
+			function l () {
+				document.getElementById("go").hidden = false;
+			}
+			function r () {
+				document.getElementById("go").hidden = true;
+			}
+			function a () {
+				document.getElementById("music").play();
+				clearInterval(n3);
+			}
+			//n = self.setInterval(function () {l()}, 100000);
+			//n2 = self.setInterval(function () {r()}, 100250);
+			//document.getElementById("music").addEventListener("canplaythrough", function () {n3 = self.setInterval(a, 1000)});
+			const index = 1 + Math.round(Math.random());
+			document.getElementById("music").addEventListener("canplaythrough",function () {document.getElementById("music").play()});
+			document.body.children[index].hidden = false;
+			function set_css (item, value) {
+				const css_root = document.styleSheets[0].cssRules[0].style;
+				css_root.setProperty(css_root.item(item), " "+value);
+			}
+			function set_props () {
+				const size = [32,288][index-1];
+				//console.log(size, index);
+				set_css(2, size.toString()+"px");
+				set_css(3, size.toString()+"px");
+			}
+			set_props();
+		</script>
+	</body>
+</html>
+
+
+<!--
+//https:piskel-imgstore-b.appspot.com/img/3f7b65c7-a791-11eb-acb3-1b0887b2ed2f.gif
+-->
+

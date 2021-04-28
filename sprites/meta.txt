@@ -1,0 +1,7 @@
+this will contain any useful information about the sprites:
+- size (in px)
+- what it's used for
+- how it should be moved
+
+wall_1 : 32 x 32 px - background image (vertically up)
+wall_2 : 288 x 288 px - background image (vertically up)

@@ -1,0 +1,4 @@
+1. Finish minimap
+2. add capability for random text e.g. $#@%$! spinning around
+3. Minimap border
+4. Fix menu bug

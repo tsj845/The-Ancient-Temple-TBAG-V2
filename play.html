@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>The Ancient Temple</title>
+		<style>
+			:root {
+				--bc : #222222;
+			}
+			body {
+				background : var(--bc);
+			}
+			h4, span, label, p, input {
+				font-family : monospace;
+				color : white;
+			}
+			input[type="text"] {
+				background : var(--bc);
+				border : none;
+				outline : none;
+			}
+			#header_text {
+				position : absolute;
+				left : 2%;
+				top : 2%;
+			}
+			#main_text_container {
+				position : absolute;
+				left : 2%;
+				top : 20%;
+				width : 75%;
+			}
+			#name_text {
+				position : absolute;
+				right : 2%;
+				top : 2%;
+			}
+			#input_container {
+				position : relative;
+			}
+			.output_line {
+				word-break : break-all;
+			}
+			dialog::backdrop {
+				background : gray;
+			}
+			dialog {
+				border : solid lightgray;
+			}
+			.bb {
+				border : solid;
+				background : black;
+			}
+			.wb {
+				color : black;
+				border : none;
+				background : lightgray;
+				outline-style : none;
+			}
+			.black {
+				color : black;
+			}
+			#minimap_div {
+				position : absolute;
+				width : 50vmin;
+				height : 50vmin;
+				bottom : 0%;
+				right : 0%;
+			}
+			.map_tile {
+				position : absolute;
+				width : 5vmin;
+				height : 5vmin;
+				bottom : calc(calc(4 - var(--abs_y)) * 5vmin);
+				right : calc(calc(4 - var(--abs_x)) * 5vmin);
+			}
+		</style>
+	</head>
+	<body>
+		<dialog id="loading">
+			<p>Loading...</p>
+		</dialog>
+    	<img src="sprites/character.gif" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img>
+		<div>
+			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
+			<audio id="stage_3" src="audios/adventuremusic.mp3" loop></audio>
+			<audio id="namey" src="audios/namey.mp3" loop></audio>
+			<audio id="silence" src="audios/silence.mp3" loop></audio>
+			<audio id="youwin" src="audios/youwin.mp3"></audio>
+			<audio id="adventure2" src="audios/adventure2.mp3" loop></audio>
+			<audio id="adventure3" src="audios/adventure3.mp3" loop></audio>
+		</div>
+		<dialog id="main_credits">
+			<p class="black">Programming:<br>@tristans2<br>@JohnHalvorson<br><br>Graphic Design:<br>@tristans2<br>@JohnHalvorson<br><br>Story:<br>@JohnHalvorson<br><br>Playtesting:<br>@KaiWilhelm<br>@KaiJusuf</p>
+			<input class="wb" type="button" value="sounds">
+			<br>
+			<input class="wb" type="button" value="back" onclick="document.getElementById('main_credits').close()">
+		</dialog>
+		<dialog id="main_menu">
+			<label for="toggle_sounds" class="black">mute sounds:</label>
+			<input type="checkbox" onchange="toggleAudio()">
+			<br>
+			<input class="wb" type="button" value="credits" onclick="document.getElementById('main_credits').showModal()">
+			<br>
+			<input class="wb" type="button" value="close" onclick="document.getElementById('main_menu').close()">
+		</dialog>
+		<input class="bb" type="button" id="menu_button" value="menu" onclick="open_menu()" style="position:absolute;right:2%;bottom:30%;">
+		<h4 id="header_text">TUTORIAL</h4>
+		<p id="name_text"></p>
+		<div id="main_text_container">
+			<p id="main_output" class="output_line">Welcome to The Ancient Temple! </p>
+			<div id="input_container">
+				<p id="options"></p>
+				<label for="text_input" id="prompt_label">Enter your name: </label>
+				<input type="text" id="text_input" value="">
+			</div>
+		</div>
+		<img id="context_img" src="" style="position:absolute;left:50%;top:50%;width:25vmin">
+		<div id="minimap_div"></div>
+		<script src="chapter_1/option.js"></script>
+		<script src="chapter_1/temple.js"></script>
+		<script src="chapter_2/labyrinth1.js"></script>
+		<script src="script.js"></script>
+		<script src="mini.js"></script>
+	</body>
+</html>
