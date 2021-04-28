@@ -51,7 +51,6 @@ class Minimap {
 		}
 		//console.log(this.board[0][0].img.complete);
 		//while (!this.board[0][0].completed) {}
-		document.getElementById("loading").close();
 	}
 	setTile (x, y, c) {
 		this.board[y][x].setValue(c);
@@ -95,3 +94,10 @@ const test_map_1 = ["  1  ",
 					"  1  "];
 
 //decoder.decode(test_map_1);
+
+function onLoadHandler (e) {
+	document.getElementById("loading").hidden = true;
+	document.getElementById("text_input").focus();
+}
+
+window.addEventListener("load", onLoadHandler);

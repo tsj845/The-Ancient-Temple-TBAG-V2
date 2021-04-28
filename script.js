@@ -261,8 +261,6 @@ class Game {
 let game = new Game();
 game.load("chapter_1/option");
 
-main_input.focus();
-
 function handleTextInput (e) {
 	game.handleTextInput(e.target.value);
 }

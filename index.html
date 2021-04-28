@@ -5,23 +5,8 @@
     	<meta name="viewport" content="width=device-width">
 		<style>
 			:root {
-				--v_cutoff : 24px;
-				--h_cutoff : 0px;
 				--bi_h : 32px;
 				--bi_w : 32px;
-			}
-			#title_img {
-				position : absolute;
-				--width : 75vw;
-				width : var(--width);
-				left : 14%;
-        		top : 40%;
-				z-index : 1;
-			}
-			#block_holder {
-				//width : 100%;
-				//height : 100%;
-				overflow : hidden;
 			}
 			body {
 				overflow : hidden;
@@ -37,12 +22,20 @@
 			@keyframes v_scroll {
 				0% {
 					transform : translate(var(--start_x,0%), var(--start_y,-5vh));
-					//width : var(--width,100vw);
 				}
 				100% {
 					transform : translate(var(--end_x,0%), var(--end_y,-100vh));
-					//width : calc(2 * var(--width,100vw));
 				}
+			}
+			#title_img {
+				position : absolute;
+				width : 75vw;
+				left : 14%;
+        		top : 40%;
+				z-index : 1;
+			}
+			#block_holder {
+				overflow : hidden;
 			}
 		</style>
 	</head>
@@ -82,10 +75,11 @@
 			function set_props () {
 				const size = [32,288][index-1];
 				//console.log(size, index);
-				set_css(2, size.toString()+"px");
-				set_css(3, size.toString()+"px");
+				set_css(0, size.toString()+"px");
+				set_css(1, size.toString()+"px");
 			}
 			set_props();
+			window.sessionStorage.setItem("img_index",index.toString());
 		</script>
 	</body>
 </html>
