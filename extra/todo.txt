@@ -1,4 +1,5 @@
-1. Finish minimap
-2. add capability for random text e.g. $#@%$! spinning around
-3. Minimap border
-4. Fix menu bug
+1. Finish minimap - high
+2. add capability for random text e.g. $#@%$! spinning around - low
+3. Minimap border - medium, assigned to: john
+4. Fix menu bug - requires elaboration
+5. Fix loading screen - urgent, assigned to: tristan
