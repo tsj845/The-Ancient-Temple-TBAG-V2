@@ -96,8 +96,8 @@ const test_map_1 = ["  1  ",
 //decoder.decode(test_map_1);
 
 function onLoadHandler (e) {
-	document.getElementById("loading").hidden = true;
+	//document.getElementById("loading_screen").hidden = true;
 	document.getElementById("text_input").focus();
 }
 
-//window.addEventListener("load", onLoadHandler);
+window.addEventListener("load", onLoadHandler);

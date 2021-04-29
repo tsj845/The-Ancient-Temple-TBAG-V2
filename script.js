@@ -1,4 +1,6 @@
 let sound_disabled = false;
+let in_title = true;
+let in_loading = false;
 
 const main_dict = {"chapter_1/option":option_file, "chapter_1/temple":temple_file, "chapter_2/labyrinth1":labyrinth_file_1};
 
@@ -272,7 +274,15 @@ function keyPress (e) {
 		return;
 	}
 	const key = e.code.toString();
-	game.handleKeyPress(key);
+	if (in_title) {
+		document.getElementById("title_screen").hidden = true;
+		in_title = false;
+	} else if (in_loading) {
+		document.getElementById("loading_screen").hidden = true;
+		in_loading = false;
+	} else {
+		game.handleKeyPress(key);
+	}
 }
 
 document.addEventListener("keydown", keyPress);

@@ -45,10 +45,8 @@
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-9 * var(--bi_h));background : url(sprites/wall_1.png) repeat;" hidden></div>
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-1 * var(--bi_h));background : url(sprites/wall_2.png) repeat;" hidden></div>
 		<img src="sprites/titlescreen.png" id="title_img">
-		<!--<a id="link" href="./play.html"></a>-->
 		<!--<img src="sprites/goawaylol.gif" style="width:100vmin;z-index:50;" id="go"> -->
 		<script>
-			//document.addEventListener("keydown", function (e) {document.getElementById("link").click()});
 			let n = 0;
 			let n2 = 0;
 			let n3 = 0;
@@ -58,13 +56,14 @@
 			function r () {
 				document.getElementById("go").hidden = true;
 			}
-			function a () {
-				document.getElementById("music").play();
-				clearInterval(n3);
-			}
 			//n = self.setInterval(function () {l()}, 100000);
 			//n2 = self.setInterval(function () {r()}, 100250);
-			//document.getElementById("music").addEventListener("canplaythrough", function () {n3 = self.setInterval(a, 1000)});
+			function close (e) {
+				window.parent.document.getElementById("title_screen").hidden = true;
+				document.getElementById("music").pause();
+				window.parent.document.getElementById("text_input").focus();
+			}
+			document.addEventListener("keydown", close);
 			const index = 1 + Math.round(Math.random());
 			document.getElementById("music").addEventListener("canplaythrough",function () {document.getElementById("music").play()});
 			document.body.children[index].hidden = false;
