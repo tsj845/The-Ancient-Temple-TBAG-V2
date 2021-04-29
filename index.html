@@ -4,137 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
 		<title>The Ancient Temple</title>
-		<!--<link href="a_v_scroll.css" rel="stylesheet" type="text/css">-->
-		<style>
-			:root {
-				--bc : #222222;
-				--bi_h : 32px;
-				--bi_w : 32px;
-			}
-			body {
-				background : var(--bc);
-				//overflow : hidden;
-			}
-			h4, span, label, p, input {
-				font-family : monospace;
-				color : white;
-			}
-			input[type="text"] {
-				background : var(--bc);
-				border : none;
-				outline : none;
-			}
-			#header_text {
-				position : absolute;
-				left : 2%;
-				top : 2%;
-			}
-			#main_text_container {
-				position : absolute;
-				left : 2%;
-				top : 20%;
-				width : 65%;
-			}
-			#name_text {
-				position : absolute;
-				right : 2%;
-				top : 2%;
-			}
-			#input_container {
-				position : relative;
-			}
-			.output_line {
-				word-break : break-all;
-			}
-			dialog::backdrop {
-				background : gray;
-			}
-			dialog {
-				border : solid lightgray;
-			}
-			.bb {
-				border : solid;
-				background : black;
-			}
-			.wb {
-				color : black;
-				border : none;
-				background : lightgray;
-				outline-style : none;
-			}
-			.black {
-				color : black;
-			}
-			#minimap_div {
-				position : absolute;
-				width : 50vmin;
-				height : 50vmin;
-				bottom : 0%;
-				right : 0%;
-			}
-			.map_tile {
-				position : absolute;
-				width : 5vmin;
-				height : 5vmin;
-				bottom : calc(calc(4 - var(--abs_y)) * 5vmin);
-				right : calc(calc(4 - var(--abs_x)) * 5vmin);
-			}
-			#context_img {
-				position : absolute;
-				right : 15%;
-				bottom : 35%;
-				width : 25vmin;
-				z-index : 13;
-			}
-			#loading::backdrop {
-				background : black;
-			}
-			#loading {
-				width : 100vw;
-				height : 100vh;
-				background : black;
-				border : none;
-				overflow : hidden;
-			}
-			.ts_im {
-				position : absolute;
-				height : 200vh;
-				width : var(--width,200vw);
-				left : 0%;
-				top : 0%;
-				animation : v_scroll 5s infinite linear;
-			}
-			@keyframes v_scroll {
-				0% {
-					transform : translate(var(--start_x,0%), var(--start_y,-5vh));
-				}
-				100% {
-					transform : translate(var(--end_x,0%), var(--end_y,-100vh));
-				}
-			}
-			#title_screen {
-				position : absolute;
-				left : 0px;
-				top : 0px;
-				margin-left : 0px;
-				margin-top : 0px;
-				width : 100vw;
-				height : 100vh;
-				border : none;
-				z-index : 5;
-			}
-			#loading_screen {
-				position : absolute;
-				left : 0px;
-				top : 0px;
-				margin-left : 0px;
-				margin-top : 0px;
-				width : 100vw;
-				height : 100vh;
-				border : none;
-				z-index : 10;
-			}
-		</style>
+		<link href="stylesheets/main_index_styles.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts"></iframe>
@@ -142,12 +12,13 @@
     	<img src="sprites/character.gif" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img>
 		<div>
 			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
-			<audio id="stage_3" src="audios/adventuremusic.mp3" loop></audio>
+			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
 			<audio id="namey" src="audios/namey.mp3" loop></audio>
 			<audio id="silence" src="audios/silence.mp3" loop></audio>
 			<audio id="youwin" src="audios/youwin.mp3"></audio>
 			<audio id="adventure2" src="audios/adventure2.mp3" loop></audio>
 			<audio id="adventure3" src="audios/adventure3.mp3" loop></audio>
+            <audio id="attack" src="audios/sword.wav" ></audio>
 		</div>
 		<dialog id="main_credits">
 			<p class="black">Programming:<br>@tristans2<br>@JohnHalvorson<br><br>Graphic Design:<br>@tristans2<br>@JohnHalvorson<br><br>Story:<br>@JohnHalvorson<br><br>Playtesting:<br>@KaiWilhelm<br>@KaiJusuf</p>
@@ -163,6 +34,9 @@
 			<br>
 			<input class="wb" type="button" value="close" onclick="document.getElementById('main_menu').close()">
 		</dialog>
+		<dialog id="char_select">
+			<img id="char_preview">
+		</dialog>
 		<input class="bb" type="button" id="menu_button" value="menu" onclick="open_menu()" style="position:absolute;right:2%;bottom:30%;">
 		<h4 id="header_text">TUTORIAL</h4>
 		<p id="name_text"></p>
@@ -174,23 +48,14 @@
 				<input type="text" autocomplete="off" id="text_input" value="">
 			</div>
 		</div>
-		<dialog id="loading">
-			<img src="sprites/Loading.png" alt="loading screen" style="position:absolute;width:30vw;left:34%;top:40%;z-index:1;">
-			<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-9 * var(--bi_h));background : url(sprites/wall_1.png) repeat;" hidden></div>
-			<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-1 * var(--bi_h));background : url(sprites/wall_2.png) repeat;" hidden></div>
-			<!--<p class="black">Loading...</p>-->
-		</dialog>
-		<img id="context_img" src="">
-		<div id="minimap_div"></div>
-		<!--<script>
-			document.getElementById("loading").showModal();
-			const index = Number(window.sessionStorage.getItem("img_index"));
-			console.log(index);
-			document.getElementById("loading").children[index].hidden = false;
-		</script>-->
+		<div id="minimap_div">
+			<img id="context_img" src="">
+		</div>
+		<div id="mute_sounds_2" class="mute_unchecked"></div>
+		<script src="extra/independance.js"></script>
 		<script>
-			//document.body.focus();
 			console.log(window.sessionStorage.getItem("img_index"));
+			window.sessionStorage.removeItem("img_index");
 		</script>
 		<script src="chapter_1/option.js"></script>
 		<script src="chapter_1/temple.js"></script>

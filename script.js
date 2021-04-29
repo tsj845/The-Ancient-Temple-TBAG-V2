@@ -216,7 +216,9 @@ class Game {
 		let good_input = false;
 		if (this.inType === 0) {
 			this.playerName = value;
-			if (value === "namey" || value === "GLaDOS") {
+			if (value === "independence") {
+				name_text.textContent = independance_text;
+			} else if (value === "namey" || value === "GLaDOS") {
 				name_text.textContent = "Sun Li";
 				this.is_dev = true;
 			} else if (value === "Sun Li") {
@@ -288,15 +290,19 @@ function keyPress (e) {
 document.addEventListener("keydown", keyPress);
 
 function toggleAudio () {
+	const img = document.getElementById("mute_sounds_2");
 	sound_disabled = !sound_disabled;
 	if (sound_disabled) {
 		game.stopSounds();
 	} else {
 		game.startSounds();
 	}
+	img.setAttribute("class", (sound_disabled ? "mute_checked" : "mute_unchecked"));
 }
 
 function open_menu () {
 	console.log("open_menu");
 	document.getElementById('main_menu').showModal();
 }
+
+document.getElementById("mute_sounds_2").addEventListener("click",toggleAudio);

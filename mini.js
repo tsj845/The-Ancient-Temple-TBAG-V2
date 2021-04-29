@@ -98,6 +98,7 @@ const test_map_1 = ["  1  ",
 function onLoadHandler (e) {
 	document.getElementById("loading_screen").hidden = true;
 	document.getElementById("text_input").focus();
+	document.getElementById("title_screen").contentWindow.postMessage("start_music","*");
 }
 
 window.addEventListener("load", onLoadHandler);
