@@ -100,4 +100,4 @@ function onLoadHandler (e) {
 	document.getElementById("text_input").focus();
 }
 
-window.addEventListener("load", onLoadHandler);
+//window.addEventListener("load", onLoadHandler);
