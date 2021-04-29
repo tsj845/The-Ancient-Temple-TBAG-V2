@@ -135,61 +135,69 @@ class Game {
 			gameprint(line);
 		} else {
 			const control = line[0];
-			if (control === "label") {
-				//
-			} else if (control === "head") {
-				header.textContent = line[1];
-			} else if (control === "chapter") {
-				this.chapter = Number(line[1]);
-				this.load("chapter_"+this.chapter.toString()+"/"+line[2]);
-			} else if (control === "option") {
-				this.prompt(line[1], line[2]);
-				return;
-			} else if (control === "sound") {
-				const elem = document.getElementById(line[1]);
-				if (elem !== null) {
-					if (this.c_sound !== null) {
-						this.c_sound.pause()
+			switch (control) {
+				case "label":
+					break;
+				case "head":
+					header.textContent = line[1];
+					break;
+				case "chapter":
+					this.chapter = Number(line[1]);
+					this.load("chapter_"+this.chapter.toString()+"/"+line[2]);
+					break;
+				case "option":
+					this.prompt(line[1], line[2]);
+					return;
+				case "sound":
+					const elem = document.getElementById(line[1]);
+					if (elem !== null) {
+						if (this.c_sound !== null) {
+							this.c_sound.pause()
+						}
+						this.c_sound = elem;
+						if (!sound_disabled) {
+							elem.play();
+						}
+					} else {
+						console.log("audio element does not exist, given name: ", line[1]);
 					}
-					this.c_sound = elem;
-					if (!sound_disabled) {
-						elem.play();
+					break;
+				case "img":
+					context_img.src = line[1];
+					break;
+				case "inventory":
+					this.inventory[line[1]] = line[2];
+					break;
+				case "gcond":
+					let parts_l = line[1].split("=");
+					if (this.inventory[parts_l[0]] === parts_l[1]) {
+						this.goto(line[2][0]);
+					} else {
+						this.goto(line[2][1]);
 					}
-				} else {
-					console.log("audio element does not exist, given name: ", line[1]);
-				}
-			} else if (control === "img") {
-				//console.log(line[1]);
-				//console.log("hello????");
-				context_img.src = line[1];
-			} else if (control === "inventory") {
-				this.inventory[line[1]] = line[2];
-			} else if (control === "gcond") {
-				let parts = line[1].split("=");
-				if (this.inventory[parts[0]] === parts[1]) {
-					this.goto(line[2][0]);
-				} else {
-					this.goto(line[2][1]);
-				}
-			} else if (control === "goto") {
-				this.goto(line[1]);
-			} else if (control === "location") {
-				const fname = "chapter_"+this.chapter.toString()+"/"+line[1];
-				this.load(fname);
-				return;
-			} else if (control === "path") {
-				this.paths[line[1]] = line[2];
-			} else if (control === "pgoto") {
-				let parts = line[1].split("=");
-				console.log(parts);
-				if (this.paths[parts[0]] === parts[1]) {
-					this.goto(line[2][0]);
-				} else {
-					this.goto(line[2][1]);
-				}
-			} else if (control === "interaction") {
-				this.startInteraction(line);
-				return;
+					break;
+				case "goto":
+					this.goto(line[1]);
+					break;
+				case "location":
+					const fname = "chapter_"+this.chapter.toString()+"/"+line[1];
+					this.load(fname);
+					return;
+				case "path":
+					this.paths[line[1]] = line[2];
+					break;
+				case "pgoto":
+					let parts = line[1].split("=");
+					console.log(parts);
+					if (this.paths[parts[0]] === parts[1]) {
+						this.goto(line[2][0]);
+					} else {
+						this.goto(line[2][1]);
+					}
+					break;
+				case "interaction":
+					this.startInteraction(line);
+					return;
 			}
 			this.progress();
 		}
@@ -218,7 +226,7 @@ class Game {
 			this.playerName = value;
 			if (value === "independence") {
 				name_text.textContent = independance_text;
-			} else if (value === "namey || value === "GLaDOS" || value === "Sun Li") {
+			} else if (value === "namey" || value === "GLaDOS" || value === "Sun Li") {
 				name_text.textContent = "Sun Li";
 					this.is_dev = true;
     		} else if (value === "god yeet") {
