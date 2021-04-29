@@ -16,6 +16,8 @@ syntax:
 
 - sound; one argument, "name":String plays a sound using an HTML audio element with the id "name"
 
+- sfx; same as sound, but for short sfx that don't need to disrupt the background music, these shouldn't loop
+
 - img; one argument, "source":String shows the provided source image using the context_img element, should be used for locations and the book boss image
 
 - location; one argument, "name":String, must be a valid key for the variable "main_dict", sends the user to another location in the current chapter

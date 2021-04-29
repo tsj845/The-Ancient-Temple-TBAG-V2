@@ -162,6 +162,8 @@ class Game {
 						console.log("audio element does not exist, given name: ", line[1]);
 					}
 					break;
+				case "sfx":
+					document.getElementById(line[1]).play();
 				case "img":
 					context_img.src = line[1];
 					break;

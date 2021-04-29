@@ -1,4 +1,4 @@
-console.log("mini.js L1");
+let ls_lfin = false;
 
 const main_div = document.getElementById("minimap_div");
 
@@ -96,6 +96,9 @@ const test_map_1 = ["  1  ",
 //decoder.decode(test_map_1);
 
 function onLoadHandler (e) {
+	if (!ls_lfin) {
+		return;
+	}
 	document.getElementById("loading_screen").hidden = true;
 	document.getElementById("text_input").focus();
 	document.getElementById("title_screen").contentWindow.postMessage("start_music","*");

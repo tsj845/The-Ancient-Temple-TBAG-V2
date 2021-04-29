@@ -5,6 +5,20 @@
 		<meta name="viewport" content="width=device-width">
 		<title>The Ancient Temple</title>
 		<link href="stylesheets/main_index_styles.css" rel="stylesheet" type="text/css">
+		<style>
+			.mute_unchecked {
+				background : url("sprites/icons/unmuted_icon.svg");
+			}
+			.mute_checked {
+				background : url("sprites/icons/muted_icon.svg");
+			}
+			#prev_char_btn {
+				background : url("sprites/icons/unmuted_icon.svg");
+			}
+			#next_char_btn {
+				background : url("sprites/icons/muted_icon.svg");
+			}
+		</style>
 	</head>
 	<body>
 		<script src="messages/index_messages.js"></script>
@@ -19,7 +33,7 @@
 			<audio id="youwin" src="audios/youwin.mp3"></audio>
 			<audio id="adventure2" src="audios/adventure2.mp3" loop></audio>
 			<audio id="adventure3" src="audios/adventure3.mp3" loop></audio>
-            <audio id="attack" src="audios/sfx/sword.wav" ></audio>
+            <audio id="attack" src="audios/sfx/slash.wav" ></audio>
 		</div>
 		<dialog id="main_credits">
 			<p class="black">Programming:<br>@tristans2<br>@JohnHalvorson<br><br>Graphic Design:<br>@tristans2<br>@JohnHalvorson<br><br>Story:<br>@JohnHalvorson<br><br>Playtesting:<br>@KaiWilhelm<br>@KaiJusuf</p>
