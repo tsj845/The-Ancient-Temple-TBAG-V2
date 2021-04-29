@@ -2,4 +2,4 @@
 2. add capability for random text e.g. $#@%$! spinning around - low
 3. Minimap border - medium, assigned to: john
 4. Fix menu bug - requires elaboration
-5. Fix loading screen - urgent, assigned to: tristan
+5. Fix loading screen text size - urgent, assigned to: john

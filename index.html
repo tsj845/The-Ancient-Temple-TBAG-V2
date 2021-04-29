@@ -121,16 +121,18 @@
 				width : 100vw;
 				height : 100vh;
 				border : none;
-				z-index : 10;
+				z-index : 5;
 			}
 			#loading_screen {
 				position : absolute;
 				left : 0px;
 				top : 0px;
-				width : 50vw;
-				height : 50vh;
+				margin-left : 0px;
+				margin-top : 0px;
+				width : 100vw;
+				height : 100vh;
 				border : none;
-				z-index : 5;
+				z-index : 10;
 			}
 		</style>
 	</head>
@@ -187,7 +189,8 @@
 			document.getElementById("loading").children[index].hidden = false;
 		</script>-->
 		<script>
-			document.body.focus();
+			//document.body.focus();
+			console.log(window.sessionStorage.getItem("img_index"));
 		</script>
 		<script src="chapter_1/option.js"></script>
 		<script src="chapter_1/temple.js"></script>

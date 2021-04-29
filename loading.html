@@ -29,9 +29,9 @@
 			}
 			#title_img {
 				position : absolute;
-				width : 75vw;
-				left : 14%;
-        		top : 40%;
+				width : 40vw;
+				left : 30%;
+        		top : 25%;
 				z-index : 1;
 			}
 			#block_holder {
@@ -46,7 +46,7 @@
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-1 * var(--bi_h));background : url(sprites/wall_2.png) repeat;" hidden></div>
 		<img src="sprites/Loading.png" id="title_img">
 		<script>
-			const index = Number(window.sessionStorage.getItem("img_index");
+			const index = Number(window.sessionStorage.getItem("img_index"));
 			//document.getElementById("music").addEventListener("canplaythrough",function () {document.getElementById("music").play()});
 			document.body.children[index].hidden = false;
 			function set_css (item, value) {

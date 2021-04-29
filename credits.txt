@@ -1,9 +1,10 @@
 goawaylol.gif - KaiWilhelm
 wall_1.png - tristans2
+wall_2.png - JohnHalvorson
 titlescreen.png - JohnHalvorson
 character.gif - JohnHalvorson
 character2.gif - JohnHalvorson
-chapter 1 minimap sprites - JohnHalvorson
+chapter 1 minimap sprites - JohnHalvorson & tristans2
 
 Major programming and minor graphic design - tristans2
 Minor programming, major graphic design, creative lead - JohnHalvorson
@@ -13,4 +14,4 @@ Playtesting - KaiWilhelm and KaiJusuf
 
 1 music track: Damiano Baldoni - Song Name - CHIPTUNE Loop.mp3 - not commerically used or edited - license here: https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
 
-We earn no money whatsoever from this game. None of these songs are being used commercially. 
+We earn no money whatsoever from this game. None of these songs are being used commercially.
