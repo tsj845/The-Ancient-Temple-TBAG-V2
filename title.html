@@ -45,6 +45,7 @@
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-9 * var(--bi_h));background : url(sprites/wall_1.png) repeat;" hidden></div>
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-1 * var(--bi_h));background : url(sprites/wall_2.png) repeat;" hidden></div>
 		<img src="sprites/titlescreen.png" id="title_img">
+		<script src="messages/title_messages.js"></script>
 		<script>
 			let music_loaded = false;
 			function close (e) {
@@ -82,6 +83,7 @@
 			}
 			set_props();
 			window.sessionStorage.setItem("img_index",index.toString());
+			send("O:TS,R:IN,M:test");
 		</script>
 	</body>
 </html>

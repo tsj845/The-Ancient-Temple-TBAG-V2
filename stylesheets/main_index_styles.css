@@ -143,8 +143,14 @@ dialog {
 	/**/
 }
 #char_preview {
-	height : 25%;
+	height : 25vh;
 }
 #char_discription {
 	color : black;
+}
+#prev_char_btn {
+	background : transparent url("sprites/icons/unmuted_icon.svg");
+}
+#next_char_btn {
+	background : transparent url("sprites/icons/muted_icon.svg");
 }

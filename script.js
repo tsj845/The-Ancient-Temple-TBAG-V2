@@ -237,6 +237,7 @@ class Game {
 			}
 			this.inType = 1;
 			good_input = true;
+			document.getElementById("char_select").showModal();
 		} else if (this.inType === 1) {
 			//console.log(value, value.length);
 			if (Number(value).toString() !== "NaN") {
@@ -306,7 +307,7 @@ function toggleAudio () {
 }
 
 function open_menu () {
-	console.log("open_menu");
+	//console.log("open_menu");
 	document.getElementById('main_menu').showModal();
 }
 

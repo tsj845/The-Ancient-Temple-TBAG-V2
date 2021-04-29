@@ -45,6 +45,7 @@
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-9 * var(--bi_h));background : url(sprites/wall_1.png) repeat;" hidden></div>
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-1 * var(--bi_h));background : url(sprites/wall_2.png) repeat;" hidden></div>
 		<img src="sprites/Loading.png" id="title_img">
+		<script src="messages/loading_messages.js"></script>
 		<script>
 			const index = Number(window.sessionStorage.getItem("img_index"));
 			document.body.children[index].hidden = false;
@@ -54,10 +55,11 @@
 			}
 			function set_props () {
 				const size = [32,288][index-1];
+				console.log(index, "index");
 				set_css(0, size.toString()+"px");
 				set_css(1, size.toString()+"px");
 			}
-			set_props();
+			send("O:LS,R:IN,M:test");
 		</script>
 	</body>
 </html>

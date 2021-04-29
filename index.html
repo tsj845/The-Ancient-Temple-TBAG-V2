@@ -7,6 +7,7 @@
 		<link href="stylesheets/main_index_styles.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
+		<script src="messages/index_messages.js"></script>
 		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts"></iframe>
 		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts"></iframe>
     	<img src="sprites/character.gif" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img>
@@ -18,7 +19,7 @@
 			<audio id="youwin" src="audios/youwin.mp3"></audio>
 			<audio id="adventure2" src="audios/adventure2.mp3" loop></audio>
 			<audio id="adventure3" src="audios/adventure3.mp3" loop></audio>
-            <audio id="attack" src="audios/sword.wav" ></audio>
+            <audio id="attack" src="audios/sfx/sword.wav" ></audio>
 		</div>
 		<dialog id="main_credits">
 			<p class="black">Programming:<br>@tristans2<br>@JohnHalvorson<br><br>Graphic Design:<br>@tristans2<br>@JohnHalvorson<br><br>Story:<br>@JohnHalvorson<br><br>Playtesting:<br>@KaiWilhelm<br>@KaiJusuf</p>
@@ -49,8 +50,10 @@
 			</div>
 		</div>
 		<dialog id="char_select">
-			<img id="char_preview" src="" alt="a preview image of the character">
+			<img id="char_preview" src="sprites/icons/muted_icon.svg" alt="a preview image of the character">
 			<p id="char_discription"></p>
+			<input type="button" id="prev_char_btn" class="csb" value="" onclick="p_char()">
+			<input type="button" id="next_char_btn" class="csb" value="" onclick="n_char()">
 		</dialog>
 		<div id="minimap_div">
 			<img id="context_img" src="">
