@@ -22,6 +22,12 @@ function receive (event) {
 			}
 			return;
 		default:
+			if (m.includes("index=")) {
+				index = Number(m[m.length-1]);
+				try {
+					set_props();
+				} catch (err) {}
+			}
 			return;
 	}
 }

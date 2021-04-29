@@ -31,8 +31,11 @@ function receive (event) {
 			case "lfin":
 				if (o === "LS") {
 					ls_lfin = true;
-					onLoadHandler();
+				} else {
+					ts_lfin = true;
 				}
+				onLoadHandler();
+				break;
 		}
 		send(locs[o],"O:IN,R:"+o+",M:resp");
 	} else {
@@ -43,3 +46,16 @@ function receive (event) {
 window.addEventListener("message", receive);
 
 window.addEventListener("messageerror",function () {console.error("error receiving message for main screen")})
+
+async function resolveAfterDelay (delay) {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			resolve(delay);
+		}, delay);
+	});
+}
+
+async function execAfterDelay (f, d) {
+	await resolveAfterDelay(d);
+	f();
+}

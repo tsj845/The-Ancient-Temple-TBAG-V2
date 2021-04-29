@@ -71,7 +71,7 @@
 					start_music();
 				}
 			}
-			window.addEventListener("message",handleMessage)
+			window.addEventListener("message",handleMessage);
 			function set_css (item, value) {
 				const css_root = document.styleSheets[0].cssRules[0].style;
 				css_root.setProperty(css_root.item(item), " "+value);
@@ -82,8 +82,9 @@
 				set_css(1, size.toString()+"px");
 			}
 			set_props();
-			window.sessionStorage.setItem("img_index",index.toString());
+			send("O:TS,R:LS,M:index="+index.toString());
 			send("O:TS,R:IN,M:init");
+			window.addEventListener("load",function (e) {send("O:TS,R:IN,M:lfin")});
 		</script>
 	</body>
 </html>
