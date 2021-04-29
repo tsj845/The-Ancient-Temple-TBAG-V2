@@ -139,3 +139,12 @@ dialog {
 	width : 7.5vmin;
 	height : 7.5vmin;
 }
+#char_select {
+	/**/
+}
+#char_preview {
+	height : 25%;
+}
+#char_discription {
+	color : black;
+}

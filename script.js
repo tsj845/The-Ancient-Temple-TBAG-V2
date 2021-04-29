@@ -218,13 +218,10 @@ class Game {
 			this.playerName = value;
 			if (value === "independence") {
 				name_text.textContent = independance_text;
-			} else if (value === "namey" || value === "GLaDOS") {
+			} else if (value === "namey || value === "GLaDOS" || value === "Sun Li") {
 				name_text.textContent = "Sun Li";
-				this.is_dev = true;
-			} else if (value === "Sun Li") {
-				name_text.textContent = "Sun Li";
-				this.is_dev = true;
-      } else if (value === "god yeet") {
+					this.is_dev = true;
+    		} else if (value === "god yeet") {
 				name_text.textContent = "demonic screeching";
 				this.is_stupid_person = true;
 			} else {
