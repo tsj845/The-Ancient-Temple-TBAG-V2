@@ -38,12 +38,10 @@ class Game {
 	firstPass () {
 		for (let i = 0; i < this.lines.length; i ++) {
 			const line = this.lines[i];
-			//console.log(line);
 			if (typeof line === "string") {
 				continue;
 			} else {
 				const control = line[0];
-				//console.log(control);
 				if (control === "label") {
 					this.labels[line[1]] = i;
 				}
@@ -54,7 +52,6 @@ class Game {
 		this.bad_file = true;
 		this.blockIndex = -1;
 		this.fname = name;
-		//console.log(this.fname, main_dict[this.fname]);
 		this.lines = main_dict[this.fname]["lines"];
 		this.labels = {};
 		const n_inven = main_dict[this.fname]["inven"];
@@ -74,7 +71,6 @@ class Game {
 		}
 	}
 	goto (line) {
-		//console.log(line);
 		if (typeof line === "string") {
 			if (line in this.labels) {
 				this.blockIndex = this.labels[line];
@@ -91,7 +87,6 @@ class Game {
 		return s;
 	}
 	prompt (keys, values) {
-		//console.log("prompt");
 		inp_container.hidden = false;
 		prompt_label.textContent = "Enter selection: ";
 		for (let i = 0; i < keys.length; i ++) {
@@ -130,7 +125,6 @@ class Game {
 	}
 	inerperet () {
 		const line = this.lines[this.blockIndex];
-		//console.log(typeof line);
 		if (typeof line === "string") {
 			gameprint(line);
 		} else {
@@ -190,7 +184,6 @@ class Game {
 					break;
 				case "pgoto":
 					let parts = line[1].split("=");
-					console.log(parts);
 					if (this.paths[parts[0]] === parts[1]) {
 						this.goto(line[2][0]);
 					} else {
@@ -221,8 +214,6 @@ class Game {
 		this.disabled = false;
 	}
 	handleTextInput (value) {
-		//console.log(this.inType);
-		//console.log("change");
 		let good_input = false;
 		if (this.inType === 0) {
 			this.playerName = value;
@@ -241,7 +232,6 @@ class Game {
 			good_input = true;
 			document.getElementById("char_select").showModal();
 		} else if (this.inType === 1) {
-			//console.log(value, value.length);
 			if (Number(value).toString() !== "NaN") {
 				const fn = Number(value)-1;
 				if (fn > -1 && fn < this.gotos.length) {
@@ -306,11 +296,6 @@ function toggleAudio () {
 		game.startSounds();
 	}
 	img.setAttribute("class", (sound_disabled ? "mute_checked" : "mute_unchecked"));
-}
-
-function open_menu () {
-	//console.log("open_menu");
-	document.getElementById('main_menu').showModal();
 }
 
 document.getElementById("mute_sounds_2").addEventListener("click",toggleAudio);

@@ -50,8 +50,6 @@ class Minimap {
 				this.board[y][x] = new Tile(x, y, /*"#ffffff88"*/"minimap/minimap_empty.png");
 			}
 		}
-		//console.log(this.board[0][0].img.complete);
-		//while (!this.board[0][0].completed) {}
 	}
 	setTile (x, y, c) {
 		this.board[y][x].setValue(c);

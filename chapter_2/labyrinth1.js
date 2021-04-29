@@ -1,5 +1,3 @@
-console.log("labyrinth file ran");
-
 const labyrinth_file_1_lines = [["head","LABYRINTH"], ["sound", "adventure2"], "Nothing to see here."];
 const labyrinth_file_1_inven = [];
 
