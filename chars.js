@@ -38,6 +38,7 @@ function n_char () {
 // selects a character
 function s_char () {
 	document.getElementById("char_select").close();
+	document.getElementById("char_display").src = char_lst[char][0];
 }
 
 document.getElementById("char_select").addEventListener("open",displayChar);

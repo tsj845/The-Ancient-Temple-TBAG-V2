@@ -78,9 +78,9 @@ dialog {
 	width : 25vmin;
 	z-index : 13;
 }
-#loading::backdrop {
-	background : black;
-}
+//#loading::backdrop {
+//	background : black;
+//}
 #loading {
 	width : 100vw;
 	height : 100vh;
@@ -128,19 +128,18 @@ dialog {
 }
 #mute_sounds_2 {
 	position : absolute;
-	right : 2%;
-	top : 25%;
+	right : -1%;
+	top : 56%;
 	width : 7.5vmin;
 	height : 7.5vmin;
 }
 #char_select {
-	/**/
+	width : 50vw;
+	height : 50vh;
+	overflow : hidden;
 }
-#char_preview {
-	height : 25vh;
-}
-#char_discription {
-	color : black;
+#char_select::backdrop {
+	background : #222222;
 }
 img {
 	user-select : none;

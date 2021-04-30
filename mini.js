@@ -96,7 +96,7 @@ const test_map_1 = ["  1  ",
 function closeLoadingScreen () {
 	document.getElementById("loading_screen").hidden = true;
 	// stops the user from noticing a jump in animation progress
-	execAfterDelay(startMusic,250);
+	execAfterDelay(startMusic,/*250*/0);
 }
 
 function startMusic () {
@@ -109,7 +109,7 @@ function onLoadHandler (e) {
 		return;
 	}
 	// closes the loading screen 4 seconds after everything finishes loading, this is so that the loading screen doesn't disappear as soon as it's finished loading
-	execAfterDelay(closeLoadingScreen,4000);
+	execAfterDelay(closeLoadingScreen,/*4000*/0);
 }
 
 // sets up the event listener

@@ -1,7 +1,6 @@
 1. add capability for random text e.g. $#@%$! spinning around - low
 2. Character selection screen - medium
-3. Mute button - high
-4. Sound credits - astronomical
+3. Sound credits - red alert
 
 
 

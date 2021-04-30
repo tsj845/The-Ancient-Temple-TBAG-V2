@@ -1,0 +1,37 @@
+if.someoneIsTryingToMakeSomethingSmaller
+    delete.ThatPerson
+    something.Embiggen for ∞ percent of image size
+        embiggen.Embiggen image
+
+if.image.IsNotBig
+    then.Embiggen
+else.Embiggen
+
+if.image.IsSmall 
+    then.EmbiggenTo∞Proportions
+        then embiggen.Embiggen
+    elif not Embiggened
+        then embiggen.Embiggen
+            and embiggen.EmbiggenTo∞Proportions
+        else Embiggen
+    else Embiggen
+else Embiggen
+
+if.imageCannotBeEmbiggened
+print.onTopOfImportantText["YOU NEED TO EMBIGGEN THIS IMAGE RIGHT NOW"]
+    if.theyDoNotEmbiggen.theirImage.print{"ALERT! EMBIGGEN NOW! SATAN IS COMING! EMBIGGEN NOW! EMBIGGEN! BIGGEN! BIG! BIG! BIG!"}
+        if.theyStillDoNotEmbiggen.theirImage.yeet.themOutOfTheir.OwnWindow
+            then summon.Satan 
+                and yeet
+            else yeet.themOutOfWindow
+        else yeet.themOutOfWindow
+    else yeet.themOutOfWindow
+else yeet.embiggen.themOutOfWindow.at ∞.speed
+
+if.imageStillIsNotEmbiggened
+    then.thisIsATravesty
+        and force.Embiggen.image
+    else Embiggen
+else chainsaw
+
+// All images should be embiggened, if they are not embiggened, rerun the code. //

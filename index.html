@@ -13,22 +13,63 @@
 				background : url("sprites/icons/muted_icon.svg");
 			}
 			#prev_char_btn {
+				margin : 0;
 				border : none;
-				background : url("sprites/icons/left_button_1.svg") no-repeat;
+				position : absolute;
+				left : 0vw;
+				top : 0%;
+				height : 25%;
+				//float : left;
+				//background : url("sprites/icons/left_button_1.svg") no-repeat;
 			}
 			#next_char_btn {
+				margin : 0;
 				border : none;
-				background : url("sprites/icons/right_button_1.svg") no-repeat;
+				position : absolute;
+				right : 0vw;
+				top : 0%;
+				height : 25%;
+				//background : url("sprites/icons/right_button_1.svg") no-repeat;
 			}
 			#char_select_btn {
-				position : absolute;
+				position : relative;
 				//color : black;
 				//background : white;
-				left : 25%;
-				bottom : 2%;
+				left : 38.225%;
+				//bottom : 2%;
 			}
 			.csb {
 				outline-style : none;
+			}
+			#char_preview {
+				margin : 0;
+				border-width : 1%;
+				border : solid lightGrey;
+				background : var(--bc);
+				position : relative;
+				width : 10vw;
+				left : 38%;
+				top : 0%;
+			}
+			#char_description {
+				//position : absolute;
+				//left : 2%;
+				//top : 30%;
+				//float : top;
+				color : black;
+				font-family : monospace;
+				//word-break : break-all;
+				overflow-y : scroll;
+				overflow-wrap : break-word;
+			}
+			#gui_holder {
+				margin : 5px auto;
+				position : relative;
+				left : 30%;
+				top : 40%;
+				width : 40vw;
+				height : 50%;
+				line-height : 0;
 			}
 		</style>
 	</head>
@@ -36,7 +77,7 @@
 		<script src="messages/index_messages.js"></script>
 		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts"></iframe>
 		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts"></iframe>
-    	<!-- <img src="sprites/chars/character.png" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img> !-->
+    	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
 		<div>
 			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
 			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
@@ -47,9 +88,14 @@
 			<audio id="adventure3" src="audios/adventure3.mp3" loop></audio>
             <audio id="attack" src="audios/sfx/slash.wav" ></audio>
 		</div>
+		<dialog id="sound_credits">
+			<p>Sound Credits:<br></p>
+			<br>
+			<input type="button" class="wb" value="back" onclick="document.getElementById('sound_credits').close()">
+		</dialog>
 		<dialog id="main_credits">
 			<p class="black">Programming:<br>@tristans2<br>@JohnHalvorson<br><br>Graphic Design:<br>@tristans2<br>@JohnHalvorson<br><br>Story:<br>@JohnHalvorson<br><br>Playtesting:<br>@KaiWilhelm<br>@KaiJusuf</p>
-			<input class="wb" type="button" value="sounds">
+			<input class="wb" type="button" value="sounds" onclick="document.getElementById('sound_credits').showModal()">
 			<br>
 			<input class="wb" type="button" value="back" onclick="document.getElementById('main_credits').close()">
 		</dialog>
@@ -61,7 +107,8 @@
 			<br>
 			<input class="wb" type="button" value="close" onclick="document.getElementById('main_menu').close()">
 		</dialog>
-		<input class="bb" type="button" id="menu_button" value="menu" onclick="document.getElementById('main_menu').showModal();" style="position:absolute;right:2%;bottom:30%;">
+		<!--menu button-->
+		<input class="bb" type="button" id="menu_button" value="menu" onclick="document.getElementById('main_menu').showModal();" style="position:absolute;right:0%;bottom:30%;">
 		<h4 id="header_text">TUTORIAL</h4>
 		<p id="name_text"></p>
 		<div id="main_text_container">
@@ -73,11 +120,14 @@
 			</div>
 		</div>
 		<dialog id="char_select">
+			<!--<div id="gui_holder">-->
+			<img src="sprites/icons/left_button_1.svg" id="prev_char_btn" class="csb" onclick="p_char()">
 			<img id="char_preview" src="sprites/chars/character.png" alt="a preview image of the character">
-			<div id="char_description"></div>
-			<input type="button" id="prev_char_btn" class="csb" value="" onclick="p_char()">
-			<input type="button" id="next_char_btn" class="csb" value="" onclick="n_char()">
+			<img src="sprites/icons/right_button_1.svg" id="next_char_btn" class="csb" onclick="n_char()">
+			<br>
 			<input type="button" id="char_select_btn" class="wb" value="select" onclick="s_char()">
+			<!--</div>-->
+			<div id="char_description"></div>
 		</dialog>
 		<div id="minimap_div">
 			<img id="context_img" src="">
