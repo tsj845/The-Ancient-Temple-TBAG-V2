@@ -95,8 +95,12 @@ const test_map_1 = ["  1  ",
 // closes the loading screen
 function closeLoadingScreen () {
 	document.getElementById("loading_screen").hidden = true;
-	document.getElementById("text_input").focus();
-	document.getElementById("title_screen").contentWindow.postMessage("start_music","*");
+	// stops the user from noticing a jump in animation progress
+	execAfterDelay(startMusic,250);
+}
+
+function startMusic () {
+	send("title_screen","O:IN,R:TS,M:start_music");
 }
 
 function onLoadHandler (e) {

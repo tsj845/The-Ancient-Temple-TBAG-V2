@@ -39,3 +39,5 @@ function n_char () {
 function s_char () {
 	document.getElementById("char_select").close();
 }
+
+document.getElementById("char_select").addEventListener("open",displayChar);

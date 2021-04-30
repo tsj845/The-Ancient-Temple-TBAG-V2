@@ -264,6 +264,8 @@ class Game {
 			good_input = true;
 			// shows the character select screen
 			document.getElementById("char_select").showModal();
+			// shows character information
+			displayChar();
 		// handles input for choices
 		} else if (this.inType === 1) {
 			if (Number(value).toString() !== "NaN") {

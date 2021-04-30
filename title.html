@@ -45,6 +45,7 @@
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_1.png) repeat;" hidden></div>
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_2.png) repeat;" hidden></div>
 		<img src="sprites/titlescreen.png" id="title_img">
+		<div id="title_cover" style="background:black;width:100vw;height:100vh;position:absolute;left:0px;top:0px;z-index:5;"></div>
 		<script src="messages/title_messages.js"></script>
 		<script>
 			let music_loaded = false;
@@ -70,6 +71,7 @@
 					return;
 				}
 				document.getElementById("music").play();
+				document.getElementById("title_cover").hidden = true;
 			}
 			// sets up the event listener
 			document.getElementById("music").addEventListener("canplaythrough",function () {start_music();music_loaded=true});

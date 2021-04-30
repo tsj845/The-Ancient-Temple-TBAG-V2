@@ -34,9 +34,6 @@
         		top : 40%;
 				z-index : 1;
 			}
-			#block_holder {
-				overflow : hidden;
-			}
 		</style>
 	</head>
 	<body style="background-color: #222222;">
@@ -45,7 +42,7 @@
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_1.png) repeat;"></div>
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_2.png) repeat;"></div>
 		<img src="sprites/Loading.png" id="title_img">
-		<div id="loading_cover" style="width:100vw;height:100vh;z-index:15;background:black;"></div>
+		<div id="loading_cover" style="width:100vw;height:100vh;z-index:15;background:black;position:absolute;left:0px;top:0px;"></div>
 		<script src="messages/loading_messages.js"></script>
 		<script>
 			// mostly the same as the title screen with the difference that it isn't picking the background

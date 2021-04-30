@@ -22,10 +22,13 @@
 			}
 			#char_select_btn {
 				position : absolute;
-				color : black;
-				background : white;
+				//color : black;
+				//background : white;
 				left : 25%;
 				bottom : 2%;
+			}
+			.csb {
+				outline-style : none;
 			}
 		</style>
 	</head>
@@ -33,7 +36,7 @@
 		<script src="messages/index_messages.js"></script>
 		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts"></iframe>
 		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts"></iframe>
-    	<img src="sprites/chars/character.png" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img>
+    	<!-- <img src="sprites/chars/character.png" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img> !-->
 		<div>
 			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
 			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
