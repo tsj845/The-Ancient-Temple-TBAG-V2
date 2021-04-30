@@ -34,3 +34,8 @@ function n_char () {
 	}
 	displayChar();
 }
+
+// selects a character
+function s_char () {
+	document.getElementById("char_select").close();
+}

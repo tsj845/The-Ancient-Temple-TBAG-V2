@@ -13,10 +13,19 @@
 				background : url("sprites/icons/muted_icon.svg");
 			}
 			#prev_char_btn {
-				background : url("sprites/icons/unmuted_icon.svg") no-repeat;
+				border : none;
+				background : url("sprites/icons/left_button_1.svg") no-repeat;
 			}
 			#next_char_btn {
-				background : url("sprites/icons/muted_icon.svg") no-repeat;
+				border : none;
+				background : url("sprites/icons/right_button_1.svg") no-repeat;
+			}
+			#char_select_btn {
+				position : absolute;
+				color : black;
+				background : white;
+				left : 25%;
+				bottom : 2%;
 			}
 		</style>
 	</head>
@@ -24,7 +33,7 @@
 		<script src="messages/index_messages.js"></script>
 		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts"></iframe>
 		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts"></iframe>
-    	<img src="sprites/chars/character.gif" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img>
+    	<img src="sprites/chars/character.png" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img>
 		<div>
 			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
 			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
@@ -61,10 +70,11 @@
 			</div>
 		</div>
 		<dialog id="char_select">
-			<img id="char_preview" src="sprites/chars/character.gif" alt="a preview image of the character">
+			<img id="char_preview" src="sprites/chars/character.png" alt="a preview image of the character">
 			<div id="char_description"></div>
 			<input type="button" id="prev_char_btn" class="csb" value="" onclick="p_char()">
 			<input type="button" id="next_char_btn" class="csb" value="" onclick="n_char()">
+			<input type="button" id="char_select_btn" class="wb" value="select" onclick="s_char()">
 		</dialog>
 		<div id="minimap_div">
 			<img id="context_img" src="">
