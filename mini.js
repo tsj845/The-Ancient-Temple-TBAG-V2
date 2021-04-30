@@ -1,8 +1,11 @@
+// this file just happens to be the one that handles showing the title screen
 let ls_lfin = false;
 let ts_lfin = false;
 
+// gets a reference to the div that holds the minimap
 const main_div = document.getElementById("minimap_div");
 
+// used to create 2D arrays
 function makeList (rc, cc) {
 	let b = [];
 	let l = [];
@@ -15,17 +18,7 @@ function makeList (rc, cc) {
 	return b;
 }
 
-function lhl (l1, l2) {
-	return l1.includes(l2);
-	l2 = l2.toString();
-	for (let i = 0; i < l1.length; i ++) {
-		if (l1[i].toString() === l2) {
-			return true;
-		}
-	}
-	return false;
-}
-
+// supporting class for the minimap
 class Tile {
 	constructor (x, y, c) {
 		this.x = x;
@@ -41,19 +34,23 @@ class Tile {
 	}
 }
 
+// holds all relavent properties and sets the appearence of the minimap
 class Minimap {
+	// initializes the minimap and populates it
 	constructor () {
 		this.size = 5;
 		this.board = makeList(this.size, this.size);
 		for (let y = 0; y < this.size; y ++) {
 			for (let x = 0; x < this.size; x ++) {
-				this.board[y][x] = new Tile(x, y, /*"#ffffff88"*/"minimap/minimap_empty.png");
+				this.board[y][x] = new Tile(x, y, "minimap/minimap_empty.png");
 			}
 		}
 	}
+	// sets a tile at a position
 	setTile (x, y, c) {
 		this.board[y][x].setValue(c);
 	}
+	// sets the appearence of the entire minimap
 	load (tiles) {
 		for (let y = 0; y < this.size; y ++) {
 			for (let x = 0; x < this.size; x ++) {
@@ -63,6 +60,7 @@ class Minimap {
 	}
 }
 
+// decodes ACSII art into a usable array of image source paths
 class Decoder {
 	constructor () {
 		this.decoding = {"?":false," ":false,"0":false,"1":true};
@@ -94,6 +92,7 @@ const test_map_1 = ["  1  ",
 
 //decoder.decode(test_map_1);
 
+// closes the loading screen
 function closeLoadingScreen () {
 	document.getElementById("loading_screen").hidden = true;
 	document.getElementById("text_input").focus();
@@ -101,10 +100,13 @@ function closeLoadingScreen () {
 }
 
 function onLoadHandler (e) {
+	// checks to make sure that everything is loaded
 	if (!ls_lfin || !ts_lfin) {
 		return;
 	}
+	// closes the loading screen 4 seconds after everything finishes loading, this is so that the loading screen doesn't disappear as soon as it's finished loading
 	execAfterDelay(closeLoadingScreen,4000);
 }
 
+// sets up the event listener
 window.addEventListener("load", onLoadHandler);

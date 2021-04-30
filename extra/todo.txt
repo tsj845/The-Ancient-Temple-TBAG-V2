@@ -2,3 +2,36 @@
 2. Character selection screen - medium
 3. Mute button - high
 4. Sound credits - astronomical
+
+
+
+
+Fighting System -- godly priority
+
+FIGHTING SYSTEM
+Char1 --  Large boost to ATK
+ATK - 3/10
+DEF - 1/10
+CHA - 1/10
+Char2 - Massive boost to CHA, small decrease to ATK (optimal purity route chara)
+ATK - 0.5/10
+DEF - 1/10
+CHA - 5/10
+Char3 - Large boost to DEF
+ATK - 1/10
+DEF - 3/10
+CHA - 1/10
+
+The higher a stat is out of 10, the better you are at a specific action. 1/10 ATK would get a +1 boost to their ATK roll, but 10/10 ATK would get a +10 boost to their ATK roll. 
+
+Different weapons give boosts to different stats. For example, Occham's Razor would give a boost to ATK, Spiked Shield (which is still a sword) would boost DEF, and Sparkling Blade would give boost to CHA. 
+
+Your HEALTH is your DEF stat + 20. Your maximum health is 30. DEFENDING gives you your DEF stat as a temporary bonus to your health during ONE ENEMY ATTACK.
+
+Your CHARISMA is your CHA stat. The higher your charisma stat is (and the lower your enemy's health is) the likelier they are to accept a PERSUADE move. If they have 1 HEALTH and you have 10/10 CHARISMA, you would have the highest possible chance (probably a 95% or so to persuade them.) IF THEY ARE NOT PERSUADED, killing them does not change your route IF AND ONLY IF you at least attempted to persuade. 
+
+Your ATK is 5 + your ATK stat. Your maximum ATK is 15, which would not be helpful in PURITY route. Your ATK is how much damage you do to an enemy's HEALTH if you attack.
+
+If your HEALTH drops to 0, you return to the beginning of the fight. If your HEALTH drops to 0 THREE TIMES on ONE BATTLE, you get a bonus of +5 to your attack roll, + 1 to your CHA stat (unless it is 10), and a +10 to your HEALTH for THAT ONE BATTLE. 
+
+If an ENEMY is PERSUADED, it gives you some GOLD, and LEAVES. If an ENEMY's HEALTH drops to 0, it gives you more GOLD then you would get from PERSUADING, but your route changes to DESTRUCTION ROUTE (UNLESS YOU TRIED TO PERSUADE.)

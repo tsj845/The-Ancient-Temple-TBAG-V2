@@ -1,9 +1,10 @@
+// if the sound is disabled
 let sound_disabled = false;
-let in_title = true;
-let in_loading = false;
 
+// main dictionairy of level names to level data
 const main_dict = {"chapter_1/option":option_file, "chapter_1/temple":temple_file, "chapter_2/labyrinth1":labyrinth_file_1};
 
+// a lot of references to everything related to the playing of the game
 const main_input = document.getElementById("text_input");
 const name_text = document.getElementById("name_text");
 const prompt_label = document.getElementById("prompt_label");
@@ -13,28 +14,46 @@ const con_out = document.getElementById("main_output");
 const header = document.getElementById("header_text");
 const context_img = document.getElementById("context_img");
 
+// puts text on the screen
 function gameprint(text) {
 	con_out.textContent = text;
 }
 
+// don't at me about this
 class Game {
 	constructor () {
+		// the position of the interpereter in the level data
 		this.blockIndex = -1;
+		// the name of the level
 		this.fname = "chapter_1/option";
+		// the current chapter, a prefix so that levels in different chapters can have the same name
 		this.chapter = 1;
+		// the name the player choses for themselves
 		this.playerName = "";
+		// stores what type of information the user is entering
 		this.inType = 0;
+		// just an inventory
 		this.inventory = {};
+		// you know that this sort of game has different routes
 		this.paths = {"route":"0"};
+		// represents if the user should be allowed to progress
 		this.disabled = true;
+		// the lines in the giant array of level data
 		this.lines = [];
+		// the first version of this (in python) didn't have labels, it was really difficult to properly navigate the level data
 		this.labels = {};
+		// each choice has two or more locations to jump to, this stores them
 		this.gotos = [];
+		// stores if the interpereter has run out of lines, if true then it can't progress as this would cause an index error
 		this.bad_file = false;
+		// stores if the user is in an interaction
 		this.interaction = false;
+		// shhh, secrets
 		this.is_dev = false;
+		// the sound that is currently playing, used for background music
 		this.c_sound = null;
 	}
+	// runs through all of the lines and finds every label and where it is, used for everything from gotos to where a user should go based on their route
 	firstPass () {
 		for (let i = 0; i < this.lines.length; i ++) {
 			const line = this.lines[i];
@@ -48,6 +67,7 @@ class Game {
 			}
 		}
 	}
+	// sets up the game to run a level, position is used to set where the interpereter should start at
 	load (name, position) {
 		this.bad_file = true;
 		this.blockIndex = -1;
@@ -70,6 +90,7 @@ class Game {
 			this.blockIndex = position;
 		}
 	}
+	// just goes to a label
 	goto (line) {
 		if (typeof line === "string") {
 			if (line in this.labels) {
@@ -79,6 +100,7 @@ class Game {
 			}
 		}
 	}
+	// support function for colored text
 	createColored (text) {
 		let parts = text.split("@&*");
 		const s = document.createElement("span");
@@ -86,6 +108,7 @@ class Game {
 		s.textContent = parts[0];
 		return s;
 	}
+	// prompts the user to make a choice
 	prompt (keys, values) {
 		inp_container.hidden = false;
 		prompt_label.textContent = "Enter selection: ";
@@ -108,9 +131,11 @@ class Game {
 		main_input.focus();
 		this.disabled = true;
 	}
+	// starts an interaction
 	startInteraction (args) {
 		this.interaction = true;
 	}
+	// advances the game
 	progress () {
 		if (this.disabled || this.bad_file) {
 			return;
@@ -120,14 +145,17 @@ class Game {
 			console.log("EOF");
 			this.bad_file = true;
 		} else {
-			this.inerperet();
+			this.interperet();
 		}
 	}
-	inerperet () {
+	// decodes and executes the current line
+	interperet () {
 		const line = this.lines[this.blockIndex];
+		// if the line is just a string then show it to the user
 		if (typeof line === "string") {
 			gameprint(line);
 		} else {
+			// otherwise, it's something that gets input moves the user around or changes the look of the game
 			const control = line[0];
 			switch (control) {
 				case "label":
@@ -196,6 +224,7 @@ class Game {
 			}
 			this.progress();
 		}
+		// if the next line is an option, then show it
 		if (typeof this.lines[this.blockIndex+1] === "object") {
 			if (this.lines[this.blockIndex+1][0] === "option") {
 				this.progress();
@@ -203,6 +232,7 @@ class Game {
 			}
 		}
 	}
+	// handles key presses
 	handleKeyPress (key) {
 		if (key === "Escape") {
 			document.getElementById("main_menu").showModal();
@@ -210,15 +240,17 @@ class Game {
 			this.progress();
 		}
 	}
-	unlock () {
-		this.disabled = false;
-	}
+	// handles text that the user inputs
 	handleTextInput (value) {
+		// if the input is valid
 		let good_input = false;
+		// if the input is for the name
 		if (this.inType === 0) {
 			this.playerName = value;
+			// be careful with this one
 			if (value === "independence") {
 				name_text.textContent = independance_text;
+			// these are secrets you can stop looking at them now
 			} else if (value === "namey" || value === "GLaDOS" || value === "Sun Li") {
 				name_text.textContent = "Sun Li";
 					this.is_dev = true;
@@ -230,7 +262,9 @@ class Game {
 			}
 			this.inType = 1;
 			good_input = true;
+			// shows the character select screen
 			document.getElementById("char_select").showModal();
+		// handles input for choices
 		} else if (this.inType === 1) {
 			if (Number(value).toString() !== "NaN") {
 				const fn = Number(value)-1;
@@ -240,7 +274,9 @@ class Game {
 				}
 			}
 		}
+		// gets rid of the text the user entered
 		main_input.value = "";
+		// if the input was valid then progress
 		if (good_input) {
 			prompt_options.replaceChildren();
 			inp_container.hidden = true;
@@ -248,11 +284,13 @@ class Game {
 			this.progress();
 		}
 	}
+	// stops the background music if it's playing
 	stopSounds () {
 		if (this.c_sound !== null) {
 			this.c_sound.pause();
 		}
 	}
+	// starts the background music if it's playing
 	startSounds () {
 		if (this.c_sound !== null) {
 			this.c_sound.play();
@@ -260,34 +298,37 @@ class Game {
 	}
 }
 
+// initializes the game
 let game = new Game();
+// loads the starting level
 game.load("chapter_1/option");
 
+// event handler for text the user has entered
 function handleTextInput (e) {
 	game.handleTextInput(e.target.value);
 }
 
+// sets up the event listener
 main_input.addEventListener("change", handleTextInput);
 
+// event handler for key presses
 function keyPress (e) {
+	// got this weird error once involving autocomplete sending a non-keyboard event to the keydown event listener, now I don't take chances
 	if (e.toString() !== "[object KeyboardEvent]") {
 		return;
 	}
+	// gets the key code
 	const key = e.code.toString();
-	if (in_title) {
-		document.getElementById("title_screen").hidden = true;
-		in_title = false;
-	} else if (in_loading) {
-		document.getElementById("loading_screen").hidden = true;
-		in_loading = false;
-	} else {
-		game.handleKeyPress(key);
-	}
+	// sends the key code to the game
+	game.handleKeyPress(key);
 }
 
+// sets up the event listener
 document.addEventListener("keydown", keyPress);
 
+// toggles the audio if the user mutes or unmutes it
 function toggleAudio () {
+	// changes the sprite for the custom button
 	const img = document.getElementById("mute_sounds_2");
 	sound_disabled = !sound_disabled;
 	if (sound_disabled) {
@@ -298,4 +339,5 @@ function toggleAudio () {
 	img.setAttribute("class", (sound_disabled ? "mute_checked" : "mute_unchecked"));
 }
 
+// adds the event listener for the custom button
 document.getElementById("mute_sounds_2").addEventListener("click",toggleAudio);

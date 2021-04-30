@@ -5,7 +5,7 @@
     	<meta name="viewport" content="width=device-width">
 		<style>
 			:root {
-				--bi_h : 32px;
+				--bi_h : -288px;
 				--bi_w : 32px;
 			}
 			body {
@@ -42,48 +42,44 @@
 	<body style="background-color: #222222;">
 		<audio id="music" src="audios/titlescreenmusic.mp3" loop></audio>
 		
-		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-9 * var(--bi_h));background : url(sprites/wall_1.png) repeat;" hidden></div>
-		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:calc(-1 * var(--bi_h));background : url(sprites/wall_2.png) repeat;" hidden></div>
+		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_1.png) repeat;" hidden></div>
+		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_2.png) repeat;" hidden></div>
 		<img src="sprites/titlescreen.png" id="title_img">
 		<script src="messages/title_messages.js"></script>
 		<script>
 			let music_loaded = false;
 			function close (e) {
+				// doesn't close if the music isn't loaded, this is because of a glitch where if the music isn't loaded before the title screen is closed then it won't ever stop playing
 				if (!music_loaded) {
 					return;
 				}
+				// hides itself and stops the music
 				window.parent.document.getElementById("title_screen").hidden = true;
 				document.getElementById("music").pause();
+				// focuses the cursor on the text input
 				window.parent.document.getElementById("text_input").focus();
 			}
+			// sets up the event listener
 			document.addEventListener("keydown", close);
+			// picks the background
 			const index = 1 + Math.round(Math.random());
+			// starts the title screen music
 			function start_music () {
+				// only starts if it is fully loaded
 				if (!window.parent.document.getElementById("loading_screen").hidden) {
 					return;
 				}
 				document.getElementById("music").play();
 			}
+			// sets up the event listener
 			document.getElementById("music").addEventListener("canplaythrough",function () {start_music();music_loaded=true});
+			// shows the correct background
 			document.body.children[index].hidden = false;
-			function handleMessage (e) {
-				if (e.data === "start_music") {
-					start_music();
-				}
-			}
-			window.addEventListener("message",handleMessage);
-			function set_css (item, value) {
-				const css_root = document.styleSheets[0].cssRules[0].style;
-				css_root.setProperty(css_root.item(item), " "+value);
-			}
-			function set_props () {
-				const size = [32,288][index-1];
-				set_css(0, size.toString()+"px");
-				set_css(1, size.toString()+"px");
-			}
-			set_props();
-			send("O:TS,R:LS,M:index="+index.toString());
+			// sends the init message
 			send("O:TS,R:IN,M:init");
+			// tells the loading screen which background to display
+			send("O:TS,R:LS,M:index="+index.toString());
+			// tells the main window when the title screen has finished loading
 			window.addEventListener("load",function (e) {send("O:TS,R:IN,M:lfin")});
 		</script>
 	</body>

@@ -24,7 +24,7 @@
 		<script src="messages/index_messages.js"></script>
 		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts"></iframe>
 		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts"></iframe>
-    	<img src="sprites/character.gif" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img>
+    	<img src="sprites/chars/character.gif" style="position:absolute;right:15%;bottom:0%;width:37vmin"></img>
 		<div>
 			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
 			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
@@ -61,8 +61,8 @@
 			</div>
 		</div>
 		<dialog id="char_select">
-			<img id="char_preview" src="sprites/icons/muted_icon.svg" alt="a preview image of the character">
-			<p id="char_discription"></p>
+			<img id="char_preview" src="sprites/chars/character.gif" alt="a preview image of the character">
+			<div id="char_description"></div>
 			<input type="button" id="prev_char_btn" class="csb" value="" onclick="p_char()">
 			<input type="button" id="next_char_btn" class="csb" value="" onclick="n_char()">
 		</dialog>
@@ -74,6 +74,8 @@
 		<script src="chapter_1/option.js"></script>
 		<script src="chapter_1/temple.js"></script>
 		<script src="chapter_2/labyrinth1.js"></script>
+		<script src="char_data.js"></script>
+		<script src="chars.js"></script>
 		<script src="script.js"></script>
 		<script src="mini.js"></script>
 	</body>
