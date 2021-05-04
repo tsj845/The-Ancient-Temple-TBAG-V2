@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>The Ancient Temple</title>
+		<link href="stylesheets/combat_styles.css" rel="stylesheet" type="text/css">
+	</head>
+	<body style="background:#222222;">
+		<p id="stats" style="font-family:monospace;position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
+		<img id="combat_player_img" src="" style="width:37vmin;position:absolute;left:25%;bottom:25%;">
+		<img id="combat_enemy_img" src="sprites/enemies/book.png" style="width:37vmin;position:absolute;top:25%;right:25%;">
+		<div id="combat_att_btn" style=""></div>
+		<div id="combat_def_btn"></div>
+		<div id="combat_per_btn" style="left:5%;top:5%;z-index:50000;"></div>
+		<div id="combat_flee_btn"></div>
+		<script src="messages/common_messages.js"></script>
+		<script>
+			function spec_mess (m) {
+				if (m[0] === "#") {
+					const elem = document.getElementById(m.slice(1,m.indexOf("?")))
+					const s = m.slice(m.indexOf("?")+1);
+					const sel = s.slice(0,s.indexOf("="));
+					const val = s.slice(s.indexOf("=")+1);
+					if (sel === "src") {
+						elem.src = val;
+					} else if (sel === "text") {
+						elem.textContent = val;
+					}
+				}
+			}
+			send("O:CB,R:IN,M:init");
+			//send("O:CB,R:IN,M:ERROR");
+			window.addEventListener("load",function (e) {send("O:CB,R:IN,M:lfin")});
+		</script>
+	</body>
+</html>

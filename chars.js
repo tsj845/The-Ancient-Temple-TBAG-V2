@@ -39,6 +39,30 @@ function n_char () {
 function s_char () {
 	document.getElementById("char_select").close();
 	document.getElementById("char_display").src = char_lst[char][0];
+	player.setStats({"h":20,"a":char_lst[char][2],"d":char_lst[char][3],"c":char_lst[char][4],"s":0});
+	if (badPerson) {
+		player.cha = -9999;
+	}
+	game.hideInput();
+	update_combat();
+}
+
+function update_combat () {
+	const att = player.att.toString()+"/10";
+	const def = player.def.toString()+"/10";
+	const cha = player.cha.toString()+"/10";
+	const health = player.health.toString()+"/20";
+	send("combat_screen","O:IN,R:CB,M:#combat_player_img?src="+char_lst[char][0]);
+	send("combat_screen","O:IN,R:CB,M:#att_stat?text="+att);
+	send("combat_screen","O:IN,R:CB,M:#def_stat?text="+def);
+	send("combat_screen","O:IN,R:CB,M:#per_stat?text="+cha);
+	send("combat_screen","O:IN,R:CB,M:#health_stat?text="+health);
+	send("combat_screen","O:IN,R:CB,M:#shield_stat?text="+player.abs.toString());
+	document.getElementById("att_stat").textContent = att;
+	document.getElementById("def_stat").textContent = def;
+	document.getElementById("per_stat").textContent = cha;
+	document.getElementById("health_stat").textContent = health;
+	document.getElementById("shield_stat").textContent = player.abs.toString();
 }
 
 document.getElementById("char_select").addEventListener("open",displayChar);

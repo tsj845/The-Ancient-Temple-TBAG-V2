@@ -1,5 +1,29 @@
+let ls_lfin = false;
+let ts_lfin = false;
+let cb_lfin = false;
+
+// closes the loading screen
+function closeLoadingScreen () {
+	document.getElementById("loading_screen").hidden = true;
+	// stops the user from noticing a jump in animation progress
+	execAfterDelay(startMusic,/*250*/0);
+}
+
+function startMusic () {
+	send("title_screen","O:IN,R:TS,M:start_music");
+}
+
+function onLoadHandler (e) {
+	// checks to make sure that everything is loaded
+	if (!ls_lfin || !ts_lfin || !cb_lfin) {
+		return;
+	}
+	// closes the loading screen 4 seconds after everything finishes loading, this is so that the loading screen doesn't disappear as soon as it's finished loading
+	execAfterDelay(closeLoadingScreen,/*4000*/0);
+}
+
 // used to get the id of the iframe that a message was sent from
-const locs = {"LS":"loading_screen","TS":"title_screen"};
+const locs = {"LS":"loading_screen","TS":"title_screen","CB":"combat_screen"};
 
 // established origin, used to block incoming messages from other origins
 let est_or = null;
@@ -13,6 +37,7 @@ function send (location, message) {
 function receive (event) {
 	if (est_or !== null) {
 		if (event.origin !== est_or) {
+			throw ("invalid message origin: " + event.origin);
 			return;
 		}
 	}
@@ -44,12 +69,24 @@ function receive (event) {
 				// sets a variable based on which iframe sent the message
 				if (o === "LS") {
 					ls_lfin = true;
+				} else if (o === "CB") {
+					cb_lfin = true;
+					document.getElementById("combat_screen").hidden = true;
 				} else {
 					ts_lfin = true;
 				}
 				// checks if the title screen should be displayed
 				onLoadHandler();
 				break;
+			case "ERROR":
+				throw ("ERROR message sent from: " + o);
+				break;
+			default:
+				if (m[0] === "@") {
+					if (m.slice(1,m.indexOf("?")) === "combat") {
+						combatRunner.choice(Number(m.slice(m.indexOf("?")+1)));
+					}
+				}
 		}
 		// sends a response
 		send(locs[o],"O:IN,R:"+o+",M:resp");
@@ -63,7 +100,7 @@ function receive (event) {
 window.addEventListener("message", receive);
 
 // throws an error if there was a messageerror
-window.addEventListener("messageerror",function () {console.error("error receiving message for main screen")})
+window.addEventListener("messageerror",function () {throw ("error receiving message for main screen")})
 
 // these two functions are modified versions of an MDN example on the javascript await keyword
 // supporting function for execAfterDelay
@@ -79,4 +116,13 @@ async function resolveAfterDelay (delay) {
 async function execAfterDelay (f, d) {
 	await resolveAfterDelay(d);
 	f();
+}
+
+// sets up the event listener
+window.addEventListener("load", onLoadHandler);
+
+function exec (code) {
+	const command = "O:IN,R:CB,M:!send('O:CB,R:IN,M:'+String("+code+"))";
+	console.log(command);
+	send("combat_screen",command);
 }

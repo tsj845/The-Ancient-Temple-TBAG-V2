@@ -14,13 +14,11 @@
 			}
 			#prev_char_btn {
 				margin : 0;
-				border : none;
+				border : none; 
 				position : absolute;
 				left : 0vw;
 				top : 0%;
 				height : 25%;
-				//float : left;
-				//background : url("sprites/icons/left_button_1.svg") no-repeat;
 			}
 			#next_char_btn {
 				margin : 0;
@@ -29,14 +27,10 @@
 				right : 0vw;
 				top : 0%;
 				height : 25%;
-				//background : url("sprites/icons/right_button_1.svg") no-repeat;
 			}
 			#char_select_btn {
 				position : relative;
-				//color : black;
-				//background : white;
 				left : 38.225%;
-				//bottom : 2%;
 			}
 			.csb {
 				outline-style : none;
@@ -52,13 +46,8 @@
 				top : 0%;
 			}
 			#char_description {
-				//position : absolute;
-				//left : 2%;
-				//top : 30%;
-				//float : top;
 				color : black;
 				font-family : monospace;
-				//word-break : break-all;
 				overflow-y : scroll;
 				overflow-wrap : break-word;
 			}
@@ -75,21 +64,28 @@
 	</head>
 	<body>
 		<script src="messages/index_messages.js"></script>
-		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts"></iframe>
-		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts"></iframe>
+		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts" style="z-index:15;"></iframe>
+		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts" style="z-index:10;"></iframe>
+		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
     	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
+        <!--<yeet id="megayeet" style="maximumyeet"></yeet>-->
+		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;left:34px;bottom:35.77659284%;">0</label>
+        <img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:25px;position:absolute;left:3px;bottom:35%">
+		<p id="stats" style="position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
 		<div>
 			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
 			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
 			<audio id="namey" src="audios/namey.mp3" loop></audio>
 			<audio id="silence" src="audios/silence.mp3" loop></audio>
-			<audio id="youwin" src="audios/youwin.mp3"></audio>
+			<audio id="youwin" src="audios/sfx/youwin.mp3"></audio>
 			<audio id="adventure2" src="audios/adventure2.mp3" loop></audio>
 			<audio id="adventure3" src="audios/adventure3.mp3" loop></audio>
-            <audio id="attack" src="audios/sfx/slash.wav" ></audio>
+            <audio id="battle" src="audios/battle.mp3" loop></audio>
+            <!--<audio id="attack" src="audios/sfx/slash.wav"></audio>-->
 		</div>
 		<dialog id="sound_credits">
-			<p>Sound Credits:<br></p>
+			<p class="black">Sound Credits:<br>4 music tracks:<br>sawsquarenoise - Song Name(s)<br> - Stage 3<br> - Boss Battle<br> - Stage 1<br> - Stage 2<br> - not commercially used<br> - fade out at end of Stage 3 was cropped<br> - License here:<br><a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by/4.0/legalcode</a><br><br>1 music track:<br>Eric Skiff<br> - Song Name:<br> - Behind the waterfall lies the beginning<br> - Available at <a href="http://EricSkiff.com/music" target="_blank">http://EricSkiff.com/music</a><br>1 music track:<br>Derris-Kharlan - Song Name<br>- Prism Stars<br>-License here<br><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/"
+            target="_blank">https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/</a></p>
 			<br>
 			<input type="button" class="wb" value="back" onclick="document.getElementById('sound_credits').close()">
 		</dialog>
@@ -139,6 +135,7 @@
 		<script src="chapter_2/labyrinth1.js"></script>
 		<script src="char_data.js"></script>
 		<script src="chars.js"></script>
+		<script src="interactions.js"></script>
 		<script src="script.js"></script>
 		<script src="mini.js"></script>
 	</body>

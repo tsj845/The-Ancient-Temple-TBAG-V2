@@ -88,23 +88,7 @@ dialog {
 	border : none;
 	overflow : hidden;
 }
-.ts_im {
-	position : absolute;
-	height : 200vh;
-	width : var(--width,200vw);
-	left : 0%;
-	top : 0%;
-	animation : v_scroll 5s infinite linear;
-}
-@keyframes v_scroll {
-	0% {
-		transform : translate(var(--start_x,0%), var(--start_y,-5vh));
-	}
-	100% {
-		transform : translate(var(--end_x,0%), var(--end_y,-100vh));
-	}
-}
-#title_screen {
+/*#title_screen {
 	position : absolute;
 	left : 0px;
 	top : 0px;
@@ -114,8 +98,8 @@ dialog {
 	height : 100vh;
 	border : none;
 	z-index : 5;
-}
-#loading_screen {
+}*/
+iframe {
 	position : absolute;
 	left : 0px;
 	top : 0px;
@@ -124,7 +108,7 @@ dialog {
 	width : 100vw;
 	height : 100vh;
 	border : none;
-	z-index : 10;
+	//z-index : 10;
 }
 #mute_sounds_2 {
 	position : absolute;
@@ -136,7 +120,8 @@ dialog {
 #char_select {
 	width : 50vw;
 	height : 50vh;
-	overflow : hidden;
+	overflow-y : scroll;
+	overflow-wrap : break-word;
 }
 #char_select::backdrop {
 	background : #222222;
@@ -145,3 +130,8 @@ img {
 	user-select : none;
 	-webkit-user-drag : none;
 }
+/*massive megayeet {
+    z-index : z-special class yeet;
+    user-select : type of yeet (x-yeet or z-yeet);
+    transform : johncode;
+}*/

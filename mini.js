@@ -1,11 +1,7 @@
-// this file just happens to be the one that handles showing the title screen
-let ls_lfin = false;
-let ts_lfin = false;
-
 // gets a reference to the div that holds the minimap
 const main_div = document.getElementById("minimap_div");
 
-// used to create 2D arrays
+// used to create 2D arrays 
 function makeList (rc, cc) {
 	let b = [];
 	let l = [];
@@ -91,26 +87,3 @@ const test_map_1 = ["  1  ",
 					"  1  "];
 
 //decoder.decode(test_map_1);
-
-// closes the loading screen
-function closeLoadingScreen () {
-	document.getElementById("loading_screen").hidden = true;
-	// stops the user from noticing a jump in animation progress
-	execAfterDelay(startMusic,/*250*/0);
-}
-
-function startMusic () {
-	send("title_screen","O:IN,R:TS,M:start_music");
-}
-
-function onLoadHandler (e) {
-	// checks to make sure that everything is loaded
-	if (!ls_lfin || !ts_lfin) {
-		return;
-	}
-	// closes the loading screen 4 seconds after everything finishes loading, this is so that the loading screen doesn't disappear as soon as it's finished loading
-	execAfterDelay(closeLoadingScreen,/*4000*/0);
-}
-
-// sets up the event listener
-window.addEventListener("load", onLoadHandler);

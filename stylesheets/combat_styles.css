@@ -1,0 +1,57 @@
+combat_att_btn {
+	width : 25%;
+	height : 15%;
+	background-image : url("sprites/buttons/attack.png");
+}
+
+combat_att_btn:hover {
+	background-image : url("sprites/buttons/attack.png");
+}
+
+combat_def_btn {
+	width : 25%;
+	height : 15%;
+	background-image : url("sprites/buttons/defend.png");
+}
+
+combat_def_btn:hover {
+	background-image : url("sprites/buttons/defend.png");
+}
+
+combat_per_btn {
+	position : absolute;
+	width : 25%;
+	height : 15%;
+	background-image : url("sprites/buttons/persuade.png");
+}
+
+combat_per_btn:hover {
+	background-image : url("sprites/buttons/persuade.png");
+}
+
+combat_flee_btn {
+	width : 25%;
+	height : 15%;
+	background-image : url("");
+}
+
+combat_flee_btn:hover {
+	background-image : url("");
+}
+
+#combat::backdrop {
+	background : transparent;
+}
+#combat {
+	position : absolute;
+	top : 0%;
+	left : 0%;
+	width : 100vw;
+	height : 100vh;
+	border : none;
+	background : #222222;
+}
+
+p {
+	color : white;
+}

@@ -5,3 +5,4 @@ this will contain any useful information about the sprites:
 
 wall_1 : 32 x 32 px - background image (vertically up)
 wall_2 : 288 x 288 px - background image (vertically up)
+YEET : yeet x yeet px - yeet image (vertically yeet)

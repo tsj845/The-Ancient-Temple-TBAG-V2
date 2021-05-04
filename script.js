@@ -1,5 +1,6 @@
 // if the sound is disabled
 let sound_disabled = false;
+let badPerson = false;
 
 // main dictionairy of level names to level data
 const main_dict = {"chapter_1/option":option_file, "chapter_1/temple":temple_file, "chapter_2/labyrinth1":labyrinth_file_1};
@@ -133,7 +134,20 @@ class Game {
 	}
 	// starts an interaction
 	startInteraction (args) {
+		this.disabled = true;
 		this.interaction = true;
+		switch (args[1]) {
+			case "combat":
+				combatRunner.start(args);
+			default:
+				return;
+		}
+	}
+	// exits an interaction
+	endInteraction () {
+		this.disabled = false;
+		this.interaction = false;
+		this.progress();
 	}
 	// advances the game
 	progress () {
@@ -219,7 +233,18 @@ class Game {
 					}
 					break;
 				case "interaction":
-					this.startInteraction(line);
+					let args = line.slice(0);
+					if (line[1] === "combat") {
+						if (typeof line[2] === "string") {
+							args = ["interaction", "combat"];
+							const t = mobs[line[2]];
+							args.push(t[0]);
+							args.push(t[1]);
+							args.push(t[2]);
+						}
+					}
+					console.log(args);
+					this.startInteraction(args);
 					return;
 			}
 			this.progress();
@@ -257,11 +282,14 @@ class Game {
     		} else if (value === "god yeet") {
 				name_text.textContent = "demonic screeching";
 				this.is_stupid_person = true;
+			} else if (value === "JOHN") {
+				name_text.textContent = "ERROR";
+				badPerson = true;
 			} else {
 				name_text.textContent = value;
 			}
 			this.inType = 1;
-			good_input = true;
+			//good_input = true;
 			// shows the character select screen
 			document.getElementById("char_select").showModal();
 			// shows character information
@@ -280,11 +308,14 @@ class Game {
 		main_input.value = "";
 		// if the input was valid then progress
 		if (good_input) {
-			prompt_options.replaceChildren();
-			inp_container.hidden = true;
-			this.disabled = false;
-			this.progress();
+			this.hideInput();
 		}
+	}
+	hideInput () {
+		prompt_options.replaceChildren();
+		inp_container.hidden = true;
+		this.disabled = false;
+		this.progress();
 	}
 	// stops the background music if it's playing
 	stopSounds () {

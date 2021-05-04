@@ -1,24 +1,20 @@
-1. add capability for random text e.g. $#@%$! spinning around - low
-2. Character selection screen - medium
-3. Sound credits - red alert
+Straws That Will Break The Tristancamel's Back
 
+-Shield will not be used in CHAPTER 1. It will be used in CHAPTER 2, as well as the companion system. Each companion you have adds 10 to your SHIELD at the beginning of a battle.
+-Text that can rotate and flip around between #$%@!*& so we can make names look cool
+-Fighting System 
 
-
-
-Fighting System -- godly priority
-
-FIGHTING SYSTEM
 Char1 --  Large boost to ATK
-ATK - 3/10
+ATK - 4/10
 DEF - 1/10
 CHA - 1/10
 Char2 - Massive boost to CHA, small decrease to ATK (optimal purity route chara)
-ATK - 0.5/10
+ATK - 1/10
 DEF - 1/10
 CHA - 5/10
 Char3 - Large boost to DEF
-ATK - 1/10
-DEF - 3/10
+ATK - 2/10
+DEF - 4/10
 CHA - 1/10
 
 The higher a stat is out of 10, the better you are at a specific action. 1/10 ATK would get a +1 boost to their ATK roll, but 10/10 ATK would get a +10 boost to their ATK roll. 
@@ -34,3 +30,25 @@ Your ATK is 5 + your ATK stat. Your maximum ATK is 15, which would not be helpfu
 If your HEALTH drops to 0, you return to the beginning of the fight. If your HEALTH drops to 0 THREE TIMES on ONE BATTLE, you get a bonus of +5 to your attack roll, + 1 to your CHA stat (unless it is 10), and a +10 to your HEALTH for THAT ONE BATTLE. 
 
 If an ENEMY is PERSUADED, it gives you some GOLD, and LEAVES. If an ENEMY's HEALTH drops to 0, it gives you more GOLD then you would get from PERSUADING, but your route changes to DESTRUCTION ROUTE (UNLESS YOU TRIED TO PERSUADE.)
+
+
+Charisma Explanation
+
+IF an enemy's health is less than 30%, they enter LOW HEALTH. This is just an attribute. If their health is in the LOW HEALTH range, then it is +20% to the PERSUASION chances. 
+
+1/10 PERSUASION adds 5% to PERSUASION chances.
+2/10 PERSUASION adds 10% to PERSUASION chances.
+3/10 PERSUASION adds 15% to PERSUASION chances.
+4/10 PERSUASION adds 20% to PERSUASION chances.
+5/10 PERSUASION adds 25% to PERSUASION chances.
+6/10 PERSUASION adds 30% to PERSUASION chances.
+7/10 PERSUASION adds 35% to PERSUASION chances.
+8/10 PERSUASION adds 40% to PERSUASION chances.
+9/10 PERSUASION adds 45% to PERSUASION chances.
+10/10 PERSUASION adds 80% to PERSUASION chances.
+John/10 PERSUASION adds -99999999% to PERSUASION chances. This happens if you name yourself JOHN. 
+
+So, the highest possible PERSUASION chances is 70%, John cannot do basic arithmetic. Remember, you can attempt to do it twice.
+
+
+
