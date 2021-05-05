@@ -46,8 +46,13 @@
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_2.png) repeat;" hidden></div>
 		<img src="sprites/titlescreen.png" id="title_img">
 		<div id="title_cover" style="background:black;width:100vw;height:100vh;position:absolute;left:0px;top:0px;z-index:5;"></div>
-		<script src="messages/title_messages.js"></script>
+		<script src="messages/common_messages.js"></script>
 		<script>
+			function spec_mess (m) {
+				if (m === "start_music") {
+					start_music();
+				}
+			}
 			let music_loaded = false;
 			function close (e) {
 				// doesn't close if the music isn't loaded, this is because of a glitch where if the music isn't loaded before the title screen is closed then it won't ever stop playing

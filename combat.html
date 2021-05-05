@@ -8,13 +8,31 @@
 		<link href="stylesheets/combat_styles.css" rel="stylesheet" type="text/css">
 	</head>
 	<body style="background:#222222;">
-		<p id="stats" style="font-family:monospace;position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
+		<!-- style the meters with the external stylesheet (stylesheets/combat_styles.css) -->
+		<div id="enemy_h_s">
+			<meter id="enemy_health" class="health enemy" max="10" value="10" low="2" high="6" optimum="8"></meter><br>
+			<meter id="en_shield_1" class="shield enemy" max="10" value="10"></meter>
+		</div>
+		<!--style="width:20vw;left:60%;bottom:45.47395687%"-->
+		<p id="stats" style="font-family:monospace;position:absolute;left:2%;top:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
 		<img id="combat_player_img" src="" style="width:37vmin;position:absolute;left:25%;bottom:25%;">
 		<img id="combat_enemy_img" src="sprites/enemies/book.png" style="width:37vmin;position:absolute;top:25%;right:25%;">
-		<div id="combat_att_btn" style=""></div>
-		<div id="combat_def_btn"></div>
-		<div id="combat_per_btn" style="left:5%;top:5%;z-index:50000;"></div>
-		<div id="combat_flee_btn"></div>
+		<div id="combat_att_btn">
+			<img src="sprites/empty.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
+			ATTACK
+		</div>
+		<div id="combat_def_btn">
+			<img src="sprites/empty.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
+			DEFEND
+		</div>
+		<div id="combat_per_btn">
+			<img src="sprites/empty.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
+			PERSUADE
+		</div>
+		<div id="combat_flee_btn">
+			<img src="sprites/empty.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
+			FLEE
+		</div>
 		<script src="messages/common_messages.js"></script>
 		<script>
 			function spec_mess (m) {
@@ -23,16 +41,38 @@
 					const s = m.slice(m.indexOf("?")+1);
 					const sel = s.slice(0,s.indexOf("="));
 					const val = s.slice(s.indexOf("=")+1);
+					console.log(sel, val);
 					if (sel === "src") {
 						elem.src = val;
 					} else if (sel === "text") {
 						elem.textContent = val;
+					} else if (sel === "html_attr") {
+						const attr = val.slice(0,val.indexOf(":="));
+						const av = val.slice(val.indexOf(":=")+2);
+						elem[attr] = av;
+						console.log(attr, av);
 					}
 				}
 			}
 			send("O:CB,R:IN,M:init");
 			//send("O:CB,R:IN,M:ERROR");
 			window.addEventListener("load",function (e) {send("O:CB,R:IN,M:lfin")});
+			const cb_ab = document.getElementById("combat_att_btn");
+			const cb_db = document.getElementById("combat_def_btn");
+			const cb_pb = document.getElementById("combat_per_btn");
+			const cb_fb = document.getElementById("combat_flee_btn");
+            cb_ab.addEventListener("mouseenter",function () {cb_ab.children[0].src="sprites/buttons/attack.png"});
+			cb_ab.addEventListener("mouseleave",function () {cb_ab.children[0].src="sprites/empty.png"});
+			cb_db.addEventListener("mouseenter",function () {cb_db.children[0].src="sprites/buttons/defend.png"});
+			cb_db.addEventListener("mouseleave",function () {cb_db.children[0].src="sprites/empty.png"});
+			cb_pb.addEventListener("mouseenter",function () {cb_pb.children[0].src="sprites/buttons/persuade.png"});
+			cb_pb.addEventListener("mouseleave",function () {cb_pb.children[0].src="sprites/empty.png"});
+			cb_fb.addEventListener("mouseenter",function () {cb_fb.children[0].src="sprites/buttons/flee.png"});
+			cb_fb.addEventListener("mouseleave",function () {cb_fb.children[0].src="sprites/empty.png"});
+			cb_ab.addEventListener("click",function () {send("O:CB,R:IN,M:@combat?0")});
+			cb_db.addEventListener("click",function () {send("O:CB,R:IN,M:@combat?1")});
+			cb_pb.addEventListener("click",function () {send("O:CB,R:IN,M:@combat?2")});
+			cb_fb.addEventListener("click",function () {send("O:CB,R:IN,M:@combat?3")});
 		</script>
 	</body>
 </html>

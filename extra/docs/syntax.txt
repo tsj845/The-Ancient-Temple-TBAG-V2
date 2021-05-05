@@ -39,4 +39,4 @@ syntax:
 - interaction; ? arguments, starts an interaction that can be almost anything
 
 interactions:
-- combat; 2 arguments, "stats":dict, "name":String, "source":String, "stats" must have the following attributes: "h","a","d","c","s", "source" must be a valid path to an image
+- combat; 2 arguments, "stats":dict, "name":String, "source":String, "coins":Number, "stats" must have the following attributes: "h","a","d","c","s", "source" must be a valid path to an image

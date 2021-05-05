@@ -78,9 +78,7 @@ dialog {
 	width : 25vmin;
 	z-index : 13;
 }
-//#loading::backdrop {
-//	background : black;
-//}
+
 #loading {
 	width : 100vw;
 	height : 100vh;

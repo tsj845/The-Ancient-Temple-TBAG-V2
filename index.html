@@ -69,9 +69,9 @@
 		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
     	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
         <!--<yeet id="megayeet" style="maximumyeet"></yeet>-->
-		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;left:34px;bottom:35.77659284%;">0</label>
-        <img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:25px;position:absolute;left:3px;bottom:35%">
-		<p id="stats" style="position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
+		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:4%;position:absolute;right:0%;top:14%">
+		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:6%;top:16%;">0</label>
+		<p id="stats" style="font-size:3vh;position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
 		<div>
 			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
 			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
@@ -126,7 +126,7 @@
 			<div id="char_description"></div>
 		</dialog>
 		<div id="minimap_div">
-			<img id="context_img" src="">
+			<img id="context_img" src="" style="z-index:1;">
 		</div>
 		<div id="mute_sounds_2" class="mute_unchecked"></div>
 		<script src="extra/independance.js"></script>

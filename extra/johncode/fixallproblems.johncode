@@ -44,7 +44,7 @@ else summon.demon
 if summon.demon then import.fix.demon.god.wishgod.wish.demon/demon\demon/demon\demon/demon else magicalDemon to.fixAllIssues
 else yeet.computerOutOfWindow.becauseItWillNeverWork
 
-elif yeeted.computer.IsNotBroken then.summonGod1.lastTime.andBegHimForHisHelp
+elif yeeted.computer.IsNotBroken then.summonGod.oneLastTime.andBegHimForHisHelp
     elif heSaysYes: 
         import.fixAllProblems{and.give/ToGod}[and.tell.HimToFixIt]
             elif heSaysNo:
@@ -77,7 +77,7 @@ if.allElseFails
 else allProblems === magicallySolved
 
 allProblems === solved
-allIssues === solved
+allIssues === deciphered
 allErrors === removed
 calc.Var.Problems === deleted
 on.RunThisScript 

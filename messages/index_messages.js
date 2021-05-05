@@ -30,6 +30,7 @@ let est_or = null;
 
 // sends a message to one of the iframes
 function send (location, message) {
+	console.log("outbound message R:"+location+"Message:\n"+message);
 	document.getElementById(location).contentWindow.postMessage(message,"*");
 }
 
@@ -49,7 +50,7 @@ function receive (event) {
 	const o = raw_message.slice(2,raw_message.indexOf(",R"));
 	// gets the actuall message
 	const m = raw_message.slice(raw_message.indexOf("M:")+2);
-	console.log(o, r, m);
+	//console.log(o, r, m);
 	// if the intended recipient of the message is the main window
 	if (r === "IN") {
 		// does things based on what the message is
@@ -62,7 +63,7 @@ function receive (event) {
 				if (est_or === null) {
 					est_or = event.origin;
 				}
-				send(locs[o],"O:IN,R:"+o+"M:init");
+				send(locs[o],"O:IN,R:"+o+",M:init");
 				return;
 			// sent when an iframe finishes loading its contents
 			case "lfin":
@@ -86,10 +87,12 @@ function receive (event) {
 					if (m.slice(1,m.indexOf("?")) === "combat") {
 						combatRunner.choice(Number(m.slice(m.indexOf("?")+1)));
 					}
+				} else if (m[0] === "$") {
+					console.log(m.slice(1));
 				}
 		}
 		// sends a response
-		send(locs[o],"O:IN,R:"+o+",M:resp");
+		//send(locs[o],"O:IN,R:"+o+",M:resp");
 	} else {
 		// else forward it to the intended recipient
 		send(locs[r],raw_message);
@@ -122,7 +125,7 @@ async function execAfterDelay (f, d) {
 window.addEventListener("load", onLoadHandler);
 
 function exec (code) {
-	const command = "O:IN,R:CB,M:!send('O:CB,R:IN,M:'+String("+code+"))";
+	const command = "O:IN,R:CB,M:!send('O:CB,R:IN,M:$'+String("+code+"))";
 	console.log(command);
 	send("combat_screen",command);
 }

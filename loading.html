@@ -44,8 +44,14 @@
 		<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_2.png) repeat;"></div>
 		<img src="sprites/Loading.png" id="title_img">
 		<div id="loading_cover" style="width:100vw;height:100vh;z-index:15;background:black;position:absolute;left:0px;top:0px;"></div>
-		<script src="messages/loading_messages.js"></script>
+		<script src="messages/common_messages.js"></script>
 		<script>
+			function spec_mess (m) {
+				if (m.includes("index=")) {
+					index = Number(m[m.length-1]);
+					show_background();
+				}
+			}
 			// mostly the same as the title screen with the difference that it isn't picking the background
 			let index = 0;
 			function show_background () {

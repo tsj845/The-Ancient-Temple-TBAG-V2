@@ -1,3 +1,5 @@
+let player_coins = 0;
+
 class Entity {
 	constructor () {
 		this.health = 10;
@@ -9,9 +11,11 @@ class Entity {
 		this.tempA = 0;
 		this.tempC = 0;
 		this.dodge = 1;
+		this.maxHealth = 10;
 	}
 	setStats (stats) {
 		this.health = stats["h"];
+		this.maxHealth = stats["h"];
 		this.def = stats["d"];
 		this.att = stats["a"];
 		this.cha = stats["c"];
@@ -27,7 +31,7 @@ class Entity {
 	takeDamage (raw) {
 		if (Math.random() >= this.dodge) {
 			raw = raw - Math.ceil((raw*(Math.min(this.def+this.tempD,15)*5)+this.getChaRedux())/100);
-			console.log(raw);
+			console.log(raw, "refined damage");
 			if (this.abs > 0) {
 				if (this.abs > raw) {
 					this.abs -= raw;
@@ -41,6 +45,9 @@ class Entity {
 		}
 		this.tempD = 0;
 	}
+	getLHBonus () {
+		return 20 * ((this.health/this.maxHealth)*100 <= 30);
+	}
 	isPersuaded (cha) {
 		if (cha >= 10) {
 			return true;
@@ -48,11 +55,11 @@ class Entity {
 		if (cha < 0) {
 			return false;
 		}
-		return Math.floor(Math.random()*100) > 100-(cha*5+20);
+		return Math.floor(Math.random()*100) > 100-(cha*5+this.getLHBonus());
 	}
 }
 
-const mobs = {"test":[{"h":10,"d":1,"a":1,"c":1,"s":0},"default test mob","sprites/enemies/book.png"]};
+const mobs = {"test":[{"h":20,"d":1,"a":1,"c":1,"s":0},"default test mob","sprites/enemies/book.png",0],"statue":[{"h":10,"a":2,"d":4,"c":0,"s":0},"guardian statue","sprites/enemies/statue.png",10]};
 
 const player = new Entity();
 player.setStats({"h":20,"d":1,"a":5,"c":1,"s":0});
@@ -63,10 +70,13 @@ class CombatRunner {
 		this.enName = "undefined";
 		this.over = false;
 		this.turn = false;
+		this.player_won = true;
+		this.coin_drops = 0;
 	}
-	end (player_won) {
-		if (player_won) {
+	end () {
+		if (this.player_won) {
 			// handle enemy loot
+			player_coins += this.coin_drops;
 		} else {
 			// handle player losses
 		}
@@ -80,6 +90,10 @@ class CombatRunner {
 		document.getElementById("combat_screen").hidden = false;
 		this.over = false;
 		this.turn = true;
+		this.player_won = true;
+		this.coin_drops = args[5];
+		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=max:="+this.enemy.maxHealth.toString());
+		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.maxHealth.toString());
 	}
 	checkDead () {
 		if (this.enemy.health <= 0) {
@@ -94,6 +108,7 @@ class CombatRunner {
 		execAfterDelay(this.end, 2500);
 	}
 	choice (cid) {
+		console.log(cid, "combat choice", this.turn);
 		if (!this.turn) {
 			return;
 		}
@@ -127,6 +142,8 @@ class CombatRunner {
 		this.checkDead();
 		if (!this.over) {
 			this.turn = true;
+		} else {
+			this.player_won = false;
 		}
 	}
 }

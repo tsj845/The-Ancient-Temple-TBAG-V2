@@ -241,6 +241,7 @@ class Game {
 							args.push(t[0]);
 							args.push(t[1]);
 							args.push(t[2]);
+							args.push(t[3]);
 						}
 					}
 					console.log(args);

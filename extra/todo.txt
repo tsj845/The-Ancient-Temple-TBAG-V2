@@ -2,7 +2,9 @@ Straws That Will Break The Tristancamel's Back
 
 -Shield will not be used in CHAPTER 1. It will be used in CHAPTER 2, as well as the companion system. Each companion you have adds 10 to your SHIELD at the beginning of a battle.
 -Text that can rotate and flip around between #$%@!*& so we can make names look cool
--Fighting System 
+-Fighting System
+
+THE ABOVE NEEDS CLARIFICATION - tristan
 
 Char1 --  Large boost to ATK
 ATK - 4/10
@@ -52,3 +54,52 @@ So, the highest possible PERSUASION chances is 70%, John cannot do basic arithme
 
 
 
+
+
+
+* THE * SHOP * SYSTEM *
+Defeat book, then enter the labyrinth!
+Labyrinth is pretty big. Hidden in it are. . . 
+
+NORMAL RARITY:
+- Iron Sword -- +2 ATK
+- Soldier's Shield -- +1 DEF
+- Traveler's Garb -- +2 CHA
+
+FINE RARITY:
+- Steel Sword -- +3 ATK
+- Knight's Shield -- +2 DEF, 3 SHIELD (+3 SHIELD at the beginning of each batte, resets after battle)
+- Knight's Tunic -- +3 CHA
+
+MAGICAL RARITY:
+- Golden Scimitar -- +4 ATK, double damage to basic enemies
+- Shield of the Mind's Eye -- +3 DEF, 5 SHIELD (+5 SHIELD at the beginning of each batte, resets after battle)
+- Armor of the Sands -- + 4 CHA
+
+MYTHIC RARITY:
+- Ludociel's Fang -- MAX ATK, +instakill basic enemies
+- Etmenenki -- MAX DEF, 10 SHIELD (+10 SHIELD at the beginning of each batte, resets after battle)
+- Garments of the Hero -- MAX CHA, +2 SHIELD (+2 SHIELD at the beginning of each batte, resets after battle)
+
+Normal items are very common. 70% of the time, they are dropped by basic enemies.
+Fine items are rare. 30% of the time, basic enemies drop them, and 80% of the time, advanced enemies drop them. 
+Magical items are extremely, extremely rare. Advanced enemies drop them 20% of the time.
+
+DROP TABLE
+Basic Enemies -- 10 - 50 Gold
+    70% normal 
+    30% fine 
+    0% magical
+Advanced Enemies -- 50 - 90 Gold
+    0% normal
+    80% fine 
+    20% magical 
+Bosses -- 115 - 180 Gold
+    0% normal
+    0% fine
+    100% magical (Book of the Seas does not drop anything)
+EX Bosses -- 300+ Gold
+    100% legendary -- set drop for each of the three EX Bosses
+
+Mythic weapons only ever drop from EX Bosses, all 3 of which are hidden in the maze.
+- Ludociel, Dragon of Dv
