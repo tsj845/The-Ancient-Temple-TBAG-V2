@@ -37,10 +37,10 @@ input[type="text"] {
 	word-break : break-all;
 }
 dialog::backdrop {
-	background : gray;
+	background : #222222;
 }
 dialog {
-	border : solid lightgray;
+	border : solid white;
 }
 .bb {
 	border : solid;
@@ -86,17 +86,6 @@ dialog {
 	border : none;
 	overflow : hidden;
 }
-/*#title_screen {
-	position : absolute;
-	left : 0px;
-	top : 0px;
-	margin-left : 0px;
-	margin-top : 0px;
-	width : 100vw;
-	height : 100vh;
-	border : none;
-	z-index : 5;
-}*/
 iframe {
 	position : absolute;
 	left : 0px;
@@ -106,7 +95,6 @@ iframe {
 	width : 100vw;
 	height : 100vh;
 	border : none;
-	//z-index : 10;
 }
 #mute_sounds_2 {
 	position : absolute;

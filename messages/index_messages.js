@@ -1,6 +1,4 @@
-let ls_lfin = false;
-let ts_lfin = false;
-let cb_lfin = false;
+let lfins = [0,0,0,0];
 
 // closes the loading screen
 function closeLoadingScreen () {
@@ -15,7 +13,11 @@ function startMusic () {
 
 function onLoadHandler (e) {
 	// checks to make sure that everything is loaded
-	if (!ls_lfin || !ts_lfin || !cb_lfin) {
+	let total = 0;
+	for (let i = 0; i < lfins.length; i ++) {
+		total += lfins[i];
+	}
+	if (total < lfins.length) {
 		return;
 	}
 	// closes the loading screen 4 seconds after everything finishes loading, this is so that the loading screen doesn't disappear as soon as it's finished loading
@@ -23,14 +25,23 @@ function onLoadHandler (e) {
 }
 
 // used to get the id of the iframe that a message was sent from
-const locs = {"LS":"loading_screen","TS":"title_screen","CB":"combat_screen"};
+const locs = {"LS":"loading_screen","TS":"title_screen","CB":"combat_screen", "SH":"shop_screen"};
 
 // established origin, used to block incoming messages from other origins
 let est_or = null;
 
 // sends a message to one of the iframes
-function send (location, message) {
-	console.log("outbound message R:"+location+"Message:\n"+message);
+function send (location, message, no_log) {
+	if (!location.includes("screen")) {
+		location = locs[location];
+	}
+	if (no_log === undefined) {
+		//console.log(no_log);
+		no_log = true;
+	}
+	if (no_log) {
+		//console.log("outbound message R:"+location+"Message:\n"+message);
+	}
 	document.getElementById(location).contentWindow.postMessage(message,"*");
 }
 
@@ -42,7 +53,7 @@ function receive (event) {
 			return;
 		}
 	}
-	console.log(event.origin, event.data);
+	//console.log(event.origin, event.data);
 	const raw_message = event.data;
 	// get the intended recipient, allows for messages to be forwarded so that one iframe can communicate with another
 	const r = raw_message.slice(raw_message.indexOf("R:")+2,raw_message.indexOf(",M"));
@@ -68,13 +79,17 @@ function receive (event) {
 			// sent when an iframe finishes loading its contents
 			case "lfin":
 				// sets a variable based on which iframe sent the message
-				if (o === "LS") {
-					ls_lfin = true;
-				} else if (o === "CB") {
-					cb_lfin = true;
-					document.getElementById("combat_screen").hidden = true;
-				} else {
-					ts_lfin = true;
+				switch (o) {
+					case "LS":
+						lfins[0] = 1;
+					case "TS":
+						lfins[1] = 1;
+					case "CB":
+						lfins[2] = 1;
+						document.getElementById("combat_screen").hidden = true;
+					case "SH":
+						lfins[3] = 1;
+						document.getElementById("shop_screen").hidden = true;
 				}
 				// checks if the title screen should be displayed
 				onLoadHandler();

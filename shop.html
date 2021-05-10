@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width">
+		<link href="stylesheets/shop_styles.css" rel="stylesheet" type="text/css">
+	</head>
+	<body style="background-color: #222222;">
+		<!-- <div>
+            <p>Oh, I think you're new around here. I'll show you the ropes. </p> 
+            <p>This is my shop! Here, you can buy weapons, armor, and shields -- anything you could   possibly need!
+            <p>The name, price, and stats are listed underneath the picture of an item. Make sure to look at the stats before buying something!
+            <p>If you don't have any gold, you won't be abltory! 
+            <p>Anyway, happy shopping! Please do buy something... please?! !-->
+		<img src="sprites/chars/shopvendor.png" style="position:absolute;left:-10%;top:15%;width:min(80vw,80vh);">
+		<div style="position:absolute;left:25%;top:25%;width:70%;height:50%;">
+			<input type="image" id="shop_close_btn" src="sprites/icons/close_button_1.svg" height="15vh" style="position:absolute;right:0%">
+			<table style="border:solid white;background-color:black;">
+				<tbody>
+					<tr>
+						<td><img src="sprites/shopvendor.png" height="40vh"></td>
+						<td><img src="sprites/shopvendor.png" height="40vh"></td>
+						<td><img src="sprites/shopvendor.png" height="40vh"></td>
+					</tr>
+					<tr>
+						<td>Traveler's Sword</td>
+						<td>Knight's Shield</td>
+						<td>Armor of the Sands</td>
+					</tr>
+					<tr>
+						<td><span id="item_1_cost">10</span> <img src="sprites/icons/coin_2_electric_boogaloo.png" height="10px"> Coins</td>
+						<td><span id="item_2_cost">10</span> <img src="sprites/icons/coin_2_electric_boogaloo.png" height="10px"> Coins</td>
+						<td><span id="item_2_cost">10</span> <img src="sprites/icons/coin_2_electric_boogaloo.png" height="10px"> Coins</td>
+					</tr>
+					<tr>
+						<td id="item_1_stats" class="table_box">+3 ATK</td>
+						<td id="item_2_stats" class="table_box">+3 DEF</td>
+						<td id="item_3_stats" class="table_box">+3 CHA</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<script src="messages/common_messages.js"></script>
+		<script>
+			function spec_mess (m) {
+				//
+			}
+			function lfinmessage (e) {
+				send("O:SH,R:IN,M:lfin");
+			}
+			// sends the init message
+			send("O:SH,R:IN,M:init");
+			// when the loading screen is fully loaded it hides the cover and alerts the main window
+			window.addEventListener("load",function (e) {lfinmessage();document.getElementById("loading_cover").hidden=true});
+		</script>
+	</body>
+</html>

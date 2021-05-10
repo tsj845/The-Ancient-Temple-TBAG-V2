@@ -6,6 +6,9 @@
 		<title>The Ancient Temple</title>
 		<link href="stylesheets/main_index_styles.css" rel="stylesheet" type="text/css">
 		<style>
+			/*body,p,span,div,input,label,img,h4,html,head,dialog {
+				cursor:url("sprites/icons/custom_pointer.png") 0 0, auto;
+			}*/
 			.mute_unchecked {
 				background : url("sprites/icons/unmuted_icon.svg");
 			}
@@ -51,27 +54,28 @@
 				overflow-y : scroll;
 				overflow-wrap : break-word;
 			}
-			#gui_holder {
-				margin : 5px auto;
-				position : relative;
-				left : 30%;
-				top : 40%;
-				width : 40vw;
-				height : 50%;
-				line-height : 0;
-			}
+            /* a {
+                cursor : url("custom-pointer.png"),default;
+             } */
+             
 		</style>
 	</head>
 	<body>
+		<!-- cross window messaging script -->
 		<script src="messages/index_messages.js"></script>
+		<!-- all iframes -->
 		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts" style="z-index:15;"></iframe>
 		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts" style="z-index:10;"></iframe>
 		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<iframe id="shop_screen" src="./shop.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<!-- displays the selected character's icon in the lower right -->
     	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
         <!--<yeet id="megayeet" style="maximumyeet"></yeet>-->
+		<!-- coins and stats -->
 		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:4%;position:absolute;right:0%;top:14%">
 		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:6%;top:16%;">0</label>
 		<p id="stats" style="font-size:3vh;position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
+		<!-- all audio elements -->
 		<div>
 			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
 			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
@@ -81,20 +85,25 @@
 			<audio id="adventure2" src="audios/adventure2.mp3" loop></audio>
 			<audio id="adventure3" src="audios/adventure3.mp3" loop></audio>
             <audio id="battle" src="audios/battle.mp3" loop></audio>
+			<audio id="shop" src="audios/shop.mp3" loop></audio>
+			<audio id="equip" src="audios/equip.mp3" loop></audio>
             <!--<audio id="attack" src="audios/sfx/slash.wav"></audio>-->
 		</div>
+		<!-- all sound credits -->
 		<dialog id="sound_credits">
-			<p class="black">Sound Credits:<br>4 music tracks:<br>sawsquarenoise - Song Name(s)<br> - Stage 3<br> - Boss Battle<br> - Stage 1<br> - Stage 2<br> - not commercially used<br> - fade out at end of Stage 3 was cropped<br> - License here:<br><a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by/4.0/legalcode</a><br><br>1 music track:<br>Eric Skiff<br> - Song Name:<br> - Behind the waterfall lies the beginning<br> - Available at <a href="http://EricSkiff.com/music" target="_blank">http://EricSkiff.com/music</a><br>1 music track:<br>Derris-Kharlan - Song Name<br>- Prism Stars<br>-License here<br><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/"
-            target="_blank">https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/</a></p>
+			<p class="black">Sound Credits:<br>4 music tracks:<br>sawsquarenoise - Song Name(s)<br> - Stage 3<br> - Boss Battle<br> - Stage 1<br> - Stage 2<br> - not commercially used<br> - fade out at end of Stage 3 was cropped<br> - License here:<br><a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by/4.0/legalcode</a><br><br>1 music track:<br>Eric Skiff - Song Name<br> - Behind the waterfall lies the beginning<br> - Available at <a href="http://EricSkiff.com/music" target="_blank">http://EricSkiff.com/music</a><br><br>1 music track:<br>Derris-Kharlan - Song Name<br>-Prism Stars<br>-License here:<br><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/"
+            target="_blank">https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/</a><br><br>2 music tracks:<br>Damiano Baldoni - Song Name(s)<br> - sport.mp3<br> - Chillout Loop.mp3<br> - not commercially used<br> - License here:<br><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode</a><br><br></p>
 			<br>
 			<input type="button" class="wb" value="back" onclick="document.getElementById('sound_credits').close()">
 		</dialog>
+		<!-- most of the credits -->
 		<dialog id="main_credits">
 			<p class="black">Programming:<br>@tristans2<br>@JohnHalvorson<br><br>Graphic Design:<br>@tristans2<br>@JohnHalvorson<br><br>Story:<br>@JohnHalvorson<br><br>Playtesting:<br>@KaiWilhelm<br>@KaiJusuf</p>
 			<input class="wb" type="button" value="sounds" onclick="document.getElementById('sound_credits').showModal()">
 			<br>
 			<input class="wb" type="button" value="back" onclick="document.getElementById('main_credits').close()">
 		</dialog>
+		<!-- main menu -->
 		<dialog id="main_menu">
 			<label for="toggle_sounds" class="black">mute sounds:</label>
 			<input type="checkbox" onchange="toggleAudio()">
@@ -115,28 +124,41 @@
 				<input type="text" autocomplete="off" id="text_input" value="">
 			</div>
 		</div>
+		<!-- character select screen -->
 		<dialog id="char_select">
-			<!--<div id="gui_holder">-->
 			<img src="sprites/icons/left_button_1.svg" id="prev_char_btn" class="csb" onclick="p_char()">
 			<img id="char_preview" src="sprites/chars/character.png" alt="a preview image of the character">
 			<img src="sprites/icons/right_button_1.svg" id="next_char_btn" class="csb" onclick="n_char()">
 			<br>
 			<input type="button" id="char_select_btn" class="wb" value="select" onclick="s_char()">
-			<!--</div>-->
 			<div id="char_description"></div>
 		</dialog>
+		<!-- holds the minimap -->
 		<div id="minimap_div">
 			<img id="context_img" src="" style="z-index:1;">
 		</div>
+		<!-- more accessable mute button -->
 		<div id="mute_sounds_2" class="mute_unchecked"></div>
-		<script src="extra/independance.js"></script>
-		<script src="chapter_1/option.js"></script>
-		<script src="chapter_1/temple.js"></script>
-		<script src="chapter_2/labyrinth1.js"></script>
-		<script src="char_data.js"></script>
-		<script src="chars.js"></script>
-		<script src="interactions.js"></script>
-		<script src="script.js"></script>
-		<script src="mini.js"></script>
+		<!-- all of the scripts used to run the game -->
+		<div>
+			<!-- used to do any setup that is required -->
+			<script src="setup.js"></script>
+			<script src="extra/independance.js"></script>
+			<!-- the above script is just an easter egg -->
+			<script src="chapter_1/option.js"></script>
+			<script src="chapter_1/temple.js"></script>
+			<script src="chapter_2/labyrinth1.js"></script>
+			<!-- the above scripts hold the data for the story -->
+			<script src="char_data.js"></script>
+			<script src="chars.js"></script>
+			<!-- the above scripts contain character data and a function to update the display to reflect stats -->
+			<script src="interactions/combat.js"></script>
+			<script src="interactions/shop.js"></script>
+			<!-- above scripts handle interactions -->
+			<!-- main script -->
+			<script src="script.js"></script>
+			<!-- does the minimap -->
+			<script src="mini.js"></script>
+		</div>
 	</body>
 </html>

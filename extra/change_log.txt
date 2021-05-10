@@ -1,0 +1,1 @@
+- fixed decoder and updated it to use UNICODE characters instead of ASCII

@@ -51,10 +51,13 @@
 			function spec_mess (m) {
 				if (m === "start_music") {
 					start_music();
+				} else if (m === "close") {
+					close();
 				}
 			}
 			let music_loaded = false;
 			function close (e) {
+				console.log("close", music_loaded);
 				// doesn't close if the music isn't loaded, this is because of a glitch where if the music isn't loaded before the title screen is closed then it won't ever stop playing
 				if (!music_loaded) {
 					return;

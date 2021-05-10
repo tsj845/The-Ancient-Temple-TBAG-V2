@@ -5,8 +5,12 @@ b) communication from a child window to any other window
 for situation a:
 to send a message:
 use the "send" function, takes two args:
-- "location", the id attribute of the iframe the window is located in
+- "location", the id attribute of the iframe the window is located in, or the string that maps to the id in the "locs" dict
 - "message", follows format "O:[origin],R:[target],M:[message]"
+where:
+- target is the string that maps to the target's id in the "locs" dict
+- origin is the string that maps to the origin's id in the "locs" dict
+- message is any string
 
 to receive a message:
 edit the "receive" function

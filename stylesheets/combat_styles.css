@@ -41,20 +41,37 @@ p, div {
 	color : white
 }
 
+meter::-webkit-meter-bar {
+	background : none;
+	border : none;
+}
+
 meter.shield::-webkit-meter-optimum-value {
 	background-color : cyan;
 }
-meter.shield::-moz-meter-optimum {
-	background-color : cyan;
+meter.shield {
+	background : none;
+}
+meter.shield::-moz-meter-bar {
+	background-image : linear-gradient(#00ffff,#00ffff);
 }
 meter.health::-webkit-meter-optimum-value {
 	background-color : lime;
 }
+meter.health:-moz-meter-optimum::-moz-meter-bar {
+	background-image : linear-gradient(#00ff00,#00ff00);
+}
 meter.health::-webkit-meter-suboptimal-value {
 	background-color : orange;
 }
+meter.health:-moz-sub-optimum::-moz-meter-bar {
+	background-image : linear-gradient(#ffa500,#ffa500);
+}
 meter.health::-webkit-meter-even-less-good-value {
 	background-color : red;
+}
+meter.health:-moz-sub-sub-optimum::-moz-meter-bar {
+	background-image : linear-gradient(#ff0000,#ff0000);
 }
 
 #enemy_h_s {

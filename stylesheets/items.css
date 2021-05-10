@@ -1,0 +1,40 @@
+:root {
+	--ngrad : linear-gradient(45deg,#666666 25% 50%,#888888);
+	--fgrad : linear-gradient(45deg,#0066ff 25% 50%,#0044cc);
+	--cp-b1 : polygon(70% 0%, 100% 30%, 100% 35%, 65% 0%);
+	--cp-b2 : polygon(80% 0%, 100% 20%, 100% 25%, 75% 0%);
+}
+
+.rnorm {
+	background : var(--ngrad);
+}
+.rfine {
+	background : var(--fgrad);
+}
+
+.display {
+	position : absolute;
+	width : 50vmin;
+	height : 50vmin;
+}
+
+.backing {
+	left : 0%;
+	top : 0%;
+	background : black;
+	overflow : hidden;
+}
+
+.fore1 {
+	clip-path : var(--cp-b1);
+	left : 0%;
+	top : 0%;
+	background : var(--ngrad);
+}
+
+.fore2 {
+	clip-path : var(--cp-b2);
+	left : 0%;
+	bottom : 0%;
+	background : var(--ngrad);
+}

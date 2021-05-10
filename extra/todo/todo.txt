@@ -1,10 +1,33 @@
-Straws That Will Break The Tristancamel's Back
+Straws That Will Break The Tristancamel and Nitzacamel's Backs
 
--Shield will not be used in CHAPTER 1. It will be used in CHAPTER 2, as well as the companion system. Each companion you have adds 10 to your SHIELD at the beginning of a battle.
--Text that can rotate and flip around between #$%@!*& so we can make names look cool
--Fighting System
+max cursor size is 128x128 - tristan
 
-THE ABOVE NEEDS CLARIFICATION - tristan
+CLOSE DA COMBAT SCREEN ! ! ! ! ! - astronomical
+
+Dialogue on attack screen - medium
+When attack, list the damage you did, like: You attacked the enemy! You dealt {x} damage.
+When defend: You held up your shield! Damage reduction was sharply boosted.
+When persuade: You attempted to persuade the enemy,but failed... You successfully persuaded the enemy to join you! 
+When boss is preparing special attack: The enemy is preparing a special attack!
+When you kill the enemy: You defeated the enemy! 
+
+Special Attack - medium
+Advanced enemies and Bosses have a special attack. Their damage is doubled every 4th turn. 
+EX Bosses have an unworldly attack every fifth turn, and no special attack. Unworldly attacks deal 3 times the normal amount of damage. 
+
+Sync up HP Meters - medium
+
+Enemy Classes - medium
+Basic Enemies -- No SHIELD
+Advanced Enemies -- No SHIELD
+Bosses -- 1 bar of SHIELD (Story Bosses have varying amounts)
+EX Bosses -- 2 bars of SHIELD
+
+
+Bosses have reduced persuade chances. - low
+
+Interactive puzzle - 
+
 
 Char1 --  Large boost to ATK
 ATK - 4/10
@@ -78,14 +101,18 @@ MAGICAL RARITY:
 
 MYTHIC RARITY:
 - Ludociel's Fang -- MAX ATK, +instakill basic enemies
-- Etmenenki -- MAX DEF, 10 SHIELD (+10 SHIELD at the beginning of each batte, resets after battle)
-- Garments of the Hero -- MAX CHA, +2 SHIELD (+2 SHIELD at the beginning of each batte, resets after battle)
+- Etmenenki -- MAX DEF, 10 SHIELD (+10 SHIELD at the beginning of each battle, resets after battle)
+- Garments of the Hero -- MAX CHA, +2 SHIELD (+2 SHIELD at the beginning of each battle, resets after battle)
 
 Normal items are very common. 70% of the time, they are dropped by basic enemies.
 Fine items are rare. 30% of the time, basic enemies drop them, and 80% of the time, advanced enemies drop them. 
 Magical items are extremely, extremely rare. Advanced enemies drop them 20% of the time.
 
 DROP TABLE
+Story Enemies -- 0 Gold
+	0% normal
+	0% fine
+	0% magical
 Basic Enemies -- 10 - 50 Gold
     70% normal 
     30% fine 
@@ -102,4 +129,27 @@ EX Bosses -- 300+ Gold
     100% legendary -- set drop for each of the three EX Bosses
 
 Mythic weapons only ever drop from EX Bosses, all 3 of which are hidden in the maze.
-- Ludociel, Dragon of Dv
+- Ludociel, Ancient Dragon of Divinity -- drops Ludociel's Fang
+- Hafgular, Phantom of the Underwater King -- Etmenenki
+- Arbiter of Lies -- Garments of the Hero
+
+EX bosses are hidden very well, and are terribly powerful. Beating them requires strategy, power, and luck. Drops 300 gold each. 
+
+EX Bosses have set drops, but mobs drop items randomly. 
+
+Equip + Inventory will be a button. 
+
+GO TO EQUIP.DRAW, LOOK AT ICONS AND READ TEXT.
+
+Welcome back. Now, you get how all the systems for shop and equip work. 
+
+COMPANION SYSTEM
+    After one of the cutscenes in Chapter 2, the companion (Latte) will join you. It will appear next to your character [directly to the left of it.]
+    Your companion gives you +1 to all stats, and +2 SHIELD for each battle. 
+    Every time you choose DEFEND, you have a 5% chance to have your comapnion deal 10 DMG to your opponent. This is called an auxiliary attack, and will be mentioned in the companion tutorial, listed below.
+
+    Congratulations! You have obtained your first COMPANION. Latte will give you +1 to all of your stats, and +2 SHIELD at the beginning of each battle.
+    She has a 5% chance when you choose the "DEFEND" option to deal 10 DMG to your enemy.
+    Continue on your adventure!
+
+THIS IS THE CURRENT FEATURE LIST FOR CHAPTERS 1 AND 2. ALL OF THESE THINGS NEED TO BE DONE. 

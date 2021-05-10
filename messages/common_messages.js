@@ -25,7 +25,23 @@ function receive (event) {
 			return;
 		// used to sync background images for the title and loading screens
 		default:
-			if (m[0] === "!") {
+			if (m[0] === "#") {
+				const elem = document.getElementById(m.slice(1,m.indexOf("?")))
+				const s = m.slice(m.indexOf("?")+1);
+				const sel = s.slice(0,s.indexOf("="));
+				const val = s.slice(s.indexOf("=")+1);
+				console.log(sel, val);
+				if (sel === "src") {
+					elem.src = val;
+				} else if (sel === "text") {
+					elem.textContent = val;
+				} else if (sel === "html_attr") {
+					const attr = val.slice(0,val.indexOf(":="));
+					const av = val.slice(val.indexOf(":=")+2);
+					elem[attr] = av;
+					console.log(attr, av);
+				}
+			}else if (m[0] === "!") {
 				eval(m.slice(1));
 			} else {
 				spec_mess(m);

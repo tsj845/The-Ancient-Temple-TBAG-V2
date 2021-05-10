@@ -1,6 +1,7 @@
 // if the sound is disabled
 let sound_disabled = false;
 let badPerson = false;
+let special_keys = ["Tab","MetaLeft","AltLeft","AltRight","ArrowLeft","ArrowRight","ArrowUp","ArrowDown","ControlLeft","ControlRight","ShiftLeft","ShiftRight","CapsLock"];
 
 // main dictionairy of level names to level data
 const main_dict = {"chapter_1/option":option_file, "chapter_1/temple":temple_file, "chapter_2/labyrinth1":labyrinth_file_1};
@@ -23,7 +24,7 @@ function gameprint(text) {
 // don't at me about this
 class Game {
 	constructor () {
-		// the position of the interpereter in the level data
+		// the position of the interpreter in the level data
 		this.blockIndex = -1;
 		// the name of the level
 		this.fname = "chapter_1/option";
@@ -241,7 +242,6 @@ class Game {
 							args.push(t[0]);
 							args.push(t[1]);
 							args.push(t[2]);
-							args.push(t[3]);
 						}
 					}
 					console.log(args);
@@ -262,8 +262,10 @@ class Game {
 	handleKeyPress (key) {
 		if (key === "Escape") {
 			document.getElementById("main_menu").showModal();
-		} else {
+		} else if (!special_keys.includes(key)) {
 			this.progress();
+		} else {
+			console.log(key);
 		}
 	}
 	// handles text that the user inputs
