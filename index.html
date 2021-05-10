@@ -57,7 +57,46 @@
             /* a {
                 cursor : url("custom-pointer.png"),default;
              } */
-             
+             :root {
+				--bi_h : -288px;
+				--bi_w : 32px;
+			}
+			body {
+				overflow : hidden;
+			}
+			.ts_im {
+				position : absolute;
+				height : 200vh;
+				width : var(--width,200vw);
+				left : 0%;
+				top : 0%;
+				animation : v_scroll 20s infinite linear;
+				//z-index : 45;
+			}
+			@keyframes v_scroll {
+				0% {
+					transform : translate(var(--start_x,0%), var(--start_y,-5vh));
+				}
+				100% {
+					transform : translate(var(--end_x,0%), var(--end_y,-100vh));
+				}
+			}
+			#title_img {
+				position : absolute;
+				width : 40vw;
+				left : 30%;
+        		top : 40%;
+				//z-index : /*50*/1;
+			}
+			#block_holder {
+				overflow : hidden;
+			}
+			#title_div {
+				position : absolute;
+				left : 0%;
+				top : 0%;
+				z-index : 10;
+			}
 		</style>
 	</head>
 	<body>
@@ -65,7 +104,55 @@
 		<script src="messages/index_messages.js"></script>
 		<!-- all iframes -->
 		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts" style="z-index:15;"></iframe>
-		<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts" style="z-index:10;"></iframe>
+		<div id="title_div" style="width:100vw;height:100vh;">
+			<audio id="title_music" src="audios/titlescreenmusic.mp3" loop></audio>
+			
+			<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_1.png) repeat;" hidden></div>
+			<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_2.png) repeat;" hidden></div>
+			<img src="sprites/titlescreen.png" id="title_img">
+			<div id="title_cover" style="background:black;width:100vw;height:100vh;position:absolute;left:0px;top:0px;"></div>
+			<!--<script src="messages/common_messages.js"></script>-->
+			<script>
+				let in_title = true;
+				let music_loaded = false;
+				function close_title_screen (e) {
+					if (document.getElementById("title_div").hidden) {
+						return;
+					}
+					console.log("close", music_loaded);
+					// doesn't close if the music isn't loaded, this is because of a glitch where if the music isn't loaded before the title screen is closed then it won't ever stop playing
+					if (!music_loaded) {
+						return;
+					}
+					// hides itself and stops the music
+					document.getElementById("title_music").pause();
+					document.getElementById("title_div").hidden = true;
+					// focuses the cursor on the text input
+					document.getElementById("text_input").focus();
+					document.getElementById("text_input").value = "";
+					in_title = false;
+				}
+				// picks the background
+				const index = 1 + Math.round(Math.random());
+				// starts the title screen music
+				function start_title_music () {
+					// only starts if it is fully loaded
+					if (!document.getElementById("loading_screen").hidden || !in_title) {
+						return;
+					}
+					document.getElementById("title_music").play();
+					document.getElementById("title_cover").hidden = true;
+					music_loaded = true;
+				}
+				// sets up the event listener
+				document.getElementById("title_music").addEventListener("canplaythrough",function () {start_title_music()});
+				// shows the correct background
+				document.getElementById("title_div").children[index].hidden = false;
+				// tells the loading screen which background to display
+				send("loading_screen","O:IN,R:LS,M:index="+index.toString());
+			</script>
+		</div>
+		<!--<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts" style="z-index:10;"></iframe>-->
 		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<iframe id="shop_screen" src="./shop.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<!-- displays the selected character's icon in the lower right -->

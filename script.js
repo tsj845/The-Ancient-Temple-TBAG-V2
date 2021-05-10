@@ -263,7 +263,11 @@ class Game {
 		if (key === "Escape") {
 			document.getElementById("main_menu").showModal();
 		} else if (!special_keys.includes(key)) {
-			this.progress();
+			if (in_title) {
+				close_title_screen();
+			} else {
+				this.progress();
+			}
 		} else {
 			console.log(key);
 		}

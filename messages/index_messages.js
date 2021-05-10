@@ -1,14 +1,14 @@
-let lfins = [0,0,0,0];
+let lfins = [0,0,0];
 
 // closes the loading screen
 function closeLoadingScreen () {
 	document.getElementById("loading_screen").hidden = true;
 	// stops the user from noticing a jump in animation progress
-	execAfterDelay(startMusic,/*250*/0);
+	execAfterDelay(startMusic,250);
 }
 
 function startMusic () {
-	send("title_screen","O:IN,R:TS,M:start_music");
+	start_title_music();
 }
 
 function onLoadHandler (e) {
@@ -21,7 +21,7 @@ function onLoadHandler (e) {
 		return;
 	}
 	// closes the loading screen 4 seconds after everything finishes loading, this is so that the loading screen doesn't disappear as soon as it's finished loading
-	execAfterDelay(closeLoadingScreen,/*4000*/0);
+	execAfterDelay(closeLoadingScreen,2000);
 }
 
 // used to get the id of the iframe that a message was sent from
@@ -82,13 +82,11 @@ function receive (event) {
 				switch (o) {
 					case "LS":
 						lfins[0] = 1;
-					case "TS":
-						lfins[1] = 1;
 					case "CB":
-						lfins[2] = 1;
+						lfins[1] = 1;
 						document.getElementById("combat_screen").hidden = true;
 					case "SH":
-						lfins[3] = 1;
+						lfins[2] = 1;
 						document.getElementById("shop_screen").hidden = true;
 				}
 				// checks if the title screen should be displayed
