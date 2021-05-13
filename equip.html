@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width">
+		<link href="stylesheets/equip_styles.css" rel="stylesheet" type="text/css">
+		<link href="stylesheets/items.css" rel="stylesheet" type="text/css">
+		<style>
+			body,p,span,div,input,label,img,h4,html,head,dialog,dialog::backdrop {
+				cursor:url("sprites/icons/custom_pointer.png") 15 0, auto;
+			}
+			img {
+				user-select : none;
+				-webkit-user-drag : none;
+			}
+			.mute_unchecked {
+				background : url("sprites/icons/unmuted_icon.svg");
+			}
+			.mute_checked {
+				background : url("sprites/icons/muted_icon.svg");
+			}
+		</style>
+	</head>
+	<body style="background-color: #222222;">
+		<script src="messages/common_messages.js"></script>
+		<input type="image" id="shop_close_btn" src="sprites/icons/close_button_1.svg" height="15vh" style="position:absolute;right:0%;top:0%;" onclick="send('O:EQ,R:IN,M:close')">
+		<div id="inventory" style="border:solid white;background-color:black;">
+			<!--<div class="table_item"><div style="background:white;"><div class="content rnorm"><img src="sprites/chars/shopvendor.png"><div class="fore1 rnorm display"></div><div class="fore2 rnorm display"></div></div></div></div>
+			<div class="table_item"><div style="background:white;"><div class="content rfine"><img src="sprites/chars/shopvendor.png"><div class="fore1 rfine display"></div><div class="fore2 rfine display"></div></div></div></div>
+			<div class="table_item"><div style="background:white;"><div class="content rmagi"><img src="sprites/chars/shopvendor.png"><div class="fore1 rmagi display"></div><div class="fore2 rmagi display"></div></div></div></div>
+			<div class="table_item"><div style="background:white;"><div class="content rmyth"><img src="sprites/chars/shopvendor.png"><div class="fore1 rmyth display"></div><div class="fore2 rmyth display"></div></div></div></div>-->
+		</div class="table_item">
+		<script src="interactions/inventory_support.js"></script>
+		<script>
+			// sends the init message
+			try {
+				send("O:EQ,R:IN,M:init");
+			} catch (err) {
+				send("O:EQ,R:IN,M:$error while sending init message: "+err.name+", "+err.message);
+			}
+			send("O:EQ,R:IN,M:$TEST MESSAGE");
+			/*send("O:EQ,R:IN,M:init");
+			send("O:EQ,R:IN,M:init");
+			send("O:EQ,R:IN,M:init");*/
+			function spec_mess (m) {
+				switch (m[0]) {
+					case "+":
+						const s = m.slice(1,m.indexOf(","));
+						m = m.slice(m.indexOf(",")+1);
+						const ba = m.slice(0,m.indexOf(","));
+						m = m.slice(m.indexOf(",")+1);
+						const bo = m.slice(0,m.indexOf(","));
+						m = m.slice(m.indexOf(",")+1);
+						add_slot(s,ba,bo,m);
+						break;
+					case "=":
+						const s = m.slice(1,m.indexOf(","));
+						m = m.slice(m.indexOf(",")+1);
+						const ind = m.slice(0,m.indexOf(","));
+						m = m.slice(m.indexOf(",")+1);
+						let rc = m;
+						if (m.indexOf(",") !== -1) {
+							rc = m.slice(0,m.indexOf(","));
+							m = m.slice(m.indexOf(",")+1);
+						} else {
+							m = "0";
+						}
+						send("O:EQ,R:IN,M:$s="+s+", ind="+ind+", rc="+rc+", rot="+m);
+						set_slot(s,Number(ind),rc,Number(m));
+						break;
+					case "-":
+						send("O:EQ,R:IN,M:$remove slot");
+						remove_slot();
+						break;
+					case "^":
+						m = m.slice(1);
+						const args = m.split(";");
+						update_item_info(args);
+						break;
+				}
+			}
+			add_slot("sprites/chars/shopvendor.png","black","white","rnorm");
+			add_slot("sprites/chars/shopvendor.png","black","white","rfine");
+			add_slot("sprites/chars/shopvendor.png","black","white","rmagi");
+			add_slot("sprites/chars/shopvendor.png","black","white","rmyth");
+			function slot_click (slot) {
+				send("O:EQ,R:IN,M:$slot "+slot.toString()+" was clicked");
+				send("O:EQ,R:IN,M:*EQRUN.SLOTCLICK-"+slot.toString());
+			}
+			function lfinmessage (e) {
+				send("O:EQ,R:IN,M:lfin");
+			}
+			// when the loading screen is fully loaded it hides the cover and alerts the main window
+			window.addEventListener("load",function (e) {lfinmessage()});
+		</script>
+	</body>
+</html>

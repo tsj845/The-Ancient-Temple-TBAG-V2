@@ -1,6 +1,0 @@
-BUGS:
-- enemy is killed after one attack
-- title screen will sometimes not listen for keydown events; currently unfixable
-
-ADDITIONS:
--empty

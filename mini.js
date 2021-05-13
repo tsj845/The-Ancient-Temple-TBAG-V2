@@ -44,7 +44,7 @@ class Minimap {
 	load (tiles) {
 		for (let y = 0; y < this.size; y ++) {
 			for (let x = 0; x < this.size; x ++) {
-				this.setTile(y, x, tiles[y][x]);
+				this.setTile(x, y, tiles[y][x]);
 			}
 		}
 	}

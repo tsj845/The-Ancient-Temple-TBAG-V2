@@ -1,0 +1,3 @@
+- fixed decoder and updated it to use UNICODE characters instead of ASCII
+
+- merged title screen and main screen to fix bug #1

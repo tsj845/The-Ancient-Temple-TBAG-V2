@@ -1,4 +1,4 @@
-let lfins = [0,0,0];
+let lfins = [0,0,0,0];
 
 // closes the loading screen
 function closeLoadingScreen () {
@@ -25,22 +25,15 @@ function onLoadHandler (e) {
 }
 
 // used to get the id of the iframe that a message was sent from
-const locs = {"LS":"loading_screen","TS":"title_screen","CB":"combat_screen", "SH":"shop_screen"};
+const locs = {"LS":"loading_screen","CB":"combat_screen", "SH":"shop_screen","EQ":"equip_screen"};
 
 // established origin, used to block incoming messages from other origins
 let est_or = null;
 
 // sends a message to one of the iframes
-function send (location, message, no_log) {
+function send (location, message) {
 	if (!location.includes("screen")) {
 		location = locs[location];
-	}
-	if (no_log === undefined) {
-		//console.log(no_log);
-		no_log = true;
-	}
-	if (no_log) {
-		//console.log("outbound message R:"+location+"Message:\n"+message);
 	}
 	document.getElementById(location).contentWindow.postMessage(message,"*");
 }
@@ -59,8 +52,8 @@ function receive (event) {
 	const r = raw_message.slice(raw_message.indexOf("R:")+2,raw_message.indexOf(",M"));
 	// gets the origin of the message, used for sending responses
 	const o = raw_message.slice(2,raw_message.indexOf(",R"));
-	// gets the actuall message
-	const m = raw_message.slice(raw_message.indexOf("M:")+2);
+	// gets the actual message
+	let m = raw_message.slice(raw_message.indexOf("M:")+2);
 	//console.log(o, r, m);
 	// if the intended recipient of the message is the main window
 	if (r === "IN") {
@@ -74,7 +67,11 @@ function receive (event) {
 				if (est_or === null) {
 					est_or = event.origin;
 				}
+				console.log("INIT message from "+o);
 				send(locs[o],"O:IN,R:"+o+",M:init");
+				if (o === "LS") {
+					send("loading_screen","O:IN,R:LS,M:index="+index.toString());
+				}
 				return;
 			// sent when an iframe finishes loading its contents
 			case "lfin":
@@ -88,10 +85,21 @@ function receive (event) {
 					case "SH":
 						lfins[2] = 1;
 						document.getElementById("shop_screen").hidden = true;
+					case "EQ":
+						//console.log("EQ LFIN");
+						lfins[3] = 1;
+						document.getElementById("equip_screen").hidden = true;
 				}
 				// checks if the title screen should be displayed
 				onLoadHandler();
 				break;
+			case "close":
+				switch (o) {
+					case "EQ":
+						equipRunner.close();
+						break;
+				}
+				return;
 			case "ERROR":
 				throw ("ERROR message sent from: " + o);
 				break;
@@ -102,6 +110,22 @@ function receive (event) {
 					}
 				} else if (m[0] === "$") {
 					console.log(m.slice(1));
+				} else if (m[0] === "*") {
+					const fname = m.slice(1,m.indexOf("-"));
+					m = m.slice(m.indexOf("-")+1);
+					const args = m.split(",");
+					switch (fname) {
+						case "EQRUN.SLOTCLICK":
+							if (o !== "EQ") {
+								throw ("ERROR, VALID FUNC NAME, INVALID ORIGN: "+fname+", "+o);
+								return;
+							}
+							equipRunner.slot_click(args);
+							return;
+						default:
+							throw ("ERROR, INVALID FUNC NAME: "+fname);
+							return;
+					}
 				}
 		}
 		// sends a response
@@ -137,8 +161,8 @@ async function execAfterDelay (f, d) {
 // sets up the event listener
 window.addEventListener("load", onLoadHandler);
 
-function exec (code) {
+function exec (l,code) {
 	const command = "O:IN,R:CB,M:!send('O:CB,R:IN,M:$'+String("+code+"))";
 	console.log(command);
-	send("combat_screen",command);
+	send(locs[l],command);
 }

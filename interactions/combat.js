@@ -1,9 +1,13 @@
 let player_coins = 0;
 
-function randrange(min, max) {
+function randrange (min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min) + min);
+}
+
+function choice (lst) {
+	return lst[randrange(0, lst.length)];
 }
 
 class Entity {
@@ -70,7 +74,7 @@ class Entity {
 	}
 }
 
-const mobs = {"test":[{"h":10,"d":0,"a":1,"c":0,"s":0},"John, but really really evil","sprites/enemies/bosses/book.png",-1],"statue":[{"h":15,"a":4,"d":4,"c":0,"s":0},"Mysterious Statue","sprites/enemies/basic/statue.png",0], "book":[{"h":17,"d":1,"a":4,"c":0,"s":4},"Book of the Seas","sprites/enemies/bosses/book.png",-1]};
+const mobs = {"test":[{"h":10,"d":0,"a":1,"c":0,"s":4},"John, but really really evil","sprites/enemies/bosses/book.png",0],"statue":[{"h":15,"a":4,"d":4,"c":0,"s":0},"Mysterious Statue","sprites/enemies/basic/statue.png",0], "book":[{"h":17,"d":1,"a":4,"c":0,"s":4},"Book of the Seas","sprites/enemies/bosses/book.png",-1]};
 
 const player = new Entity();
 player.setStats({"h":20,"d":1,"a":5,"c":1,"s":0});
@@ -95,18 +99,18 @@ class CombatRunner {
 	getLoot () {
 		switch (this.enemyLevel) {
 			case -1:
-				return [0,[]];
+				return [75,[0,0,0]];
 			case 0:
-				return [randrange(10,51),[]];
+				return [randrange(10,51),[7,3,0]];
 			case 1:
-				return [randrange(50,91),[]];
+				return [randrange(50,91),[0,8,2]];
 			case 2:
-				return [randrange(115,181),[]];
+				return [randrange(115,181),[0,0,10]];
 			case 3:
-				return [300,[]];
+				return [300,[0,0,0]];
 			default:
 				console.log("invalid enemy level: ", this.enemyLevel);
-				return;
+				return [0,[0,0,0]];
 		}
 	}
     end () {
@@ -118,7 +122,27 @@ class CombatRunner {
 		if (this.player_won) {
 			console.log("player won");
 			// handle enemy loot
-			console.log("Loot:\n", this.getLoot());
+			const loot = this.getLoot();
+			let drops = [];
+			player_coins += loot[0];
+			console.log("Loot:\n", loot);
+			document.getElementById("coin_count").textContent = player_coins.toString();
+			const d1 = Math.floor(Math.random() * 10);
+			const d2 = Math.floor(Math.random() * 10);
+			const d3 = Math.floor(Math.random() * 10);
+			if (d1 < loot[1][0]) {
+				drops.push(choice(loot_dict["normal"]));
+			}
+			if (d2 < loot[1][1]) {
+				drops.push(choice(loot_dict["fine"]));
+			}
+			if (d2 < loot[1][2]) {
+				drops.push(choice(loot_dict["magical"]));
+			}
+			if (this.enemyLevel === 3) {
+				drops.push(loot_dict["mythic"][this.enName]);
+			}
+			console.log("Drops\n",drops);
 		} else {
 			// handle player losses
 			// put the player before the fight
@@ -131,14 +155,22 @@ class CombatRunner {
 		send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=START BATTLE!");
 		this.enemy.setStats(args[2]);
 		this.enName = args[3];
-		send("combat_screen","O:IN,R:CB,M:#combat_enemy_img?src="+args[4],false);
+		send("combat_screen","O:IN,R:CB,M:#combat_enemy_img?src="+args[4]);
 		document.getElementById("combat_screen").hidden = false;
 		this.over = false;
 		this.turn = true;
 		this.player_won = true;
 		this.enemyLevel = args[5];
-		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=max:="+this.enemy.maxHealth.toString(),false);
-		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.maxHealth.toString(),false);
+		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=max:="+this.enemy.maxHealth.toString());
+		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.maxHealth.toString());
+		console.log(this.enemy.abs);
+		send("combat_screen","O:IN,R:CB,M:#en_shield_1?html_attr=max:="+this.enemy.abs.toString());
+		send("combat_screen","O:IN,R:CB,M:#en_shield_1?html_attr=value:="+this.enemy.abs.toString());
+		if (this.enemy.abs > 0) {
+			send("combat_screen","O:IN,R:CB,M:#en_shield_1?hidden=false");
+		} else {
+			send("combat_screen","O:IN,R:CB,M:#en_shield_1?hidden=true");
+		}
 	}
 	checkDead () {
 		if (this.enemy.health <= 0) {
@@ -181,6 +213,7 @@ class CombatRunner {
 		}
 		update_combat();
 		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.health.toString());
+		send("combat_screen","O:IN,R:CB,M:#en_shield_1?html_attr=value:="+this.enemy.abs.toString());
 		this.checkDead();
 		if (!this.over) {
 			execAfterDelay(enTurn, 2500);

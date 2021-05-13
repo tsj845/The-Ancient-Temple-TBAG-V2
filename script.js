@@ -139,6 +139,14 @@ class Game {
 		this.interaction = true;
 		switch (args[1]) {
 			case "combat":
+				if (!["battle","boss"].includes(this.c_sound.getAttribute("id"))) {
+					if (!sound_disabled) {
+						this.c_sound.pause();
+						this.c_sound = document.getElementById("battle");
+						this.c_sound.currentTime = 0;
+						this.c_sound.play();
+					}
+				}
 				combatRunner.start(args);
 			default:
 				return;
@@ -186,6 +194,9 @@ class Game {
 					this.prompt(line[1], line[2]);
 					return;
 				case "sound":
+					if (sound_disabled) {
+						break;
+					}
 					const elem = document.getElementById(line[1]);
 					if (elem !== null) {
 						if (this.c_sound !== null) {
@@ -193,6 +204,8 @@ class Game {
 						}
 						this.c_sound = elem;
 						if (!sound_disabled) {
+							console.log(elem.currentTime);
+							elem.currentTime = 0;
 							elem.play();
 						}
 					} else {
@@ -200,7 +213,13 @@ class Game {
 					}
 					break;
 				case "sfx":
+					if (sound_disabled) {
+						break;
+					}
+					console.log(document.getElementById(line[1]).currentTime);
+					document.getElementById(line[1]).currentTime = 0;
 					document.getElementById(line[1]).play();
+					break;
 				case "img":
 					context_img.src = line[1];
 					break;
@@ -242,6 +261,7 @@ class Game {
 							args.push(t[0]);
 							args.push(t[1]);
 							args.push(t[2]);
+							args.push(t[3]);
 						}
 					}
 					console.log(args);
@@ -265,12 +285,14 @@ class Game {
 		} else if (!special_keys.includes(key)) {
 			if (in_title) {
 				close_title_screen();
+				main_input.textContent = "";
 			} else {
 				this.progress();
 			}
-		} else {
-			console.log(key);
 		}
+	}
+	showPortalUI () {
+		// coming soon
 	}
 	// handles text that the user inputs
 	handleTextInput (value) {
@@ -292,13 +314,19 @@ class Game {
 			} else if (value === "JOHN") {
 				name_text.textContent = "ERROR";
 				badPerson = true;
+			} else if (value === "Chell") {
+				name_text.textContent = "chell";
+				this.showPortalUI();
+				this.is_dev = true;
 			} else {
 				name_text.textContent = value;
 			}
 			this.inType = 1;
 			//good_input = true;
 			// shows the character select screen
-			document.getElementById("char_select").showModal();
+			const cs = document.getElementById("char_select");
+			console.log(cs);
+			cs.showModal();
 			// shows character information
 			displayChar();
 		// handles input for choices

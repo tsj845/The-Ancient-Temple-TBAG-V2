@@ -6,6 +6,21 @@
 		<meta name="viewport" content="width=device-width">
 		<title>The Ancient Temple</title>
 		<link href="stylesheets/combat_styles.css" rel="stylesheet" type="text/css">
+		<style>
+			body,p,span,div,input,label,img,h4,html,head,dialog,dialog::backdrop {
+				cursor:url("sprites/icons/custom_pointer.png") 15 0, auto;
+			}
+			img {
+				user-select : none;
+				-webkit-user-drag : none;
+			}
+			.mute_unchecked {
+				background : url("sprites/icons/unmuted_icon.svg");
+			}
+			.mute_checked {
+				background : url("sprites/icons/muted_icon.svg");
+			}
+		</style>
 	</head>
 	<body style="background:#222222;">
 		<!-- style the meters with the external stylesheet (stylesheets/combat_styles.css) -->
@@ -19,19 +34,19 @@
 		<p id="combat_dialog" style="font-family:monospace;position:absolute;top:77%;left:11.5%;">BEGIN BATTLE!</p>
 		<img id="combat_enemy_img" src="sprites/enemies/bosses/book.png" style="width:37vmin;position:absolute;top:25%;right:25%;">
 		<div id="combat_att_btn">
-			<img src="sprites/empty.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
+			<img src="sprites/buttons/attack.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
 			ATTACK
 		</div>
 		<div id="combat_def_btn">
-			<img src="sprites/empty.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
+			<img src="sprites/buttons/defend.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
 			DEFEND
 		</div>
 		<div id="combat_per_btn">
-			<img src="sprites/empty.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
+			<img src="sprites/buttons/persuade.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
 			PERSUADE
 		</div>
 		<div id="combat_flee_btn">
-			<img src="sprites/empty.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
+			<img src="sprites/buttons/flee.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
 			FLEE
 		</div>
 		<script src="messages/common_messages.js"></script>
@@ -58,6 +73,13 @@
 			cb_db.addEventListener("click",function () {send("O:CB,R:IN,M:@combat?1")});
 			cb_pb.addEventListener("click",function () {send("O:CB,R:IN,M:@combat?2")});
 			cb_fb.addEventListener("click",function () {send("O:CB,R:IN,M:@combat?3")});
+			function hide_imgs () {
+				cb_ab.children[0].src = "sprites/empty.png";
+				cb_db.children[0].src = "sprites/empty.png";
+				cb_pb.children[0].src = "sprites/empty.png";
+				cb_fb.children[0].src = "sprites/empty.png";
+			}
+			window.addEventListener("load",hide_imgs);
 		</script>
 	</body>
 </html>

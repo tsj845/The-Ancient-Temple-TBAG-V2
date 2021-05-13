@@ -1,7 +1,0 @@
-:root {
-	--normal : linear-gradient(45deg,#cccccc,#dddddd);
-}
-
-.normal {
-	background-image : var(--normal);
-}

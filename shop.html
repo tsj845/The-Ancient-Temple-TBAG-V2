@@ -4,6 +4,21 @@
     	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width">
 		<link href="stylesheets/shop_styles.css" rel="stylesheet" type="text/css">
+		<style>
+			body,p,span,div,input,label,img,h4,html,head,dialog,dialog::backdrop {
+				cursor:url("sprites/icons/custom_pointer.png") 15 0, auto;
+			}
+			img {
+				user-select : none;
+				-webkit-user-drag : none;
+			}
+			.mute_unchecked {
+				background : url("sprites/icons/unmuted_icon.svg");
+			}
+			.mute_checked {
+				background : url("sprites/icons/muted_icon.svg");
+			}
+		</style>
 	</head>
 	<body style="background-color: #222222;">
 		<!-- <div>
@@ -18,9 +33,9 @@
 			<table style="border:solid white;background-color:black;">
 				<tbody>
 					<tr>
-						<td><img src="sprites/shopvendor.png" height="40vh"></td>
-						<td><img src="sprites/shopvendor.png" height="40vh"></td>
-						<td><img src="sprites/shopvendor.png" height="40vh"></td>
+						<td><img src="sprites/chars/shopvendor.png" height="40vh"></td>
+						<td><img src="sprites/chars/shopvendor.png" height="40vh"></td>
+						<td><img src="sprites/chars/shopvendor.png" height="40vh"></td>
 					</tr>
 					<tr>
 						<td>Traveler's Sword</td>
@@ -51,7 +66,7 @@
 			// sends the init message
 			send("O:SH,R:IN,M:init");
 			// when the loading screen is fully loaded it hides the cover and alerts the main window
-			window.addEventListener("load",function (e) {lfinmessage();document.getElementById("loading_cover").hidden=true});
+			window.addEventListener("load",function (e) {lfinmessage()});
 		</script>
 	</body>
 </html>

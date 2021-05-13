@@ -6,9 +6,9 @@
 		<title>The Ancient Temple</title>
 		<link href="stylesheets/main_index_styles.css" rel="stylesheet" type="text/css">
 		<style>
-			/*body,p,span,div,input,label,img,h4,html,head,dialog {
-				cursor:url("sprites/icons/custom_pointer.png") 0 0, auto;
-			}*/
+			body,p,span,div,input,label,img,h4,html,head,dialog,dialog::backdrop {
+				cursor:url("sprites/icons/custom_pointer.png") 15 0, auto;
+			}
 			.mute_unchecked {
 				background : url("sprites/icons/unmuted_icon.svg");
 			}
@@ -61,9 +61,6 @@
 				--bi_h : -288px;
 				--bi_w : 32px;
 			}
-			body {
-				overflow : hidden;
-			}
 			.ts_im {
 				position : absolute;
 				height : 200vh;
@@ -88,14 +85,12 @@
         		top : 40%;
 				//z-index : /*50*/1;
 			}
-			#block_holder {
-				overflow : hidden;
-			}
 			#title_div {
 				position : absolute;
 				left : 0%;
 				top : 0%;
 				z-index : 10;
+				overflow : hidden;
 			}
 		</style>
 	</head>
@@ -111,7 +106,6 @@
 			<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_2.png) repeat;" hidden></div>
 			<img src="sprites/titlescreen.png" id="title_img">
 			<div id="title_cover" style="background:black;width:100vw;height:100vh;position:absolute;left:0px;top:0px;"></div>
-			<!--<script src="messages/common_messages.js"></script>-->
 			<script>
 				let in_title = true;
 				let music_loaded = false;
@@ -148,19 +142,18 @@
 				document.getElementById("title_music").addEventListener("canplaythrough",function () {start_title_music()});
 				// shows the correct background
 				document.getElementById("title_div").children[index].hidden = false;
-				// tells the loading screen which background to display
-				send("loading_screen","O:IN,R:LS,M:index="+index.toString());
 			</script>
 		</div>
-		<!--<iframe id="title_screen" src="./title.html" sandbox="allow-same-origin allow-scripts" style="z-index:10;"></iframe>-->
 		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<iframe id="shop_screen" src="./shop.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<iframe id="equip_screen" src="./equip.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<input type="button" value="test equip" style="position:absolute;left:0%;top:0%;" onclick="document.getElementById('equip_screen').hidden=false">
 		<!-- displays the selected character's icon in the lower right -->
     	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
         <!--<yeet id="megayeet" style="maximumyeet"></yeet>-->
 		<!-- coins and stats -->
-		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:4%;position:absolute;right:0%;top:14%">
-		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:6%;top:16%;">0</label>
+		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:8%;position:absolute;right:3%;top:11%">
+		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:11%;top:15%;">0</label>
 		<p id="stats" style="font-size:3vh;position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
 		<!-- all audio elements -->
 		<div>
@@ -178,14 +171,14 @@
 		</div>
 		<!-- all sound credits -->
 		<dialog id="sound_credits">
-			<p class="black">Sound Credits:<br>4 music tracks:<br>sawsquarenoise - Song Name(s)<br> - Stage 3<br> - Boss Battle<br> - Stage 1<br> - Stage 2<br> - not commercially used<br> - fade out at end of Stage 3 was cropped<br> - License here:<br><a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by/4.0/legalcode</a><br><br>1 music track:<br>Eric Skiff - Song Name<br> - Behind the waterfall lies the beginning<br> - Available at <a href="http://EricSkiff.com/music" target="_blank">http://EricSkiff.com/music</a><br><br>1 music track:<br>Derris-Kharlan - Song Name<br>-Prism Stars<br>-License here:<br><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/"
+			<p class="black">Sound Credits:<br>4 music tracks:<br>sawsquarenoise - Song Name(s)<br> - Stage 3<br> - Boss Battle<br> - Stage 1<br> - Stage 2<br> - not commercially used<br> - fade out at end of Stage 3 was cropped<br> - License here:<br><a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by/4.0/legalcode</a><br><br>1 music track:<br>Eric Skiff - Song Name<br> - Behind the waterfall lies the beginning<br> - Available at <a href="http://EricSkiff.com/music" target="_blank">http://EricSkiff.com/music</a><br><br>1 music track:<br>Derris-Kharlan - Song Name<br>- Prism Stars<br>- License here:<br><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/"
             target="_blank">https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/</a><br><br>2 music tracks:<br>Damiano Baldoni - Song Name(s)<br> - sport.mp3<br> - Chillout Loop.mp3<br> - not commercially used<br> - License here:<br><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode</a><br><br></p>
 			<br>
 			<input type="button" class="wb" value="back" onclick="document.getElementById('sound_credits').close()">
 		</dialog>
 		<!-- most of the credits -->
 		<dialog id="main_credits">
-			<p class="black">Programming:<br>@tristans2<br>@JohnHalvorson<br><br>Graphic Design:<br>@tristans2<br>@JohnHalvorson<br><br>Story:<br>@JohnHalvorson<br><br>Playtesting:<br>@KaiWilhelm<br>@KaiJusuf</p>
+			<p class="black">Major Programming:<br>@tristans2<br><br>Major Graphic Design:<br>@JohnHalvorson<br><br>Story:<br>@JohnHalvorson<br><br>Playtesting:<br>@KaiWilhelm<br>@KaiJusuf</p>
 			<input class="wb" type="button" value="sounds" onclick="document.getElementById('sound_credits').showModal()">
 			<br>
 			<input class="wb" type="button" value="back" onclick="document.getElementById('main_credits').close()">
@@ -195,6 +188,8 @@
 			<label for="toggle_sounds" class="black">mute sounds:</label>
 			<input type="checkbox" onchange="toggleAudio()">
 			<br>
+            <label></label>
+            <br> 
 			<input class="wb" type="button" value="credits" onclick="document.getElementById('main_credits').showModal()">
 			<br>
 			<input class="wb" type="button" value="close" onclick="document.getElementById('main_menu').close()">
@@ -239,6 +234,8 @@
 			<script src="char_data.js"></script>
 			<script src="chars.js"></script>
 			<!-- the above scripts contain character data and a function to update the display to reflect stats -->
+			<script src="interactions/loot.js"></script>
+			<script src="interactions/equip.js"></script>
 			<script src="interactions/combat.js"></script>
 			<script src="interactions/shop.js"></script>
 			<!-- above scripts handle interactions -->
