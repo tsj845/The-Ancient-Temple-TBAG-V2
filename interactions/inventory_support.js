@@ -8,7 +8,7 @@ function add_slot (src, background, border, rarity_class) {
 	if (rarity_class === undefined) {
 		rarity_class = "rnorm";
 	}
-	send("O:EQ,R:IN,M:$rarity_class="+rarity_class);
+	//send("O:EQ,R:IN,M:$rarity_class="+rarity_class);
 	const d1 = document.createElement("div");
 	d1.setAttribute("class", "table_item");
 	const d2 = document.createElement("div");
@@ -21,7 +21,7 @@ function add_slot (src, background, border, rarity_class) {
 	d4.setAttribute("class", "fore1 display "+rarity_class);
 	const d5 = document.createElement("div");
 	d5.setAttribute("class", "fore2 display "+rarity_class);
-	send("O:EQ,R:IN,M:$d4c="+d4.getAttribute("class")+", d5c="+d5.getAttribute("class"));
+	//send("O:EQ,R:IN,M:$d4c="+d4.getAttribute("class")+", d5c="+d5.getAttribute("class"));
 	const img = document.createElement("img");
 	img.src = src;
 	d3.appendChild(img);
@@ -51,5 +51,16 @@ function remove_slot () {
 }
 
 function update_item_info (args) {
-	//
+	item_click = false;
+	const container = document.getElementById("item_info_container");
+	container.hidden = false;
+	document.getElementById("item_info_name").textContent = args[0];
+	document.getElementById("item_info_type").textContent = args[1];
+	let rarity = {"rnorm":"Normal","rfine":"Fine","rmagi":"Magical","rmyth":"Mythical"}[args[2]];
+	rarity = (rarity === undefined) ? "Unobtainable" : rarity;
+	document.getElementById("item_info_rarity").textContent = rarity;
+	document.getElementById("item_info_atk").textContent = (args[3][0] === "-" ? args[3] : "+"+args[3]);
+	document.getElementById("item_info_def").textContent = (args[4][0] === "-" ? args[4] : "+"+args[4]);
+	document.getElementById("item_info_cha").textContent = (args[5][0] === "-" ? args[5] : "+"+args[5]);
+	document.getElementById("item_info_shield").textContent = (args[6][0] === "-" ? args[6] : "+"+args[6]);
 }

@@ -33,14 +33,8 @@ function getType (av) {
 }
 
 // follows same basic format as with the indes_messages.js but without forwarding capabilities
-function receive (event) {
-	if (est_or !== null) {
-		if (event.origin !== est_or) {
-			return;
-		}
-	}
-	console.log(event.origin, event.data);
-	const raw_message = event.data;
+function interperet_message (raw_message) {
+	send("O:CON,R:IN,M:$"+raw_message);
 	const m = raw_message.slice(raw_message.indexOf("M:")+2);
 	switch (m) {
 		case "resp":
@@ -86,7 +80,40 @@ function receive (event) {
 	}
 }
 
+function receive (event) {
+	if (est_or !== null) {
+		if (event.origin !== est_or) {
+			throw ("invalid message origin: " + event.origin);
+			return;
+		}
+	}
+	//console.log(event.origin, event.data);
+	const raw_messages = event.data;
+	if (raw_messages.includes(";")) {
+		const messages = raw_messages.split(";");
+		messages.forEach(function(elem){interperet_message(elem)});
+	} else {
+		interperet_message(raw_messages);
+	}
+}
+
 // sets up the event listeners
 window.addEventListener("message", receive);
 
 window.addEventListener("messageerror",function () {console.error("error receiving message for loading screen")})
+
+// these two functions are modified versions of an MDN example on the javascript await keyword
+// supporting function for execAfterDelay
+async function resolveAfterDelay (delay) {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			resolve(delay);
+		}, delay);
+	});
+}
+
+// used to create a time.sleep equivalent
+async function execAfterDelay (f, d) {
+	await resolveAfterDelay(d);
+	f();
+}

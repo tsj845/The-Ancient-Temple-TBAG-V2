@@ -8,10 +8,13 @@
 	width : 50vw;
 	height : 10vw;
 	overflow : auto;
+}
+
+.hide_scrollbar {
 	scrollbar-width : none;
 }
 
-#inventory::-webkit-scrollbar {
+.hide_scrollbar::-webkit-scrollbar {
 	display : none;
 }
 
@@ -52,3 +55,34 @@
 .table_item  p {
 	text-align : center;
 }
+
+#item_info_container {
+	width : 25%;
+	height : 75%;
+	position : abosolute;
+	left : 2.5%;
+	top : 12.5%;
+	overflow-y : scroll;
+}
+
+#item_info_container * {
+	color : white;
+	word-break : break-all;
+}
+
+#item_info_stats {
+	font-size : 0.75em;
+}
+
+#equip_btn {
+	background : gray;
+}
+#equip_btn:hover {
+	background : white;
+}
+
+
+
+/*body * {
+	border : solid lime;
+}*/

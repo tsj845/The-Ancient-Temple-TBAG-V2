@@ -38,16 +38,12 @@ function send (location, message) {
 	document.getElementById(location).contentWindow.postMessage(message,"*");
 }
 
+function runerror_invalid_origin (fname, o) {
+	throw ("ERROR, VALID FUNC NAME, INVALID ORIGN: "+fname+", "+o);
+}
+
 // handles messages sent to the main window
-function receive (event) {
-	if (est_or !== null) {
-		if (event.origin !== est_or) {
-			throw ("invalid message origin: " + event.origin);
-			return;
-		}
-	}
-	//console.log(event.origin, event.data);
-	const raw_message = event.data;
+function interperet_message (raw_message) {
 	// get the intended recipient, allows for messages to be forwarded so that one iframe can communicate with another
 	const r = raw_message.slice(raw_message.indexOf("R:")+2,raw_message.indexOf(",M"));
 	// gets the origin of the message, used for sending responses
@@ -117,10 +113,17 @@ function receive (event) {
 					switch (fname) {
 						case "EQRUN.SLOTCLICK":
 							if (o !== "EQ") {
-								throw ("ERROR, VALID FUNC NAME, INVALID ORIGN: "+fname+", "+o);
+								runerror_invalid_origin(fname, o);
 								return;
 							}
 							equipRunner.slot_click(args);
+							return;
+						case "EQRUN.EQITEM":
+							if (o !== "EQ") {
+								runerror_invalid_origin(fname, o);
+								return;
+							}
+							equipRunner.equip_item(args);
 							return;
 						default:
 							throw ("ERROR, INVALID FUNC NAME: "+fname);
@@ -133,6 +136,23 @@ function receive (event) {
 	} else {
 		// else forward it to the intended recipient
 		send(locs[r],raw_message);
+	}
+}
+
+function receive (event) {
+	if (est_or !== null) {
+		if (event.origin !== est_or) {
+			throw ("invalid message origin: " + event.origin);
+			return;
+		}
+	}
+	//console.log(event.origin, event.data);
+	const raw_messages = event.data;
+	if (raw_messages.includes(";")) {
+		const messages = raw_messages.split(";");
+		messages.forEach(function(elem){interperet_message(elem)});
+	} else {
+		interperet_message(raw_messages);
 	}
 }
 

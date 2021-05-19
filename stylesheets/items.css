@@ -2,13 +2,14 @@
 	--ngrad : linear-gradient(45deg,#666666 25% 50%,#696969);
 	--fgrad : linear-gradient(45deg,#0066ff 25% 50%,#0044cc);
 	--mgrad : linear-gradient(45deg,#b105a2 25% 50%,#b92eff);
-	--lgrad-b : linear-gradient(45deg, #FFB6C1 25% 50%,#FFB6C1);
+	--lgrad-b : linear-gradient(45deg,#ff768b,#ff4460);
 
 	/*--lgrad-f : linear-gradient(-45deg,#ff0000,#ff8800,#ffff00,#00ff00,#00ffff,#0000ff,
 	#ff00ff);
-	send("equip_screen","O:IN,R:EQ,M:=sprites/equipment/swords/rustedsword.png,3,rmyth,-90")*/
-	/*Z--lgrad-f : lineargradient(-45deg,#9c4f96,#ff6355,#FBA949,#fae442,#8bd448,#2aa8f2); */
-    --lgrad-f : lineargradient(-45deg,#ffafbd,#ffc3a0);
+	/*send("equip_screen","O:IN,R:EQ,M:=sprites/equipment/swords/rustedsword.png,3,rmyth,-90")*/
+	/*--lgrad-f : linear-gradient(-45deg,#9c4f96,#ff6355,#FBA949,#fae442,#8bd448,#2aa8f2);*/
+    --lgrad-f : linear-gradient(-45deg,#ffafbd,
+	#ffc3a0);
      /* The Rainbow Gradient Color Scheme palette has 6 colors which are Razzmic Berry (#9C4F96), Sunset Orange (#FF6355), Yellow Orange (#FBA949), Gargoyle Gas (#FAE442), Kiwi (#8BD448) and Button Blue (#2AA8F2). */
 	--cp-b1 : polygon(70% 0%, 100% 30%, 100% 35%, 65% 0%);
 	--cp-b2 : polygon(80% 0%, 100% 20%, 100% 25%, 75% 0%);
@@ -25,6 +26,9 @@
 }
 .rmyth {
 	background : var(--lgrad-b);
+}
+.dev {
+	background : #00eeff;
 }
 .empty {
 	background : transparent;
@@ -56,6 +60,10 @@
 .content.rmyth {
 	/*background : #ab5f05;*/
 	background : var(--lgrad-f);
+}
+.content.dev {
+	background : linear-gradient(#00d9ff,#ff8c8c);
+    /*background : linear-gradient(-45deg, #9c4f96,#ff6355,#FBA949,#fae442,#8bd448,#2aa8f2);*/
 }
 .content.empty {
 	background : black;

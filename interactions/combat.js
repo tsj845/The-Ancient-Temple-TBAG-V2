@@ -22,6 +22,7 @@ class Entity {
 		this.tempC = 0;
 		this.dodge = 1; 
 		this.maxHealth = 10;
+		this.is_player = false;
 
 	}
 	setStats (stats) {
@@ -40,11 +41,9 @@ class Entity {
 		return 0;
 	}
 	takeDamage (raw) {
-		//console.log("you idiot, now you gonna die");
 		if (!(Math.random() >= this.dodge)) {
-			//console.log("yeet! you yoted yourself and ran the dodge mechanic! yote yeet yate!");
 			raw = raw - Math.ceil((raw*(Math.min(this.def+this.tempD,15)*5)+this.getChaRedux())/100);
-			console.log(raw, "refined damage");
+			console.log(raw, "refined damage", this.is_player);
 			if (this.abs > 0) {
 				if (this.abs > raw) {
 					this.abs -= raw;
@@ -77,6 +76,7 @@ class Entity {
 const mobs = {"test":[{"h":10,"d":0,"a":1,"c":0,"s":4},"John, but really really evil","sprites/enemies/bosses/book.png",0],"statue":[{"h":15,"a":4,"d":4,"c":0,"s":0},"Mysterious Statue","sprites/enemies/basic/statue.png",0], "book":[{"h":17,"d":1,"a":4,"c":0,"s":4},"Book of the Seas","sprites/enemies/bosses/book.png",-1]};
 
 const player = new Entity();
+player.is_player = true;
 player.setStats({"h":20,"d":1,"a":5,"c":1,"s":0});
 
 function endFight () {
@@ -95,6 +95,9 @@ class CombatRunner {
 		this.over = false;
 		this.turn = false;
 		this.player_won = true;
+	}
+	getArmorBonus (stat_name) {
+		return equipRunner.get_stat_boosts[{"attack":0,"defend":1,"charisma":2,"shield":3}];
 	}
 	getLoot () {
 		switch (this.enemyLevel) {
@@ -152,6 +155,7 @@ class CombatRunner {
 		game.endInteraction();
 	}
 	start (args) {
+		player.abs += this.getArmorBonus("shield");
 		send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=START BATTLE!");
 		this.enemy.setStats(args[2]);
 		this.enName = args[3];
@@ -163,7 +167,7 @@ class CombatRunner {
 		this.enemyLevel = args[5];
 		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=max:="+this.enemy.maxHealth.toString());
 		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.maxHealth.toString());
-		console.log(this.enemy.abs);
+		console.log(this.enemy.abs, "enemy shield");
 		send("combat_screen","O:IN,R:CB,M:#en_shield_1?html_attr=max:="+this.enemy.abs.toString());
 		send("combat_screen","O:IN,R:CB,M:#en_shield_1?html_attr=value:="+this.enemy.abs.toString());
 		if (this.enemy.abs > 0) {

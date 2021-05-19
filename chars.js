@@ -45,6 +45,8 @@ function s_char () {
 	}
 	game.hideInput();
 	update_combat();
+	send("combat_screen","O:IN,R:CB,M:#combat_player_img?src="+char_lst[char][0]);
+	send("equip_screen","O:IN,R:EQ,M:#character_img?src="+char_lst[char][0]);
 }
 
 function update_combat () {
@@ -52,12 +54,7 @@ function update_combat () {
 	const def = player.def.toString()+"/10";
 	const cha = player.cha.toString()+"/10";
 	const health = player.health.toString()+"/20";
-	send("combat_screen","O:IN,R:CB,M:#combat_player_img?src="+char_lst[char][0],false);
-	send("combat_screen","O:IN,R:CB,M:#att_stat?text="+att,false);
-	send("combat_screen","O:IN,R:CB,M:#def_stat?text="+def,false);
-	send("combat_screen","O:IN,R:CB,M:#per_stat?text="+cha,false);
-	send("combat_screen","O:IN,R:CB,M:#health_stat?text="+health,false);
-	send("combat_screen","O:IN,R:CB,M:#shield_stat?text="+player.abs.toString(),false);
+	send("combat_screen","O:IN,R:CB,M:#att_stat?text="+att+";O:IN,R:CB,M:#def_stat?text="+def+";O:IN,R:CB,M:#per_stat?text="+cha+";O:IN,R:CB,M:#health_stat?text="+health+";O:IN,R:CB,M:#shield_stat?text="+player.abs.toString());
 	document.getElementById("att_stat").textContent = att;
 	document.getElementById("def_stat").textContent = def;
 	document.getElementById("per_stat").textContent = cha;

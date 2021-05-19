@@ -139,7 +139,16 @@ class Game {
 		this.interaction = true;
 		switch (args[1]) {
 			case "combat":
-				if (!["battle","boss"].includes(this.c_sound.getAttribute("id"))) {
+				let wrong_music = true;
+				const keywords = ["battle","boss"];
+				const id = this.c_sound.getAttribute("id");
+				for (let i = 0; i < keywords.length; i ++) {
+					if (id.includes(keywords[i])) {
+						wrong_music = false;
+						break;
+					}
+				}
+				if (wrong_music) {
 					if (!sound_disabled) {
 						this.c_sound.pause();
 						this.c_sound = document.getElementById("battle");

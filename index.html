@@ -6,7 +6,7 @@
 		<title>The Ancient Temple</title>
 		<link href="stylesheets/main_index_styles.css" rel="stylesheet" type="text/css">
 		<style>
-			body,p,span,div,input,label,img,h4,html,head,dialog,dialog::backdrop {
+			*, dialog::backdrop {
 				cursor:url("sprites/icons/custom_pointer.png") 15 0, auto;
 			}
 			.mute_unchecked {
@@ -54,9 +54,6 @@
 				overflow-y : scroll;
 				overflow-wrap : break-word;
 			}
-            /* a {
-                cursor : url("custom-pointer.png"),default;
-             } */
              :root {
 				--bi_h : -288px;
 				--bi_w : 32px;
@@ -147,7 +144,7 @@
 		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<iframe id="shop_screen" src="./shop.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<iframe id="equip_screen" src="./equip.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
-		<input type="button" value="test equip" style="position:absolute;left:0%;top:0%;" onclick="document.getElementById('equip_screen').hidden=false">
+		<input type="button" value="test equip" style="position:absolute;left:0%;top:0%;color:black;" onclick="equipRunner.open()">
 		<!-- displays the selected character's icon in the lower right -->
     	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
         <!--<yeet id="megayeet" style="maximumyeet"></yeet>-->
