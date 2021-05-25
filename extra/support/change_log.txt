@@ -3,3 +3,9 @@
 - merged title screen and main screen to fix bug #1
 
 - added an inventory for the equip screen, and info that shows when an item is clicked
+
+- changed mute button to an image input
+
+- made equipping items fully functional
+
+- switched functionality from test equip to the offical button

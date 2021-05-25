@@ -8,7 +8,7 @@ function add_slot (src, background, border, rarity_class) {
 	if (rarity_class === undefined) {
 		rarity_class = "rnorm";
 	}
-	//send("O:EQ,R:IN,M:$rarity_class="+rarity_class);
+	// send("O:EQ,R:IN,M:$rarity_class="+rarity_class);
 	const d1 = document.createElement("div");
 	d1.setAttribute("class", "table_item");
 	const d2 = document.createElement("div");
@@ -29,7 +29,11 @@ function add_slot (src, background, border, rarity_class) {
 	d3.appendChild(d5);
 	d2.appendChild(d3);
 	document.getElementById("inventory").appendChild(d1);
-	d3.setAttribute("onclick","slot_click("+(document.getElementById("inventory").children.length-1).toString()+")");
+	const oc = "slot_click("+(document.getElementById("inventory").children.length-1).toString()+")";
+	// d3.setAttribute("onclick",oc);
+	// img.setAttribute("onclick",oc);
+	const v = document.getElementById("inventory").children.length-1;
+	d1.addEventListener("click",function(){slot_click(v)});
 }
 
 function set_slot (src, index, rc, rot) {
@@ -37,12 +41,28 @@ function set_slot (src, index, rc, rot) {
 		rot = 0;
 	}
 	const container = document.getElementById("inventory").children[index].children[0].children[0];
-	container.setAttribute("class", "content "+rc);
+	container.className = "content "+rc;
 	container.children[0].src = src;
-	container.children[1].setAttribute("class", "fore1 display "+rc);
-	container.children[2].setAttribute("class", "fore2 display "+rc);
-	container.children[1].style.cssText = "transform:rotate("+rot.toString()+"deg);";
-	container.children[2].style.cssText = "transform:rotate("+rot.toString()+"deg);";
+	container.children[1].className = "fore1 display "+rc;
+	container.children[2].className = "fore2 display "+rc;
+	const styling = "transform:rotate("+rot.toString()+"deg);";
+	container.children[1].style.cssText = styling;
+	container.children[2].style.cssText = styling;
+}
+
+function update_equipped (slot, src, rc, rot) {
+	if (rot === undefined) {
+		rot = "0";
+	}
+	// console.log(slot, src, rc, rot);
+	const container = document.getElementById("equip_slots").children[Number(slot)].children[0].children[0].children[0];
+	container.className = "content "+rc;
+	container.children[0].src = src;
+	container.children[1].className = "fore1 display "+rc;
+	container.children[2].className = "fore2 display "+rc;
+	const styling = "transform:rotate("+rot+"deg);";
+	container.children[1].style.cssText = styling;
+	container.children[2].style.cssText = styling;
 }
 
 function remove_slot () {
@@ -56,8 +76,12 @@ function update_item_info (args) {
 	container.hidden = false;
 	document.getElementById("item_info_name").textContent = args[0];
 	document.getElementById("item_info_type").textContent = args[1];
-	let rarity = {"rnorm":"Normal","rfine":"Fine","rmagi":"Magical","rmyth":"Mythical"}[args[2]];
+	let rarity = undefined;
+	try {
+		rarity = {"rnorm":"Normal","rfine":"Fine","rmagi":"Magical","rmyth":"Mythical","dev":"Unobtainable"}[args[2]];
+	} catch (err) {}
 	rarity = (rarity === undefined) ? "Unobtainable" : rarity;
+	// send("O:EQ,R:IN,M:$rarity="+rarity.toString()+", ii[2]="+args[2]);
 	document.getElementById("item_info_rarity").textContent = rarity;
 	document.getElementById("item_info_atk").textContent = (args[3][0] === "-" ? args[3] : "+"+args[3]);
 	document.getElementById("item_info_def").textContent = (args[4][0] === "-" ? args[4] : "+"+args[4]);

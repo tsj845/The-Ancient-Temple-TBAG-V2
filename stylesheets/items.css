@@ -49,20 +49,20 @@
 }
 
 .content.rnorm {
-	background : #969696;
+	background : #a8a8a8;
 }
 .content.rfine {
-	background : #9898ff;
+	background : #a1a1ff;
 }
 .content.rmagi {
-	background : #ff85f5;
+	background : #ff89f5;
 }
 .content.rmyth {
 	/*background : #ab5f05;*/
 	background : var(--lgrad-f);
 }
 .content.dev {
-	background : linear-gradient(#00d9ff,#ff8c8c);
+	background : radial-gradient(#2dff03,#000000);
     /*background : linear-gradient(-45deg, #9c4f96,#ff6355,#FBA949,#fae442,#8bd448,#2aa8f2);*/
 }
 .content.empty {

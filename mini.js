@@ -56,7 +56,6 @@ class Decoder {
 		this.hallway_decoding = {"─":"minimap/minimap_h_hall.png","│":"minimap/minimap_v_hall.png","┘":"minimap/minimap_lu_corner.png","┐":"minimap/minimap_ld_corner.png","└":"minimap/minimap_ru_corner.png","┌":"minimap/minimap_rd_corner.png","┴":"minimap/minimap_t_lru.png","┤":"minimap/minimap_t_lud.png","┬":"minimap/minimap_t_lrd.png","├":"minimap/minimap_t_rud.png","┼":"minimap/minimap_cross.png"," ":"minimap/minimap_empty.png"};
 	}
 	decode (map_design) {
-		console.log("\x1b[38;2;255;155;0mSTART DECODE\x1b[39m\n");
 		let final = makeList(map_design.length, map_design[0].length);
 		for (let y = 0; y < map_design.length; y ++) {
 			for (let x = 0; x < map_design[0].length; x ++) {

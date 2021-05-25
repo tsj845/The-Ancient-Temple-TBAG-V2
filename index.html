@@ -9,12 +9,12 @@
 			*, dialog::backdrop {
 				cursor:url("sprites/icons/custom_pointer.png") 15 0, auto;
 			}
-			.mute_unchecked {
+			/* .mute_unchecked {
 				background : url("sprites/icons/unmuted_icon.svg");
 			}
 			.mute_checked {
 				background : url("sprites/icons/muted_icon.svg");
-			}
+			} */
 			#prev_char_btn {
 				margin : 0;
 				border : none; 
@@ -110,7 +110,7 @@
 					if (document.getElementById("title_div").hidden) {
 						return;
 					}
-					console.log("close", music_loaded);
+					// console.log("close", music_loaded);
 					// doesn't close if the music isn't loaded, this is because of a glitch where if the music isn't loaded before the title screen is closed then it won't ever stop playing
 					if (!music_loaded) {
 						return;
@@ -144,13 +144,12 @@
 		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<iframe id="shop_screen" src="./shop.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<iframe id="equip_screen" src="./equip.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
-		<input type="button" value="test equip" style="position:absolute;left:0%;top:0%;color:black;" onclick="equipRunner.open()">
 		<!-- displays the selected character's icon in the lower right -->
     	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
         <!--<yeet id="megayeet" style="maximumyeet"></yeet>-->
 		<!-- coins and stats -->
-		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:8%;position:absolute;right:3%;top:11%">
-		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:11%;top:15%;">0</label>
+		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:8%;position:absolute;right:0%;top:11%">
+		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:8%;top:15.5%;">0</label>
 		<p id="stats" style="font-size:3vh;position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
 		<!-- all audio elements -->
 		<div>
@@ -191,8 +190,16 @@
 			<br>
 			<input class="wb" type="button" value="close" onclick="document.getElementById('main_menu').close()">
 		</dialog>
-		<!--menu button-->
-		<input class="bb" type="button" id="menu_button" value="menu" onclick="document.getElementById('main_menu').showModal();" style="position:absolute;right:0%;bottom:30%;">
+		<!-- buttons -->
+		<div style="position:absolute;right:0%;bottom:30%;display:grid;row-gap:1vh;">
+			<!-- more accessable mute button -->
+			<!--<div id="mute_sounds_2" class="mute_unchecked"></div>-->
+			<input type="image" id="mute_sounds" src="sprites/icons/unmuted_icon.svg" onclick="toggleAudio();document.getElementById('mute_sounds').src=(sound_disabled?'sprites/icons/muted_icon.svg':'sprites/icons/unmuted_icon.svg')" style="width:7.5vmin;height:7.5vmin;margin-left:auto;">
+			<!-- equip button -->
+			<input class="bb" type="button" value="inventory" onclick="equipRunner.open()">
+			<!-- menu button -->
+			<input class="bb" type="button" id="menu_button" value="menu" onclick="document.getElementById('main_menu').showModal();">
+		</div>
 		<h4 id="header_text">TUTORIAL</h4>
 		<p id="name_text"></p>
 		<div id="main_text_container">
@@ -216,8 +223,6 @@
 		<div id="minimap_div">
 			<img id="context_img" src="" style="z-index:1;">
 		</div>
-		<!-- more accessable mute button -->
-		<div id="mute_sounds_2" class="mute_unchecked"></div>
 		<!-- all of the scripts used to run the game -->
 		<div>
 			<!-- used to do any setup that is required -->

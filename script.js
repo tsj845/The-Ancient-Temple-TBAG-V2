@@ -213,7 +213,7 @@ class Game {
 						}
 						this.c_sound = elem;
 						if (!sound_disabled) {
-							console.log(elem.currentTime);
+							// console.log(elem.currentTime);
 							elem.currentTime = 0;
 							elem.play();
 						}
@@ -225,7 +225,7 @@ class Game {
 					if (sound_disabled) {
 						break;
 					}
-					console.log(document.getElementById(line[1]).currentTime);
+					// console.log(document.getElementById(line[1]).currentTime);
 					document.getElementById(line[1]).currentTime = 0;
 					document.getElementById(line[1]).play();
 					break;
@@ -273,7 +273,7 @@ class Game {
 							args.push(t[3]);
 						}
 					}
-					console.log(args);
+					// console.log(args);
 					this.startInteraction(args);
 					return;
 			}
@@ -334,7 +334,7 @@ class Game {
 			//good_input = true;
 			// shows the character select screen
 			const cs = document.getElementById("char_select");
-			console.log(cs);
+			// console.log(cs);
 			cs.showModal();
 			// shows character information
 			displayChar();
@@ -406,15 +406,15 @@ document.addEventListener("keydown", keyPress);
 // toggles the audio if the user mutes or unmutes it
 function toggleAudio () {
 	// changes the sprite for the custom button
-	const img = document.getElementById("mute_sounds_2");
+	// const img = document.getElementById("mute_sounds_2");
 	sound_disabled = !sound_disabled;
 	if (sound_disabled) {
 		game.stopSounds();
 	} else {
 		game.startSounds();
 	}
-	img.setAttribute("class", (sound_disabled ? "mute_checked" : "mute_unchecked"));
+	// img.setAttribute("class", (sound_disabled ? "mute_checked" : "mute_unchecked"));
 }
 
 // adds the event listener for the custom button
-document.getElementById("mute_sounds_2").addEventListener("click",toggleAudio);
+// document.getElementById("mute_sounds_2").addEventListener("click",toggleAudio);

@@ -20,10 +20,26 @@ class Entity {
 		this.tempD = 0;
 		this.tempA = 0;
 		this.tempC = 0;
-		this.dodge = 1; 
+		this.dodge = 1;
 		this.maxHealth = 10;
 		this.is_player = false;
-
+	}
+	get_stat (stat_name) {
+		// const eq = equipRunner.get_stat_boosts()[{"attack":0,"defend":1,"charisma":2,"shield":3,"health":0}[stat_name]];
+		// console.log(eq);
+		switch (stat_name) {
+			case "health":
+				return this.health;
+			case "attack":
+				return this.tempA+this.att;
+			case "defend":
+				return this.tempD+this.def;
+			case "charisma":
+				return this.tempC+this.cha;
+			case "shield":
+				return this.abs;
+		}
+		return 0;
 	}
 	setStats (stats) {
 		this.health = stats["h"];
@@ -43,7 +59,7 @@ class Entity {
 	takeDamage (raw) {
 		if (!(Math.random() >= this.dodge)) {
 			raw = raw - Math.ceil((raw*(Math.min(this.def+this.tempD,15)*5)+this.getChaRedux())/100);
-			console.log(raw, "refined damage", this.is_player);
+			// console.log(raw, "refined damage", this.is_player);
 			if (this.abs > 0) {
 				if (this.abs > raw) {
 					this.abs -= raw;
@@ -63,6 +79,7 @@ class Entity {
 		return 20 * ((this.health/this.maxHealth)*100 <= 30);
 	}
 	isPersuaded (cha) {
+		// console.log(cha);
 		if (cha >= 10) {
 			return true;
 		}
@@ -73,7 +90,7 @@ class Entity {
 	}
 }
 
-const mobs = {"test":[{"h":10,"d":0,"a":1,"c":0,"s":4},"John, but really really evil","sprites/enemies/bosses/book.png",0],"statue":[{"h":15,"a":4,"d":4,"c":0,"s":0},"Mysterious Statue","sprites/enemies/basic/statue.png",0], "book":[{"h":17,"d":1,"a":4,"c":0,"s":4},"Book of the Seas","sprites/enemies/bosses/book.png",-1]};
+const mobs = {"test":[{"h":10,"d":0,"a":1,"c":0,"s":4},"John, but really really evil","sprites/enemies/bosses/book.png",2],"statue":[{"h":15,"a":4,"d":4,"c":0,"s":0},"Mysterious Statue","sprites/enemies/basic/statue.png",0], "book":[{"h":17,"d":1,"a":4,"c":0,"s":4},"Book of the Seas","sprites/enemies/bosses/book.png",-1]};
 
 const player = new Entity();
 player.is_player = true;
@@ -97,7 +114,7 @@ class CombatRunner {
 		this.player_won = true;
 	}
 	getArmorBonus (stat_name) {
-		return equipRunner.get_stat_boosts[{"attack":0,"defend":1,"charisma":2,"shield":3}];
+		return equipRunner.get_stat_boosts()[{"attack":0,"defend":1,"charisma":2,"shield":3}[stat_name]];
 	}
 	getLoot () {
 		switch (this.enemyLevel) {
@@ -112,7 +129,7 @@ class CombatRunner {
 			case 3:
 				return [300,[0,0,0]];
 			default:
-				console.log("invalid enemy level: ", this.enemyLevel);
+				// console.log("invalid enemy level: ", this.enemyLevel);
 				return [0,[0,0,0]];
 		}
 	}
@@ -123,7 +140,7 @@ class CombatRunner {
 		player.health = player.maxHealth;
 		update_combat();
 		if (this.player_won) {
-			console.log("player won");
+			// console.log("player won");
 			// handle enemy loot
 			const loot = this.getLoot();
 			let drops = [];
@@ -156,20 +173,15 @@ class CombatRunner {
 	}
 	start (args) {
 		player.abs += this.getArmorBonus("shield");
-		send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=START BATTLE!");
+		send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=START BATTLE!;O:IN,R:CB,M:#combat_enemy_img?src="+args[4]+";O:IN,R:CB,M:#shield_stat?text="+player.abs.toString());
 		this.enemy.setStats(args[2]);
 		this.enName = args[3];
-		send("combat_screen","O:IN,R:CB,M:#combat_enemy_img?src="+args[4]);
 		document.getElementById("combat_screen").hidden = false;
 		this.over = false;
 		this.turn = true;
 		this.player_won = true;
 		this.enemyLevel = args[5];
-		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=max:="+this.enemy.maxHealth.toString());
-		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.maxHealth.toString());
-		console.log(this.enemy.abs, "enemy shield");
-		send("combat_screen","O:IN,R:CB,M:#en_shield_1?html_attr=max:="+this.enemy.abs.toString());
-		send("combat_screen","O:IN,R:CB,M:#en_shield_1?html_attr=value:="+this.enemy.abs.toString());
+		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=max:="+this.enemy.maxHealth.toString()+";O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.maxHealth.toString()+";O:IN,R:CB,M:#en_shield_1?html_attr=max:="+this.enemy.abs.toString()+";O:IN,R:CB,M:#en_shield_1?html_attr=value:="+this.enemy.abs.toString());
 		if (this.enemy.abs > 0) {
 			send("combat_screen","O:IN,R:CB,M:#en_shield_1?hidden=false");
 		} else {
@@ -185,7 +197,7 @@ class CombatRunner {
 		}
 	}
 	choice (cid) {
-		console.log(cid, typeof cid, "combat choice", this.turn);
+		// console.log(cid, typeof cid, "combat choice", this.turn);
 		if (!this.turn) {
 			return;
 			send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=BEGIN BATTLE!");
@@ -194,16 +206,22 @@ class CombatRunner {
 		let dmg = 0;
 		if (cid === 0) {
 			// player chose to attack
-			dmg = this.enemy.takeDamage(player.att);
-			console.log(dmg);
+			dmg = this.enemy.takeDamage(player.get_stat("attack"));
+			// console.log(dmg);
 			send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=You attacked the enemy! You dealt "+dmg.toString()+" damage!");
 		} else if (cid === 1) {
 			// player chose to defend
 			player.tempD = player.def;
 			send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=You defended yourself! You reduced the enemy's damage this turn!");
 		} else if (cid === 2) {
+			let pr = 1;
+			if (this.enemyLevel === 2) {
+				pr = 2;
+			} else if (this.enemyLevel === 3) {
+				pr = 4;
+			}
 			// player chose to persuade
-			if (this.enemy.isPersuaded(player.cha+player.tempC)) {
+			if (this.enemy.isPersuaded(Math.round((player.get_stat("charisma"))/pr))) {
 				send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=You successfully persuaded the enemy to join you!");
 				this.enemy.health = 0;
 			} else {
@@ -216,8 +234,7 @@ class CombatRunner {
 			this.player_won = false;
 		}
 		update_combat();
-		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.health.toString());
-		send("combat_screen","O:IN,R:CB,M:#en_shield_1?html_attr=value:="+this.enemy.abs.toString());
+		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.health.toString()+";O:IN,R:CB,M:#en_shield_1?html_attr=value:="+this.enemy.abs.toString());
 		this.checkDead();
 		if (!this.over) {
 			execAfterDelay(enTurn, 2500);

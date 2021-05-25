@@ -96,13 +96,13 @@ iframe {
 	height : 100vh;
 	border : none;
 }
-#mute_sounds_2 {
-	position : absolute;
-	right : -1%;
-	top : 56%;
+/* #mute_sounds_2 {
+	margin : 0%;
+	padding : 0%;
+	justify-self : end;
 	width : 7.5vmin;
 	height : 7.5vmin;
-}
+} */
 #char_select {
 	width : 50vw;
 	height : 50vh;

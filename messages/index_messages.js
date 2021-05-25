@@ -63,7 +63,7 @@ function interperet_message (raw_message) {
 				if (est_or === null) {
 					est_or = event.origin;
 				}
-				console.log("INIT message from "+o);
+				// console.log("INIT message from "+o);
 				send(locs[o],"O:IN,R:"+o+",M:init");
 				if (o === "LS") {
 					send("loading_screen","O:IN,R:LS,M:index="+index.toString());
@@ -183,6 +183,6 @@ window.addEventListener("load", onLoadHandler);
 
 function exec (l,code) {
 	const command = "O:IN,R:CB,M:!send('O:CB,R:IN,M:$'+String("+code+"))";
-	console.log(command);
+	// console.log(command);
 	send(locs[l],command);
 }

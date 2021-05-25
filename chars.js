@@ -50,10 +50,10 @@ function s_char () {
 }
 
 function update_combat () {
-	const att = player.att.toString()+"/10";
-	const def = player.def.toString()+"/10";
-	const cha = player.cha.toString()+"/10";
-	const health = player.health.toString()+"/20";
+	const att = player.get_stat("attack").toString()+"/10";
+	const def = player.get_stat("defend").toString()+"/10";
+	const cha = player.get_stat("charisma").toString()+"/10";
+	const health = player.get_stat("health").toString()+"/20";
 	send("combat_screen","O:IN,R:CB,M:#att_stat?text="+att+";O:IN,R:CB,M:#def_stat?text="+def+";O:IN,R:CB,M:#per_stat?text="+cha+";O:IN,R:CB,M:#health_stat?text="+health+";O:IN,R:CB,M:#shield_stat?text="+player.abs.toString());
 	document.getElementById("att_stat").textContent = att;
 	document.getElementById("def_stat").textContent = def;

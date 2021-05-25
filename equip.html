@@ -31,11 +31,41 @@
 			<div class="table_item"><div style="background:white;"><div class="content rmagi"><img src="sprites/chars/shopvendor.png"><div class="fore1 rmagi display"></div><div class="fore2 rmagi display"></div></div></div></div>
 			<div class="table_item"><div style="background:white;"><div class="content rmyth"><img src="sprites/chars/shopvendor.png"><div class="fore1 rmyth display"></div><div class="fore2 rmyth display"></div></div></div></div>-->
 		</div>
-		<img id="character_img" src="sprites/chars/character.png" style="width:40%;position:absolute;bottom:1%;right:-10% ;">
-		<div id="equip_slots">
-			<div id="sword_slot"></div>
-			<div id="shield_slot"></div>
-			<div id="armor_slot"></div>
+		<img id="character_img" src="sprites/chars/character.png" style="width:40%;position:absolute;bottom:1%;right:-10%;z-index:-5;">
+		<div id="equip_slots" style="border:solid white;background-color:black;">
+			<div id="sword_slot">
+				<div class="table_item">
+					<div style="background:white;">
+						<div class="content empty">
+							<img src="">
+							<div class="fore1 display empty"></div>
+							<div class="fore2 display empty"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="shield_slot">
+				<div class="table_item">
+					<div style="background:white;">
+						<div class="content empty">
+							<img src="">
+							<div class="fore1 display empty"></div>
+							<div class="fore2 display empty"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="armor_slot">
+				<div class="table_item">
+					<div style="background:white;">
+						<div class="content empty">
+							<img src="">
+							<div class="fore1 display empty"></div>
+							<div class="fore2 display empty"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="item_info_container" class="hide_scrollbar" hidden style="font-family:monospace;">
 			<p>Item Name:<br><span id="item_info_name">Uh oh, something went wrong when displaying the item information!</span><br><br>Item Type:<br><span id="item_info_type">placeholder</span><br><br>Item Rarity:<br><span id="item_info_rarity">placeholder</span><br><br>Stats:<br><span id="item_info_stats">ATK: <span id="item_info_atk" style="color:crimson;">+1</span><br>DEF: <span id="item_info_def" style="color:aquamarine;">+0</span><br>CHA: <span id="item_info_cha" style="color:violet;">+0</span><br>Shield: <span id="item_info_shield" style="color:cyan;">+0</span></span></p>
@@ -56,6 +86,7 @@
 						add_slot(s,ba,bo,m);
 						break;
 					case "=":
+						// send("O:EQ,R:IN,M:$update slot: "+m);
 						const s2 = m.slice(1,m.indexOf(","));
 						m = m.slice(m.indexOf(",")+1);
 						const ind = m.slice(0,m.indexOf(","));
@@ -71,13 +102,20 @@
 						set_slot(s2,Number(ind),rc,Number(m));
 						break;
 					case "-":
-						send("O:EQ,R:IN,M:$remove slot");
+						// send("O:EQ,R:IN,M:$remove slot");
 						remove_slot();
 						break;
 					case "^":
+						// send("O:EQ,R:IN,M:$update info: "+m);
 						m = m.slice(1);
-						const args = m.split(";");
+						const args = m.split("+");
 						update_item_info(args);
+						break;
+					case "&":
+						// send("O:EQ,R:IN,M:$update equipped: "+m);
+						m = m.slice(1);
+						const arg_lst = m.split("|");
+						update_equipped(arg_lst[0],arg_lst[1],arg_lst[2],arg_lst[3]);
 						break;
 				}
 			}
@@ -85,17 +123,18 @@
 			add_slot("","black","white","rfine");
 			add_slot("","black","white","rmagi");
 			add_slot("","black","white","rmyth");
-			add_slot("","black","white","dev");
+			add_slot("","black","white","rnorm");
 			let current_slot = 0;
 			function slot_click (slot) {
 				current_slot = slot;
-				send("O:EQ,R:IN,M:$slot "+slot.toString()+" was clicked");
+				// send("O:EQ,R:IN,M:$slot "+slot.toString()+" was clicked");
 				send("O:EQ,R:IN,M:*EQRUN.SLOTCLICK-"+slot.toString());
 			}
 			function equip_item () {
 				item_click = false;
+				item_info_container.hidden = true;
 				send("O:EQ,R:IN,M:*EQRUN.EQITEM-"+current_slot.toString());
-				send("O:EQ,R:IN,M:$equip item");
+				// send("O:EQ,R:IN,M:$equip item");
 			}
 			/*document.getElementById("equip_btn").addEventListener("click",equip_item);*/
 			// sends the init message
@@ -107,7 +146,7 @@
 			window.addEventListener("load",function (e) {lfinmessage()});
 			let item_click = true;
 			function handleBodyClick () {
-				send("O:EQ,R:IN,M:$EQ body click");
+				// send("O:EQ,R:IN,M:$EQ body click");
 				if (item_click) {
 					document.getElementById("item_info_container").hidden = true;
 				} else {
