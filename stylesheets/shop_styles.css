@@ -2,37 +2,84 @@ p, div, td {
 	color : white
 }
 
-table {
-	height : 100%;
-	width : 100%;
-}
-
-tbody {
-	align-items : center;
-}
-
-tr {
-	padding : 0%;
+.table_item {
+	position : relative;
+	left : 0%;
+	top : 0%;
+	border : none;
 	margin : 0%;
+	padding : 0%;
+	width : 1fr;
+	height : inherit;
+	color : white;
+	overflow : hidden;
+}
+
+.table_item > div {
 	width : 100%;
+	height : 100%;
+}
+.table_item > div > .content {
+	width : 100%;
+	height : 100%;
+	position : relative;
+	left : 0%;
+	top : 0%;
+	--v1 : 2.5%;
+	--v2 : calc(100% - var(--v1));
+	clip-path : polygon(var(--v1) var(--v1), var(--v2) var(--v1), var(--v2) var(--v2), var(--v1) var(--v2));
 }
 
-td {
-	margin : 0px;
-	padding : 0px;
-	width : calc(65vw / 3);
-	text-align : center;
-}
-
-.table_box {
-	border : solid white;
-}
-
-td:not(.table_box) {
-	border : solid white;
+.table_item > div > .content > img {
+	width : 100%;
 }
 
 input[type="image"], img, td {
 	-webkit-user-drag : none;
 	-webkit-user-select : none;
+}
+
+#shop_slots {
+	--fw : 60vw;
+	position : absolute;
+	left : 25%;
+	top : 25%;
+	width : var(--fw);
+	height : calc(var(--fw) / 3);
+	border : solid white;
+	display : grid;
+	grid-template-columns : repeat(3, 1fr);
+}
+
+.hide_scrollbar {
+	scrollbar-width : none;
+}
+
+.hide_scrollbar::-webkit-scrollbar {
+	display : none;
+}
+
+#item_info_container {
+	width : 25%;
+	height : 75%;
+	position : abosolute;
+	left : 2.5%;
+	top : 12.5%;
+	overflow-y : scroll;
+}
+
+#item_info_container * {
+	color : white;
+	word-break : break-all;
+}
+
+#item_info_stats {
+	font-size : 0.75em;
+}
+
+#buy_btn {
+	background : gray;
+}
+#buy_btn:hover {
+	background : white;
 }

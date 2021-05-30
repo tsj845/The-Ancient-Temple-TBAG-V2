@@ -1,10 +1,12 @@
+let char_selected = false;
+
 const no_sword = ["empty","","sword","empty",0,0,0,0];
 const no_shield = ["empty","","shield","empty",0,0,0,0];
 const no_armor = ["empty","","armor","empty",0,0,0,0];
 
 class EquipRunner {
 	constructor () {
-		this.inventory = [loot_dict["normal"][0], loot_dict["normal"][1], loot_dict["normal"][2], loot_dict["normal"][3], loot_dict["dev"][0]];
+		this.inventory = [loot_dict["normal"][0], loot_dict["normal"][1], loot_dict["normal"][2], loot_dict["mythic"][0], loot_dict["dev"][0],null,null,null,null,null];
 		this.body_slots = {"sword":no_sword,"shield":no_shield,"armor":no_armor};
 	}
 	get_stat_boosts () {
@@ -40,7 +42,6 @@ class EquipRunner {
 			return;
 		}
 		const outbound = this.format_item_info(data);
-		// console.log("INFO:\n",outbound);
 		send("equip_screen","O:IN,R:EQ,M:^"+outbound);
 	}
 	equip_item (args) {
@@ -79,6 +80,9 @@ class EquipRunner {
 		send("equip_screen","O:IN,R:EQ,M:&"+out.join("|"));
 	}
 	open () {
+		if (!char_selected) {
+			return;
+		}
 		game.disabled = true;
 		game.interaction = true;
 		document.getElementById("equip_screen").hidden = false;

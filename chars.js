@@ -47,6 +47,7 @@ function s_char () {
 	update_combat();
 	send("combat_screen","O:IN,R:CB,M:#combat_player_img?src="+char_lst[char][0]);
 	send("equip_screen","O:IN,R:EQ,M:#character_img?src="+char_lst[char][0]);
+	char_selected = true;
 }
 
 function update_combat () {

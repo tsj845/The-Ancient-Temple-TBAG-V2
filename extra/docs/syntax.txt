@@ -40,3 +40,6 @@ syntax:
 
 interactions:
 - combat; 2 arguments, "stats":dict, "name":String, "source":String, "level":Number, "stats" must have the following attributes: "h","a","d","c","s", "source" must be a valid path to an image, "level" must be an integer from -1 to 3
+
+condition:
+[item name]=[value]

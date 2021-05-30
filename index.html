@@ -9,12 +9,6 @@
 			*, dialog::backdrop {
 				cursor:url("sprites/icons/custom_pointer.png") 15 0, auto;
 			}
-			/* .mute_unchecked {
-				background : url("sprites/icons/unmuted_icon.svg");
-			}
-			.mute_checked {
-				background : url("sprites/icons/muted_icon.svg");
-			} */
 			#prev_char_btn {
 				margin : 0;
 				border : none; 
@@ -98,7 +92,6 @@
 		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts" style="z-index:15;"></iframe>
 		<div id="title_div" style="width:100vw;height:100vh;">
 			<audio id="title_music" src="audios/titlescreenmusic.mp3" loop></audio>
-			
 			<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_1.png) repeat;" hidden></div>
 			<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_2.png) repeat;" hidden></div>
 			<img src="sprites/titlescreen.png" id="title_img">
@@ -110,7 +103,6 @@
 					if (document.getElementById("title_div").hidden) {
 						return;
 					}
-					// console.log("close", music_loaded);
 					// doesn't close if the music isn't loaded, this is because of a glitch where if the music isn't loaded before the title screen is closed then it won't ever stop playing
 					if (!music_loaded) {
 						return;
@@ -139,14 +131,15 @@
 				document.getElementById("title_music").addEventListener("canplaythrough",function () {start_title_music()});
 				// shows the correct background
 				document.getElementById("title_div").children[index].hidden = false;
+				// alert("WARNING: the beginning of the game is slated for a major change when saving functionality is introduced")
 			</script>
 		</div>
 		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<iframe id="shop_screen" src="./shop.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<iframe id="equip_screen" src="./equip.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<iframe id="promo_screen" src="./promo.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<!-- displays the selected character's icon in the lower right -->
     	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
-        <!--<yeet id="megayeet" style="maximumyeet"></yeet>-->
 		<!-- coins and stats -->
 		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:8%;position:absolute;right:0%;top:11%">
 		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:8%;top:15.5%;">0</label>
@@ -163,6 +156,7 @@
             <audio id="battle" src="audios/battle.mp3" loop></audio>
 			<audio id="shop" src="audios/shop.mp3" loop></audio>
 			<audio id="equip" src="audios/equip.mp3" loop></audio>
+			<audio id="demonbream" src="audios/demonbream.mp3" loop></audio>
             <!--<audio id="attack" src="audios/sfx/slash.wav"></audio>-->
 		</div>
 		<!-- all sound credits -->
@@ -184,7 +178,6 @@
 			<label for="toggle_sounds" class="black">mute sounds:</label>
 			<input type="checkbox" onchange="toggleAudio()">
 			<br>
-            <label></label>
             <br> 
 			<input class="wb" type="button" value="credits" onclick="document.getElementById('main_credits').showModal()">
 			<br>
@@ -193,12 +186,17 @@
 		<!-- buttons -->
 		<div style="position:absolute;right:0%;bottom:30%;display:grid;row-gap:1vh;">
 			<!-- more accessable mute button -->
-			<!--<div id="mute_sounds_2" class="mute_unchecked"></div>-->
 			<input type="image" id="mute_sounds" src="sprites/icons/unmuted_icon.svg" onclick="toggleAudio();document.getElementById('mute_sounds').src=(sound_disabled?'sprites/icons/muted_icon.svg':'sprites/icons/unmuted_icon.svg')" style="width:7.5vmin;height:7.5vmin;margin-left:auto;">
+			<!-- redeem promo codes -->
+			<input class="bb" type="button" value="promo" onclick="open_promo()">
+			<!-- shop button -->
+			<input class="bb" type="button" value="shop" onclick="shopRunner.open()">
 			<!-- equip button -->
 			<input class="bb" type="button" value="inventory" onclick="equipRunner.open()">
 			<!-- menu button -->
-			<input class="bb" type="button" id="menu_button" value="menu" onclick="document.getElementById('main_menu').showModal();">
+			<input class="bb" type="button" value="menu" onclick="document.getElementById('main_menu').showModal()">
+			<!-- saves -->
+			<input class="bb" type="button" value="save" onclick="">
 		</div>
 		<h4 id="header_text">TUTORIAL</h4>
 		<p id="name_text"></p>
@@ -206,7 +204,7 @@
 			<p id="main_output" class="output_line">Welcome to The Ancient Temple! </p>
 			<div id="input_container">
 				<p id="options"></p>
-				<label for="text_input" id="prompt_label">Enter your name: </label>
+				<label for="text_input" id="prompt_label">Test: </label>
 				<input type="text" autocomplete="off" id="text_input" value="">
 			</div>
 		</div>
@@ -225,12 +223,14 @@
 		</div>
 		<!-- all of the scripts used to run the game -->
 		<div>
-			<!-- used to do any setup that is required -->
+			<!-- does setup -->
 			<script src="setup.js"></script>
 			<script src="extra/independance.js"></script>
 			<!-- the above script is just an easter egg -->
 			<script src="chapter_1/option.js"></script>
 			<script src="chapter_1/temple.js"></script>
+			<script src="chapter_1/illuminated.js"></script>
+			<script src="chapter_1/unilluminated.js"></script>
 			<script src="chapter_2/labyrinth1.js"></script>
 			<!-- the above scripts hold the data for the story -->
 			<script src="char_data.js"></script>
@@ -245,6 +245,8 @@
 			<script src="script.js"></script>
 			<!-- does the minimap -->
 			<script src="mini.js"></script>
+			<!-- handles saving the game -->
+			<script src="save.js"></script>
 		</div>
 	</body>
 </html>

@@ -32,7 +32,7 @@ class Minimap {
 		this.board = makeList(this.size, this.size);
 		for (let y = 0; y < this.size; y ++) {
 			for (let x = 0; x < this.size; x ++) {
-				this.board[y][x] = setUpImg(x,y);//new Tile(x, y, "minimap/minimap_empty.png");
+				this.board[y][x] = setUpImg(x,y);
 			}
 		}
 	}

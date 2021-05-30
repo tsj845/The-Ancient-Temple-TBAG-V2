@@ -1,4 +1,4 @@
-let lfins = [0,0,0,0];
+let lfins = [0,0,0,0,0];
 
 // closes the loading screen
 function closeLoadingScreen () {
@@ -25,7 +25,7 @@ function onLoadHandler (e) {
 }
 
 // used to get the id of the iframe that a message was sent from
-const locs = {"LS":"loading_screen","CB":"combat_screen", "SH":"shop_screen","EQ":"equip_screen"};
+const locs = {"LS":"loading_screen","CB":"combat_screen", "SH":"shop_screen","EQ":"equip_screen", "PS":"promo_screen"};
 
 // established origin, used to block incoming messages from other origins
 let est_or = null;
@@ -50,7 +50,6 @@ function interperet_message (raw_message) {
 	const o = raw_message.slice(2,raw_message.indexOf(",R"));
 	// gets the actual message
 	let m = raw_message.slice(raw_message.indexOf("M:")+2);
-	//console.log(o, r, m);
 	// if the intended recipient of the message is the main window
 	if (r === "IN") {
 		// does things based on what the message is
@@ -63,7 +62,6 @@ function interperet_message (raw_message) {
 				if (est_or === null) {
 					est_or = event.origin;
 				}
-				// console.log("INIT message from "+o);
 				send(locs[o],"O:IN,R:"+o+",M:init");
 				if (o === "LS") {
 					send("loading_screen","O:IN,R:LS,M:index="+index.toString());
@@ -82,9 +80,11 @@ function interperet_message (raw_message) {
 						lfins[2] = 1;
 						document.getElementById("shop_screen").hidden = true;
 					case "EQ":
-						//console.log("EQ LFIN");
 						lfins[3] = 1;
 						document.getElementById("equip_screen").hidden = true;
+					case "PS":
+						lfins[4] = 1;
+						document.getElementById("promo_screen").hidden = true;
 				}
 				// checks if the title screen should be displayed
 				onLoadHandler();
@@ -93,6 +93,9 @@ function interperet_message (raw_message) {
 				switch (o) {
 					case "EQ":
 						equipRunner.close();
+						break;
+					case "SH":
+						shopRunner.close();
 						break;
 				}
 				return;
@@ -125,14 +128,26 @@ function interperet_message (raw_message) {
 							}
 							equipRunner.equip_item(args);
 							return;
+						case "SHRUN.SLOTCLICK":
+							if (o !== "SH") {
+								runerror_invalid_origin(fname, o);
+								return;
+							}
+							shopRunner.slot_click(args);
+							return;
+						case "SHRUN.SHBUY":
+							if (o !== "SH") {
+								runerror_invalid_origin(fname, o);
+								return;
+							}
+							shopRunner.buy_item(args);
+							return;
 						default:
 							throw ("ERROR, INVALID FUNC NAME: "+fname);
 							return;
 					}
 				}
 		}
-		// sends a response
-		//send(locs[o],"O:IN,R:"+o+",M:resp");
 	} else {
 		// else forward it to the intended recipient
 		send(locs[r],raw_message);
@@ -146,7 +161,6 @@ function receive (event) {
 			return;
 		}
 	}
-	//console.log(event.origin, event.data);
 	const raw_messages = event.data;
 	if (raw_messages.includes(";")) {
 		const messages = raw_messages.split(";");
@@ -183,6 +197,5 @@ window.addEventListener("load", onLoadHandler);
 
 function exec (l,code) {
 	const command = "O:IN,R:CB,M:!send('O:CB,R:IN,M:$'+String("+code+"))";
-	// console.log(command);
 	send(locs[l],command);
 }

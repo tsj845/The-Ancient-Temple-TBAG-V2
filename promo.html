@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Iris: The Ancient Temple Promo</title>
+		<link href="stylesheets/promo.css" rel="stylesheet" type="text/css" />
+		<style>
+			*, dialog::backdrop {
+				cursor:url("sprites/icons/custom_pointer.png") 15 0, auto;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="messages/common_messages.js"></script>
+		<div class="p">
+    		<label for="pswd" style="font-family:monospace;color:lemonchiffon;">Enter promotion code: </label>
+    		<input type="text" id="pswd" style="font-family:monospace;" autocomplete="off">
+    		<input type="button" value="Enter" onclick="checkPswd();" style="font-family:monospace;">
+			<p id="code-feedback" class="faded" style="font-family:monospace;">Invalid promotional code!</p>
+		</div>
+		<dialog id="unlocked_char" class="discrete-dialog">
+			<input type="image" src="sprites/icons/close_button_1.svg" style="width:2.5vw;height:2.5vw;position:absolute;right:0%;top:0%;" onclick="document.getElementById('unlocked_char').close()">
+			<img id="unlock_img" src="sprites/pastry.gif" style="width:50%;position:absolute;margin-left:auto;background-color:#b3fff2;border-style:solid;border-color:white;border-width:thick;">
+			<div class="speech-bubble" style="font-family:monospace;position:absolute;right:10%;">
+				<div class="arrow bottom right"></div>
+				You unlocked the <span id="unlock_name">Pastry</span> character! :D
+			</div>
+		</dialog>
+		<!--Function to check password the already set password is admin-->
+		<script>
+			/**
+			 * CODES:
+			 * pastry code: EMuj0IsP27NuT5hK
+			 * raspberry code: 8vjhaY5SamBkcFxR
+			 * shroom code: op3cpFghTYdMXOCE
+			 **/
+			const regex = new RegExp("[^0-9^a-z^A-Z]+");
+			let invalid = false;
+			const codes = [-67676733,-631449788,480995631];
+			const lst = [["sprites/chars/pastry.gif","Pastry"],["sprites/chars/raspberry.gif","Raspberry"],["sprites/chars/shroom.gif","Shroom"]];
+			function finish_fade () {
+				document.getElementById("code-feedback").className = "faded";
+				invalid = false;
+			}
+			function invalid_code () {
+				invalid = true;
+				const f = document.getElementById("code-feedback");
+				f.className = "";
+				f.className = "text-fade";
+				execAfterDelay(finish_fade,2500);
+			}
+			function checkPswd() {
+				if (invalid) {
+					return;
+				}
+				let password = document.getElementById("pswd").value;
+				document.getElementById("pswd").value = "";
+				if (password.length !== 16 || (regex.test(password))) {
+					invalid_code();
+					return;
+				}
+				password = get_hash(password);
+				const ind = codes.indexOf(password);
+				if (ind !== -1) {
+					document.getElementById("unlock_img").src = lst[ind][0];
+					document.getElementById("unlock_name").textContent = lst[ind][1];
+					document.getElementById("unlocked_char").showModal();
+				} else {
+					invalid_code();
+				}
+			}
+			async function resolveAfterDelay (delay) {
+				return new Promise(resolve => {
+					setTimeout(() => {
+						resolve(delay);
+					}, delay);
+				});
+			}
+
+			async function execAfterDelay (f, d) {
+				await resolveAfterDelay(d);
+				f();
+			}
+			function get_hash(s){if(typeof s !== "string"){throw "can only hash strings";}if(s.length===0){return 0;}let hash=0;for(let i=0;i<s.length;i++){let chr=s.charCodeAt(i);hash=((hash<<5)-hash)+chr;hash|=0;}return hash;}
+			function spec_mess (m) {
+				//
+			}
+			function lfinmessage (e) {
+				send("O:PS,R:IN,M:lfin");
+			}
+			// sends the init message
+			send("O:PS,R:IN,M:init");
+			// when the loading screen is fully loaded it hides the cover and alerts the main window
+			window.addEventListener("load",function (e) {lfinmessage()});
+		</script>
+		<div class="speech-bubble" style="font-family:monospace;position:absolute;left:65%;">
+			<div class="arrow bottom right"></div>
+			Hello! Welcome to the Promo Code Center!
+		</div>
+		<div class="speech-bubble-2" style="font-family:monospace;position:absolute;right:65%;">
+			<div class="arrow bottom left"></div>
+			This is where you can unlock new characters and items! 
+		</div>
+		<img src="sprites/chars/equipvendor.png" class="promovendor" alt="yeet"></img>
+	</body>
+</html>

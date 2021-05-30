@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -14,21 +13,13 @@
 				user-select : none;
 				-webkit-user-drag : none;
 			}
-			.mute_unchecked {
-				background : url("sprites/icons/unmuted_icon.svg");
-			}
-			.mute_checked {
-				background : url("sprites/icons/muted_icon.svg");
-			}
 		</style>
 	</head>
 	<body style="background:#222222;">
-		<!-- style the meters with the external stylesheet (stylesheets/combat_styles.css) -->
 		<div id="enemy_h_s">
 			<meter id="enemy_health" class="health enemy" max="10" value="10" low="2" high="6" optimum="8"></meter><br>
 			<meter id="en_shield_1" class="shield enemy" max="10" value="10"></meter>
 		</div>
-		<!--style="width:20vw;left:60%;bottom:45.47395687%"-->
 		<p id="stats" style="font-family:monospace;position:absolute;left:2%;top:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
 		<img id="combat_player_img" src="" style="width:37vmin;position:absolute;left:25%;bottom:25%;">
 		<p id="combat_dialog" style="font-family:monospace;position:absolute;top:77%;left:11.5%;">BEGIN BATTLE!</p>
@@ -55,7 +46,6 @@
 				//
 			}
 			send("O:CB,R:IN,M:init");
-			//send("O:CB,R:IN,M:ERROR");
 			window.addEventListener("load",function (e) {send("O:CB,R:IN,M:lfin")});
 			const cb_ab = document.getElementById("combat_att_btn");
 			const cb_db = document.getElementById("combat_def_btn");

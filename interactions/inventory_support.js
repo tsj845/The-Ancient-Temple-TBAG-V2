@@ -8,20 +8,17 @@ function add_slot (src, background, border, rarity_class) {
 	if (rarity_class === undefined) {
 		rarity_class = "rnorm";
 	}
-	// send("O:EQ,R:IN,M:$rarity_class="+rarity_class);
 	const d1 = document.createElement("div");
 	d1.setAttribute("class", "table_item");
 	const d2 = document.createElement("div");
 	d2.style = "background:"+border+";";
 	d1.appendChild(d2);
 	const d3 = document.createElement("div");
-	/*d3.style = "background:"+background+";";*/
 	d3.setAttribute("class", "content "+rarity_class);
 	const d4 = document.createElement("div");
 	d4.setAttribute("class", "fore1 display "+rarity_class);
 	const d5 = document.createElement("div");
 	d5.setAttribute("class", "fore2 display "+rarity_class);
-	//send("O:EQ,R:IN,M:$d4c="+d4.getAttribute("class")+", d5c="+d5.getAttribute("class"));
 	const img = document.createElement("img");
 	img.src = src;
 	d3.appendChild(img);
@@ -29,9 +26,7 @@ function add_slot (src, background, border, rarity_class) {
 	d3.appendChild(d5);
 	d2.appendChild(d3);
 	document.getElementById("inventory").appendChild(d1);
-	const oc = "slot_click("+(document.getElementById("inventory").children.length-1).toString()+")";
-	// d3.setAttribute("onclick",oc);
-	// img.setAttribute("onclick",oc);
+	// const oc = "slot_click("+(document.getElementById("inventory").children.length-1).toString()+")";
 	const v = document.getElementById("inventory").children.length-1;
 	d1.addEventListener("click",function(){slot_click(v)});
 }
@@ -54,7 +49,6 @@ function update_equipped (slot, src, rc, rot) {
 	if (rot === undefined) {
 		rot = "0";
 	}
-	// console.log(slot, src, rc, rot);
 	const container = document.getElementById("equip_slots").children[Number(slot)].children[0].children[0].children[0];
 	container.className = "content "+rc;
 	container.children[0].src = src;
@@ -81,7 +75,6 @@ function update_item_info (args) {
 		rarity = {"rnorm":"Normal","rfine":"Fine","rmagi":"Magical","rmyth":"Mythical","dev":"Unobtainable"}[args[2]];
 	} catch (err) {}
 	rarity = (rarity === undefined) ? "Unobtainable" : rarity;
-	// send("O:EQ,R:IN,M:$rarity="+rarity.toString()+", ii[2]="+args[2]);
 	document.getElementById("item_info_rarity").textContent = rarity;
 	document.getElementById("item_info_atk").textContent = (args[3][0] === "-" ? args[3] : "+"+args[3]);
 	document.getElementById("item_info_def").textContent = (args[4][0] === "-" ? args[4] : "+"+args[4]);

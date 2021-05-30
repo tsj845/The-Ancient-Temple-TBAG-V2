@@ -1,0 +1,102 @@
+body {
+    background-color : #222222
+}
+.p {
+	position : relative;
+	width : 50vw;
+	left : 25vw;
+	display : grid;
+}
+.p > * {
+	justify-self : center;
+}
+.promovendor {
+    width : 50%;
+    position : absolute;
+    bottom : 0%;
+    left : 25%;
+}
+.speech-bubble {
+    background-color: #f8f8f8;
+    border: 1px solid #c8c8c8;
+    border-radius: 5px;
+    width: 110px;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+}
+.speech-bubble .arrow {
+    border-style: solid;
+    position: absolute;
+}
+ 
+.bottom {
+    border-color: #c8c8c8 transparent transparent transparent;
+    border-width: 8px 8px 0px 8px;
+    bottom: -8px;
+}
+.bottom:after {
+    border-color: #f8f8f8 transparent transparent transparent;
+    border-style: solid;
+    border-width: 7px 7px 0px 7px;
+    bottom: 1px;
+    content: "";
+    position: absolute;
+    left: -7px;
+}
+.speech-bubble-2{
+    background-color: #f8f8f8;
+    border: 1px solid #c8c8c8;
+    border-radius: 5px;
+    width: 110px;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+}
+.speech-bubble-2 .arrow {
+    border-style: solid;
+    position: absolute;
+}
+.bottom {
+    border-color: #c8c8c8 transparent transparent transparent;
+    border-width: 8px 8px 0px 8px;
+    bottom: -8px;
+}
+.bottom:after {
+    border-color: #f8f8f8 transparent transparent transparent;
+    border-style: solid;
+    border-width: 7px 7px 0px 7px;
+    bottom: 1px;
+    content: "";
+    position: absolute;
+    left: -7px;
+}
+dialog.discrete-dialog {
+	width : 100vw;
+	height : 100vh;
+	border : none;
+	background : #222222;
+}
+
+#code-feedback {
+	--r : 255;
+	--g : 0;
+	--b : 0;
+	user-select : none;
+}
+
+.text-fade {
+	animation : 2.5s linear text-fade;
+}
+.faded {
+	color : transparent;
+}
+
+@keyframes text-fade {
+	0% {
+		color : rgba(var(--r),var(--g),var(--b),1);
+	}
+	100% {
+		color : transparent;
+	}
+}

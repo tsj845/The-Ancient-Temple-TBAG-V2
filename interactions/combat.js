@@ -137,6 +137,7 @@ class CombatRunner {
 		if (!this.over) {
 			return;
 		}
+		player.abs = 0;
 		player.health = player.maxHealth;
 		update_combat();
 		if (this.player_won) {

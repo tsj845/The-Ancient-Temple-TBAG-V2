@@ -4,7 +4,7 @@ let badPerson = false;
 let special_keys = ["Tab","MetaLeft","AltLeft","AltRight","ArrowLeft","ArrowRight","ArrowUp","ArrowDown","ControlLeft","ControlRight","ShiftLeft","ShiftRight","CapsLock"];
 
 // main dictionairy of level names to level data
-const main_dict = {"chapter_1/option":option_file, "chapter_1/temple":temple_file, "chapter_2/labyrinth1":labyrinth_file_1};
+const main_dict = {"chapter_1/option":option_file, "chapter_1/temple":temple_file,"chapter_1/s_lab_illuminated":illuminated_file,"chapter_1/s_lab_unilluminated":unilluminated_file, "chapter_2/labyrinth1":labyrinth_file_1};
 
 // a lot of references to everything related to the playing of the game
 const main_input = document.getElementById("text_input");
@@ -32,7 +32,6 @@ class Game {
 		this.chapter = 1;
 		// the name the player choses for themselves
 		this.playerName = "";
-		// stores what type of information the user is entering
 		this.inType = 0;
 		// just an inventory
 		this.inventory = {};
@@ -53,7 +52,7 @@ class Game {
 		// shhh, secrets
 		this.is_dev = false;
 		// the sound that is currently playing, used for background music
-		this.c_sound = null;
+		this.c_sound = document.getElementById("silence");
 	}
 	// runs through all of the lines and finds every label and where it is, used for everything from gotos to where a user should go based on their route
 	firstPass () {
@@ -213,7 +212,6 @@ class Game {
 						}
 						this.c_sound = elem;
 						if (!sound_disabled) {
-							// console.log(elem.currentTime);
 							elem.currentTime = 0;
 							elem.play();
 						}
@@ -225,7 +223,6 @@ class Game {
 					if (sound_disabled) {
 						break;
 					}
-					// console.log(document.getElementById(line[1]).currentTime);
 					document.getElementById(line[1]).currentTime = 0;
 					document.getElementById(line[1]).play();
 					break;
@@ -273,7 +270,6 @@ class Game {
 							args.push(t[3]);
 						}
 					}
-					// console.log(args);
 					this.startInteraction(args);
 					return;
 			}
@@ -299,9 +295,6 @@ class Game {
 				this.progress();
 			}
 		}
-	}
-	showPortalUI () {
-		// coming soon
 	}
 	// handles text that the user inputs
 	handleTextInput (value) {
@@ -331,10 +324,8 @@ class Game {
 				name_text.textContent = value;
 			}
 			this.inType = 1;
-			//good_input = true;
 			// shows the character select screen
 			const cs = document.getElementById("char_select");
-			// console.log(cs);
 			cs.showModal();
 			// shows character information
 			displayChar();
@@ -382,11 +373,17 @@ game.load("chapter_1/option");
 
 // event handler for text the user has entered
 function handleTextInput (e) {
-	game.handleTextInput(e.target.value);
+	if (e.toString() !== "[object KeyboardEvent]") {
+		return;
+	}
+	if (e.code.toString() !== "Enter" || main_input.value.length === 0) {
+		return;
+	}
+	game.handleTextInput(main_input.value);
 }
 
 // sets up the event listener
-main_input.addEventListener("change", handleTextInput);
+main_input.addEventListener("keyup", handleTextInput);
 
 // event handler for key presses
 function keyPress (e) {
@@ -405,16 +402,14 @@ document.addEventListener("keydown", keyPress);
 
 // toggles the audio if the user mutes or unmutes it
 function toggleAudio () {
-	// changes the sprite for the custom button
-	// const img = document.getElementById("mute_sounds_2");
 	sound_disabled = !sound_disabled;
 	if (sound_disabled) {
 		game.stopSounds();
 	} else {
 		game.startSounds();
 	}
-	// img.setAttribute("class", (sound_disabled ? "mute_checked" : "mute_unchecked"));
 }
 
-// adds the event listener for the custom button
-// document.getElementById("mute_sounds_2").addEventListener("click",toggleAudio);
+function open_promo () {
+	//
+}
