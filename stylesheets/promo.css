@@ -1,6 +1,8 @@
+/* basic stuff */
 body {
     background-color : #222222
 }
+/* I don't know what most of this does, John copied a bunch of it off of the internet */
 .p {
 	position : relative;
 	width : 50vw;
@@ -10,6 +12,7 @@ body {
 .p > * {
 	justify-self : center;
 }
+/* positions and sizes the promovendor image */
 .promovendor {
     width : 50%;
     position : absolute;
@@ -71,6 +74,8 @@ body {
     position: absolute;
     left: -7px;
 }
+
+/* makes dialogs discrete */
 dialog.discrete-dialog {
 	width : 100vw;
 	height : 100vh;
@@ -78,6 +83,7 @@ dialog.discrete-dialog {
 	background : #222222;
 }
 
+/* used to make the "invalid promo code" text fade */
 #code-feedback {
 	--r : 255;
 	--g : 0;
@@ -88,10 +94,13 @@ dialog.discrete-dialog {
 .text-fade {
 	animation : 2.5s linear text-fade;
 }
+
+/* keeps the text faded */
 .faded {
 	color : transparent;
 }
 
+/* fading animation */
 @keyframes text-fade {
 	0% {
 		color : rgba(var(--r),var(--g),var(--b),1);

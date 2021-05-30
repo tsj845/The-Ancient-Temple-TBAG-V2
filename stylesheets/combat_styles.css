@@ -1,56 +1,68 @@
+/* defines things for images */
 :root {
 	--img_width : 5vw;
 	--img_align : middle;
 }
 
+/* hides overflow and sets font */
 div {
 	overflow : hidden;
 	font-family : monospace;
-	border : white;
+	/* border : white; */
 }
 
+/* positions the attack button */
 #combat_att_btn {
 	position : absolute;
 	left : 0%;
 	bottom : 0%;
 }
 
+/* positions the defend button */
 #combat_def_btn {
 	position : absolute;
 	left : 25%;
 	bottom : 0%;
 }
 
+/* positions the pursuade button */
 #combat_per_btn {
 	position : absolute;
 	left : 50%;
 	bottom : 0%;
 }
 
+/* positions the flee button */
 #combat_flee_btn {
 	position : absolute;
 	left : 75%;
 	bottom : 0%;
 }
 
+/* makes text white */
 p, div {
 	color : white
 }
 
+/* styles meters, allows them be used as bars that represent health and shield */
 meter::-webkit-meter-bar {
 	background : none;
 	border : none;
 }
 
+/* makes shield bars blue */
 meter.shield::-webkit-meter-optimum-value {
 	background-color : cyan;
 }
 meter.shield {
 	background : none;
 }
+
+/* for mozilla browsers */
 meter.shield::-moz-meter-bar {
 	background-image : linear-gradient(#00ffff,#00ffff);
 }
+/* makes health bars go from green to orange to red depending on how much health the entity has left */
 meter.health::-webkit-meter-optimum-value {
 	background-color : lime;
 }
@@ -60,6 +72,8 @@ meter.health:-moz-meter-optimum::-moz-meter-bar {
 meter.health::-webkit-meter-suboptimal-value {
 	background-color : orange;
 }
+
+/* does the same for mozilla browsers */
 meter.health:-moz-sub-optimum::-moz-meter-bar {
 	background-image : linear-gradient(#ffa500,#ffa500);
 }
@@ -70,12 +84,14 @@ meter.health:-moz-sub-sub-optimum::-moz-meter-bar {
 	background-image : linear-gradient(#ff0000,#ff0000);
 }
 
+/* positions the enemy's health and shield bars */
 #enemy_h_s {
 	position : absolute;
 	bottom : 75%;
 	right : 25%;
 }
 
+/* sizes the image that represents the enemy */
 meter.enemy {
 	width : 37vmin;
 }

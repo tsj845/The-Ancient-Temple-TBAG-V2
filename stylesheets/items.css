@@ -1,39 +1,53 @@
+/* defines colors and some polygons */
 :root {
+	/* normal color */
 	--ngrad : linear-gradient(45deg,#666666 25% 50%,#696969);
+	/* fine color */
 	--fgrad : linear-gradient(45deg,#0066ff 25% 50%,#0044cc);
+	/* magic color */
 	--mgrad : linear-gradient(45deg,#b105a2 25% 50%,#b92eff);
+	/* mythic background color */
 	--lgrad-b : linear-gradient(45deg,#ff768b,#ff4460);
 
 	/*--lgrad-f : linear-gradient(-45deg,#ff0000,#ff8800,#ffff00,#00ff00,#00ffff,#0000ff,
 	#ff00ff);
 	/*send("equip_screen","O:IN,R:EQ,M:=sprites/equipment/swords/rustedsword.png,3,rmyth,-90")*/
 	/*--lgrad-f : linear-gradient(-45deg,#9c4f96,#ff6355,#FBA949,#fae442,#8bd448,#2aa8f2);*/
+	/* mythic color */
     --lgrad-f : linear-gradient(-45deg,#ffafbd,
 	#ffc3a0);
      /* The Rainbow Gradient Color Scheme palette has 6 colors which are Razzmic Berry (#9C4F96), Sunset Orange (#FF6355), Yellow Orange (#FBA949), Gargoyle Gas (#FAE442), Kiwi (#8BD448) and Button Blue (#2AA8F2). */
+	/* polygons */
 	--cp-b1 : polygon(70% 0%, 100% 30%, 100% 35%, 65% 0%);
 	--cp-b2 : polygon(80% 0%, 100% 20%, 100% 25%, 75% 0%);
 }
 
+/* normal rarity */
 .rnorm {
 	background : var(--ngrad);
 }
+/* fine rarity */
 .rfine {
 	background : var(--fgrad);
 }
+/* magical rarity */
 .rmagi {
 	background : var(--mgrad);
 }
+/* mythic rarity */
 .rmyth {
 	background : var(--lgrad-b);
 }
+/* developer rarity */
 .dev {
 	background : #00eeff;
 }
+/* for empty slots */
 .empty {
 	background : transparent;
 }
 
+/* for polygons */
 .display {
 	position : absolute;
 	width : inherit;
@@ -42,12 +56,14 @@
 	top : 0%;
 }
 
+/* item slot background */
 .backing {
 	left : 0%;
 	top : 0%;
 	overflow : hidden;
 }
 
+/* same rarities, just for backgrounds instead of foregrounds */
 .content.rnorm {
 	background : #a8a8a8;
 }
@@ -69,10 +85,12 @@
 	background : black;
 }
 
+/* adds polygon to first foreground shape */
 .fore1 {
 	clip-path : var(--cp-b1);
 }
 
+/* adds polygon to second foreground shape */
 .fore2 {
 	clip-path : var(--cp-b2);
 }
