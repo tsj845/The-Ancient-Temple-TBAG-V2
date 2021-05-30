@@ -2,7 +2,7 @@ function set_slot (src, index, rc, rot) {
 	if (rot === undefined) {
 		rot = 0;
 	}
-	const container = document.getElementById("inventory").children[index].children[0].children[0];
+	const container = document.getElementById("shop_slots").children[index].children[0].children[0];
 	container.className = "content "+rc;
 	container.children[0].src = src;
 	container.children[1].className = "fore1 display "+rc;

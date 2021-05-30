@@ -60,12 +60,15 @@ input[type="image"], img, td {
 }
 
 #item_info_container {
-	width : 25%;
-	height : 75%;
-	position : abosolute;
-	left : 2.5%;
-	top : 12.5%;
-	overflow-y : scroll;
+	width : 75%;
+	height : 35%;
+	position : absolute;
+	left : 25%;
+	top : calc(20% + 30vw);
+	overflow-x : scroll;
+	display : flex;
+	align-content : space-between;
+	grid-column-gap : 5vw;
 }
 
 #item_info_container * {
@@ -82,4 +85,9 @@ input[type="image"], img, td {
 }
 #buy_btn:hover {
 	background : white;
+}
+
+#item_info_container > span {
+	margin-top : auto;
+	margin-bottom : auto;
 }

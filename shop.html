@@ -18,7 +18,7 @@
             <p>The name, price, and stats are listed underneath the picture of an item. Make sure to look at the stats before buying something!
             <p>If you don't have any gold, you won't be abltory! 
             <p>Anyway, happy shopping! Please do buy something... please?! !-->
-		<img src="sprites/chars/shopvendor.png" style="position:absolute;left:-10%;top:15%;width:min(80vw,80vh);">
+		<img src="sprites/chars/shopvendor.png" style="position:absolute;left:-20%;top:15%;width:80vmin;z-index:-5;">
 		<input type="image" id="shop_close_btn" src="sprites/icons/close_button_1.svg" height="15vh" style="position:absolute;right:0%;top:0%;" onclick="send('O:SH,R:IN,M:close')">
 		<span id="shop_dialog" style="position:absolute;left:25vw;bottom:5%;width:50vw;text-align:center;color:white;"></span>
 		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:8%;position:absolute;right:0%;top:11%">
@@ -53,8 +53,8 @@
 			</div>
 		</div>
 		<div id="item_info_container" class="hide_scrollbar" hidden style="font-family:monospace;">
-			<p>Item Name:<br><span id="item_info_name">Uh oh, something went wrong when displaying the item information!</span><br><br>Item Type:<br><span id="item_info_type">placeholder</span><br><br>Item Rarity:<br><span id="item_info_rarity">placeholder</span><br><br>Stats:<br><span id="item_info_stats">ATK: <span id="item_info_atk" style="color:crimson;">+1</span><br>DEF: <span id="item_info_def" style="color:aquamarine;">+0</span><br>CHA: <span id="item_info_cha" style="color:violet;">+0</span><br>Shield: <span id="item_info_shield" style="color:cyan;">+0</span></span></p>
-			<input type="button" id="buy_btn" style="color:black;" value="buy item" onclick="buy_item()">
+			<p>Item Name:<br><span id="item_info_name">Uh oh, something went wrong when displaying the item information!</span><br><br>Item Type:<br><span id="item_info_type">placeholder</span><br><br>Item Rarity:<br><span id="item_info_rarity">placeholder</span><br></p><p>Stats:<br><span id="item_info_stats">ATK: <span id="item_info_atk" style="color:crimson;">+1</span><br>DEF: <span id="item_info_def" style="color:aquamarine;">+0</span><br>CHA: <span id="item_info_cha" style="color:violet;">+0</span><br>Shield: <span id="item_info_shield" style="color:cyan;">+0</span></span></p>
+			<span><input type="button" id="buy_btn" style="color:black;" value="buy item" onclick="buy_item()"></span>
 		</div>
 		<script src="messages/common_messages.js"></script>
 		<script src="interactions/shop_support.js"></script>

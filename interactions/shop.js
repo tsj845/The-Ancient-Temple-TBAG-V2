@@ -21,6 +21,12 @@ class ShopRunner {
 			// TODO: give feedback to user
 			return;
 		}
+		// not enough money to buy item
+		if (player_coins < 10) {
+			return;
+		}
+		// pay
+		player_coins -= 10;
 		equipRunner.inventory[index] = this.items[slot];
 		this.items[slot] = null;
 		this.update_items();

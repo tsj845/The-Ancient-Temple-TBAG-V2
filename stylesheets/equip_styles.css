@@ -7,7 +7,7 @@
 	bottom : 15vh;
 	width : 50vw;
 	height : 10vw;
-	overflow : auto;
+	overflow-y : scroll;
 }
 
 .hide_scrollbar {
