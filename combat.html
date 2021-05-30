@@ -16,37 +16,49 @@
 		</style>
 	</head>
 	<body style="background:#222222;">
+		<!-- enemy health and shield bars -->
 		<div id="enemy_h_s">
 			<meter id="enemy_health" class="health enemy" max="10" value="10" low="2" high="6" optimum="8"></meter><br>
 			<meter id="en_shield_1" class="shield enemy" max="10" value="10"></meter>
 		</div>
+		<!-- player stats -->
 		<p id="stats" style="font-family:monospace;position:absolute;left:2%;top:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
 		<img id="combat_player_img" src="" style="width:37vmin;position:absolute;left:25%;bottom:25%;">
+		<!-- tells the player things like how much damage they did and took -->
 		<p id="combat_dialog" style="font-family:monospace;position:absolute;top:77%;left:11.5%;">BEGIN BATTLE!</p>
+		<!-- the enemy image -->
 		<img id="combat_enemy_img" src="sprites/enemies/bosses/book.png" style="width:37vmin;position:absolute;top:25%;right:25%;">
+		<!-- attack button -->
 		<div id="combat_att_btn">
 			<img src="sprites/buttons/attack.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
 			ATTACK
 		</div>
+		<!-- defend button -->
 		<div id="combat_def_btn">
 			<img src="sprites/buttons/defend.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
 			DEFEND
 		</div>
+		<!-- pursuade button  -->
 		<div id="combat_per_btn">
 			<img src="sprites/buttons/persuade.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
 			PERSUADE
 		</div>
+		<!-- flee button -->
 		<div id="combat_flee_btn">
 			<img src="sprites/buttons/flee.png" style="width:var(--img_width);vertical-align:var(--img_align);" class="button_icon">
 			FLEE
 		</div>
+		<!-- cross window communication -->
 		<script src="messages/common_messages.js"></script>
 		<script>
 			function spec_mess (m) {
 				//
 			}
+			// initial message
 			send("O:CB,R:IN,M:init");
+			// loading message
 			window.addEventListener("load",function (e) {send("O:CB,R:IN,M:lfin")});
+			// sets up event listeners to animate buttons
 			const cb_ab = document.getElementById("combat_att_btn");
 			const cb_db = document.getElementById("combat_def_btn");
 			const cb_pb = document.getElementById("combat_per_btn");

@@ -50,6 +50,7 @@ function s_char () {
 	char_selected = true;
 }
 
+// updates stats and images
 function update_combat () {
 	const att = player.get_stat("attack").toString()+"/10";
 	const def = player.get_stat("defend").toString()+"/10";

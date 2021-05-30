@@ -12,13 +12,16 @@
 		</style>
 	</head>
 	<body>
+		<!-- cross window messaging -->
 		<script src="messages/common_messages.js"></script>
+		<!-- I didn't make this, John copy pasted it in from the internet with a few modifications -->
 		<div class="p">
     		<label for="pswd" style="font-family:monospace;color:lemonchiffon;">Enter promotion code: </label>
     		<input type="text" id="pswd" style="font-family:monospace;" autocomplete="off">
     		<input type="button" value="Enter" onclick="checkPswd();" style="font-family:monospace;">
 			<p id="code-feedback" class="faded" style="font-family:monospace;">Invalid promotional code!</p>
 		</div>
+		<!-- shows the player which character they unlocked when a valid code is entered -->
 		<dialog id="unlocked_char" class="discrete-dialog">
 			<input type="image" src="sprites/icons/close_button_1.svg" style="width:2.5vw;height:2.5vw;position:absolute;right:0%;top:0%;" onclick="document.getElementById('unlocked_char').close()">
 			<img id="unlock_img" src="sprites/pastry.gif" style="width:50%;position:absolute;margin-left:auto;background-color:#b3fff2;border-style:solid;border-color:white;border-width:thick;">
@@ -35,14 +38,17 @@
 			 * raspberry code: 8vjhaY5SamBkcFxR
 			 * shroom code: op3cpFghTYdMXOCE
 			 **/
+			// special characters DENIED
 			const regex = new RegExp("[^0-9^a-z^A-Z]+");
 			let invalid = false;
 			const codes = [-67676733,-631449788,480995631];
 			const lst = [["sprites/chars/pastry.gif","Pastry"],["sprites/chars/raspberry.gif","Raspberry"],["sprites/chars/shroom.gif","Shroom"]];
+			// finishes the fading animation
 			function finish_fade () {
 				document.getElementById("code-feedback").className = "faded";
 				invalid = false;
 			}
+			// tells the user when they've entered an invalid code
 			function invalid_code () {
 				invalid = true;
 				const f = document.getElementById("code-feedback");
@@ -50,6 +56,7 @@
 				f.className = "text-fade";
 				execAfterDelay(finish_fade,2500);
 			}
+			// checks the code
 			function checkPswd() {
 				if (invalid) {
 					return;
@@ -60,16 +67,22 @@
 					invalid_code();
 					return;
 				}
+				// hashes the code, no sensitive info like passwords should ever be stored in plain-text
 				password = get_hash(password);
+				// gets the index of the code
 				const ind = codes.indexOf(password);
+				// code is valid
 				if (ind !== -1) {
+					// shows the player which character they unlocked
 					document.getElementById("unlock_img").src = lst[ind][0];
 					document.getElementById("unlock_name").textContent = lst[ind][1];
 					document.getElementById("unlocked_char").showModal();
+				// code is invalid
 				} else {
 					invalid_code();
 				}
 			}
+			// delayed execution of a function
 			async function resolveAfterDelay (delay) {
 				return new Promise(resolve => {
 					setTimeout(() => {
@@ -77,11 +90,11 @@
 					}, delay);
 				});
 			}
-
 			async function execAfterDelay (f, d) {
 				await resolveAfterDelay(d);
 				f();
 			}
+			// a hash function. thank you stack overflow, live saver
 			function get_hash(s){if(typeof s !== "string"){throw "can only hash strings";}if(s.length===0){return 0;}let hash=0;for(let i=0;i<s.length;i++){let chr=s.charCodeAt(i);hash=((hash<<5)-hash)+chr;hash|=0;}return hash;}
 			function spec_mess (m) {
 				//
@@ -94,6 +107,7 @@
 			// when the loading screen is fully loaded it hides the cover and alerts the main window
 			window.addEventListener("load",function (e) {lfinmessage()});
 		</script>
+		<!-- more copy pasted things -->
 		<div class="speech-bubble" style="font-family:monospace;position:absolute;left:65%;">
 			<div class="arrow bottom right"></div>
 			Hello! Welcome to the Promo Code Center!

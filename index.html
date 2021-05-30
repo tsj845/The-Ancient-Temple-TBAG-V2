@@ -74,7 +74,6 @@
 				width : 40vw;
 				left : 30%;
         		top : 40%;
-				//z-index : /*50*/1;
 			}
 			#title_div {
 				position : absolute;
@@ -89,12 +88,19 @@
 		<!-- cross window messaging script -->
 		<script src="messages/index_messages.js"></script>
 		<!-- all iframes -->
+		<!-- loading screen -->
 		<iframe id="loading_screen" src="./loading.html" sandbox="allow-same-origin allow-scripts" style="z-index:15;"></iframe>
+		<!-- title screen -->
 		<div id="title_div" style="width:100vw;height:100vh;">
+			<!-- title screen music -->
 			<audio id="title_music" src="audios/titlescreenmusic.mp3" loop></audio>
+			<!-- the first background image -->
 			<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_1.png) repeat;" hidden></div>
+			<!-- the second background image -->
 			<div class="ts_im" style="--start_x:0%;--end_x:0%;--start_y:0%;--end_y:var(--bi_h);background : url(sprites/wall_2.png) repeat;" hidden></div>
+			<!-- not the background, but the text -->
 			<img src="sprites/titlescreen.png" id="title_img">
+			<!-- covers the title screen background for a fraction of a second so that it doesn't look loke the background is jumping -->
 			<div id="title_cover" style="background:black;width:100vw;height:100vh;position:absolute;left:0px;top:0px;"></div>
 			<script>
 				let in_title = true;
@@ -134,21 +140,28 @@
 				// alert("WARNING: the beginning of the game is slated for a major change when saving functionality is introduced")
 			</script>
 		</div>
+		<!-- combat screen -->
 		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<!-- shop screen -->
 		<iframe id="shop_screen" src="./shop.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<!-- equip screen -->
 		<iframe id="equip_screen" src="./equip.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<!-- promo screen -->
 		<iframe id="promo_screen" src="./promo.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
 		<!-- displays the selected character's icon in the lower right -->
     	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
 		<!-- coins and stats -->
 		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:8%;position:absolute;right:0%;top:11%">
+		<!-- counter for the coin -->
 		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:8%;top:15.5%;">0</label>
+		<!-- character stats -->
 		<p id="stats" style="font-size:3vh;position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
 		<!-- all audio elements -->
 		<div>
 			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
 			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
 			<audio id="namey" src="audios/namey.mp3" loop></audio>
+			<!-- used whenever the background music needs to be stopped -->
 			<audio id="silence" src="audios/silence.mp3" loop></audio>
 			<audio id="youwin" src="audios/sfx/youwin.mp3"></audio>
 			<audio id="adventure2" src="audios/adventure2.mp3" loop></audio>
@@ -198,10 +211,14 @@
 			<!-- saves -->
 			<input class="bb" type="button" value="save" onclick="">
 		</div>
+		<!-- header text -->
 		<h4 id="header_text">TUTORIAL</h4>
+		<!-- player name -->
 		<p id="name_text"></p>
+		<!-- story text -->
 		<div id="main_text_container">
 			<p id="main_output" class="output_line">Welcome to The Ancient Temple! </p>
+			<!-- text input entered by the player -->
 			<div id="input_container">
 				<p id="options"></p>
 				<label for="text_input" id="prompt_label">Test: </label>
@@ -210,11 +227,16 @@
 		</div>
 		<!-- character select screen -->
 		<dialog id="char_select">
+			<!-- previous character button -->
 			<img src="sprites/icons/left_button_1.svg" id="prev_char_btn" class="csb" onclick="p_char()">
+			<!-- character preview image -->
 			<img id="char_preview" src="sprites/chars/character.png" alt="a preview image of the character">
+			<!-- next character button -->
 			<img src="sprites/icons/right_button_1.svg" id="next_char_btn" class="csb" onclick="n_char()">
 			<br>
+			<!-- character select button -->
 			<input type="button" id="char_select_btn" class="wb" value="select" onclick="s_char()">
+			<!-- discription of the character -->
 			<div id="char_description"></div>
 		</dialog>
 		<!-- holds the minimap -->
