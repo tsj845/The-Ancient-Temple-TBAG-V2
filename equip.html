@@ -103,11 +103,10 @@
 						break;
 				}
 			}
-			add_slot("","black","white","rnorm");
-			add_slot("","black","white","rfine");
-			add_slot("","black","white","rmagi");
-			add_slot("","black","white","rmyth");
-			add_slot("","black","white","rnorm");
+			const slots = 10;
+			for (let i = 0; i < slots; i ++) {
+				add_slot("","black","white","empty");
+			}
 			let current_slot = 0;
 			function slot_click (slot) {
 				current_slot = slot;

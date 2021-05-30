@@ -36,8 +36,8 @@
 
 .display {
 	position : absolute;
-	width : 10vw;
-	height : 10vw;
+	width : inherit;
+	height : inherit;
 	left : 0%;
 	top : 0%;
 }
@@ -71,12 +71,8 @@
 
 .fore1 {
 	clip-path : var(--cp-b1);
-	left : 0%;
-	top : 0%;
 }
 
 .fore2 {
 	clip-path : var(--cp-b2);
-	left : 0%;
-	bottom : 0%;
 }

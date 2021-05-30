@@ -9,3 +9,5 @@
 - made equipping items fully functional
 
 - switched functionality from test equip to the offical button
+
+- shopping now works note: has not been thouroghly tested and also does not have price assignments

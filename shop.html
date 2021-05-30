@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<div id="item_info_container" class="hide_scrollbar" hidden style="font-family:monospace;">
-			<p>Item Name:<br><span id="item_info_name">Uh oh, something went wrong when displaying the item information!</span><br><br>Item Type:<br><span id="item_info_type">placeholder</span><br><br>Item Rarity:<br><span id="item_info_rarity">placeholder</span><br></p><p>Stats:<br><span id="item_info_stats">ATK: <span id="item_info_atk" style="color:crimson;">+1</span><br>DEF: <span id="item_info_def" style="color:aquamarine;">+0</span><br>CHA: <span id="item_info_cha" style="color:violet;">+0</span><br>Shield: <span id="item_info_shield" style="color:cyan;">+0</span></span></p>
+			<p>Item Name:<br><span id="item_info_name">Uh oh, something went wrong when displaying the item information!</span><br><br>Item Type:<br><span id="item_info_type">placeholder</span><br><br>Item Rarity:<br><span id="item_info_rarity">placeholder</span><br></p><p>Stats:<br><span id="item_info_stats">ATK: <span id="item_info_atk" style="color:crimson;">+1</span><br>DEF: <span id="item_info_def" style="color:aquamarine;">+0</span><br>CHA: <span id="item_info_cha" style="color:violet;">+0</span><br>Shield: <span id="item_info_shield" style="color:cyan;">+0</span><br>Cost: <span id="price_tag" style="color:yellow;">0</span></p>
 			<span><input type="button" id="buy_btn" style="color:black;" value="buy item" onclick="buy_item()"></span>
 		</div>
 		<script src="messages/common_messages.js"></script>
@@ -84,7 +84,6 @@
 			}
 			let current_slot = 0;
 			function slot_click (index) {
-				// console.log(index);
 				current_slot = index;
 				send("O:SH,R:IN,M:*SHRUN.SLOTCLICK-"+index.toString());
 			}
