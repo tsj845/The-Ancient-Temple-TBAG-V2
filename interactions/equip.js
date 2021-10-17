@@ -8,6 +8,7 @@ class EquipRunner {
 	constructor () {
 		this.inventory = [loot_dict["normal"][0], loot_dict["normal"][1], loot_dict["normal"][2], loot_dict["mythic"][0], loot_dict["dev"][0],null,null,null,null,null];
 		this.body_slots = {"sword":no_sword,"shield":no_shield,"armor":no_armor};
+		this.story_iven = [];
 	}
 	get_stat_boosts () {
 		let lst = [0,0,0,0];
@@ -28,6 +29,14 @@ class EquipRunner {
 				send("equip_screen","O:IN,R:EQ,M:=,"+i.toString()+",empty");
 			} else {
 				send("equip_screen","O:IN,R:EQ,M:="+item[1]+","+i.toString()+","+item[3]+","+item[8].toString());
+			}
+		}
+		for (let ind = 0; ind < 3; ind ++) {
+			const type = {0:"sword", 1:"shield", 2:"armor"}[ind];
+			const data = this.body_slots[type];
+			if (data[0] !== "empty") {
+				let out = [ind.toString(),data[1],data[3],data[8].toString()];
+				send("equip_screen","O:IN,R:EQ,M:&"+out.join("|"));
 			}
 		}
 	}
@@ -83,6 +92,13 @@ class EquipRunner {
 		if (!char_selected) {
 			return;
 		}
+		// plays the gacha theme
+		const equip_theme = document.getElementById("equip_theme");
+		// starts theme from the beginning
+		equip_theme.currentTime = 0;
+		if (!sound_disabled) {
+			equip_theme.play();
+		}
 		game.disabled = true;
 		game.interaction = true;
 		document.getElementById("equip_screen").hidden = false;
@@ -90,9 +106,14 @@ class EquipRunner {
 	}
 	close () {
 		document.getElementById("equip_screen").hidden = true;
+		// pauses the gacha theme
+		document.getElementById("equip_theme").pause();
 		game.interaction = false;
 		game.disabled = false;
 		update_combat();
+		if (!sound_disabled) {
+			game.c_sound.play();
+		}
 	}
 }
 

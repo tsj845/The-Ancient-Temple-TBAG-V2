@@ -1,0 +1,20 @@
+note that tiles must not clash with one another if they are to be used in the same level
+
+enemys (this is so that you don't have to hunt through the code for what enemy sprites we need):
+	skeleton,
+	zombie,
+	wolf,
+	slime,
+	statue
+
+need:
+	path tile,
+	path tile with a key on it,
+	wall tile,
+	closed door,
+	open door,
+	player sprites (idle and running, both directions, also players need to be squares use existing sprites as templates),
+	enemy tiles (you can do one for now, but we need one sprite for each enemy in the "mobs" dict (found in combat.js))
+
+not required but would like to have:
+	sort of foggy tile for the empty tiles (they are filler tiles to pad out too small chunks), def need to be different from the path tiles but shouldn't be too interesting as they are not the main focus for the player

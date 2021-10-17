@@ -7,25 +7,33 @@ const c_cost_mult = 2;
 // multiplier for cost based on shield increase
 const s_cost_mult = 3.75;
 
+
 class ShopRunner {
 	constructor () {
-		this.items = [loot_dict["normal"][0],loot_dict["fine"][0],loot_dict["normal"][2]];
+		this.items = [];
+		this.max_items = 5;
+	}
+	generate_items () {
+		if (this.items.length >= this.max_items) {
+			return;
+		}
+		for (let i = 0; i < randrange(1,this.max_items-this.items.length); i ++) {
+			this.items.push(choice(loot_dict[choice(["normal","fine","magical"])]));
+		}
+		// trigger save
 	}
 	// displays items and their stats
 	update_items () {
+		let f = [];
 		for (let i = 0; i < this.items.length; i ++) {
-			const item = this.items[i];
-			if (item === null) {
-				send("shop_screen","O:IN,R:SH,M:=,"+i.toString()+",empty");
-			} else {
-				send("shop_screen","O:IN,R:SH,M:="+item[1]+","+i.toString()+","+item[3]+","+item[8].toString());
-			}
+			f.push(this.items[i][0]);
 		}
+		send("shop_screen","O:IN,R:SH,M:%"+f.join("|"));
 	}
 	// calculates the price of an item
 	get_price (data) {
 		// multiplier for item type
-		const type_cost = {"sword":1,"shield":1.5,"armor":2}[data[2].toLowerCase()];
+		const type_cost = {"sword":2,"shield":1.5,"armor":1}[data[2].toLowerCase()];
 		// multiplier for item rarity
 		const rarity_multiplier = {"rnorm":1,"rfine":2,"rmagi":3,"rmyth":10,"dev":1}[data[3]];
 		// cost of stats boosted by item
@@ -53,12 +61,12 @@ class ShopRunner {
 		}
 		player_coins -= price;
 		// updates the coin counters
-		document.getElementById("coin_count").textContent = player_coins.toString();
+		document.getElementById("coin_count").children[1].textContent = player_coins.toString();
 		send("shop_screen","O:IN,R:SH,M:#coin_count?text="+player_coins.toString());
 		// adds the item to the inventory
 		equipRunner.inventory[index] = this.items[slot];
 		// removes the item from the shop
-		this.items[slot] = null;
+		this.items.splice(slot,1);
 		// updates the shop to display the items
 		this.update_items();
 		// TODO: save game after purchase
@@ -76,7 +84,7 @@ class ShopRunner {
 		// formats the item data
 		let outbound = equipRunner.format_item_info(data);
 		// appends the item's calculated price to the info
-		outbound += "+"+this.get_price(data).toString();
+		outbound += "+"+this.get_price(data).toString()+"+"+data[1];
 		// updates the item info
 		send("shop_screen","O:IN,R:SH,M:^"+outbound);
 	}
@@ -86,13 +94,23 @@ class ShopRunner {
 		if (!char_selected) {
 			return;
 		}
+		const shop_theme = document.getElementById("shop_theme");
+		// starts theme from the beginning
+		shop_theme.currentTime = 0;
+		if (!sound_disabled) {
+			shop_theme.play();
+		}
+		// stocks the shop for the first time when there are no items
+		if (this.items.join("") === "") {
+			this.generate_items();
+		}
 		// prevents the game from continuing in the background
 		game.disabled = true;
 		game.interaction = true;
 		// shows the shop screen
 		document.getElementById("shop_screen").hidden = false;
-		// updates the coin counter
-		send("shop_screen","O:IN,R:SH,M:#coin_count?text="+player_coins.toString());
+		// updates the coin counter and selects the first slot
+		send("shop_screen","O:IN,R:SH,M:#coin_count?text="+player_coins.toString()+";O:IN,R:SH,M:&");
 		// updates the items
 		this.update_items();
 	}
@@ -103,6 +121,12 @@ class ShopRunner {
 		game.interaction = false;
 		// hides the shop screen
 		document.getElementById("shop_screen").hidden = true;
+		document.getElementById("shop_theme").pause();
+		if (!sound_disabled) {
+			game.c_sound.play();
+		}
+		// updates player coins
+		document.getElementById("coin_count").children[1].textContent = player_coins.toString();
 	}
 }
 

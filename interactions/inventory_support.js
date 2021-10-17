@@ -81,3 +81,16 @@ function update_item_info (args) {
 	document.getElementById("item_info_cha").textContent = (args[5][0] === "-" ? args[5] : "+"+args[5]);
 	document.getElementById("item_info_shield").textContent = (args[6][0] === "-" ? args[6] : "+"+args[6]);
 }
+
+let current_tab = 1;
+
+const tabids = ["items", "equipment"];
+
+function _switch_tab (n) {
+	if (n === current_tab) {
+		return;
+	}
+	document.getElementById(tabids[current_tab]).hidden = true;
+	document.getElementById(tabids[n]).hidden = false;
+	current_tab = n;
+}

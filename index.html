@@ -5,9 +5,14 @@
 		<meta name="viewport" content="width=device-width">
 		<title>The Ancient Temple</title>
 		<link href="stylesheets/main_index_styles.css" rel="stylesheet" type="text/css">
+		<link href="stylesheets/menu_styles.css" rel="stylesheet" type="text/css">
+		<link href="stylesheets/chapter_2/game_tiles.css" rel="stylesheet" type="text/css">
 		<style>
 			*, dialog::backdrop {
 				cursor:url("sprites/icons/custom_pointer.png") 15 0, auto;
+			}
+			* {
+				user-select : var(--u-sel, none);
 			}
 			#prev_char_btn {
 				margin : 0;
@@ -85,6 +90,7 @@
 		</style>
 	</head>
 	<body>
+		<div id="main_cover" hidden style="position:absolute;top:0%;left:0%;width:100vw;height:100vh;background:#222222;z-index:50000"></div>
 		<!-- cross window messaging script -->
 		<script src="messages/index_messages.js"></script>
 		<!-- all iframes -->
@@ -137,57 +143,153 @@
 				document.getElementById("title_music").addEventListener("canplaythrough",function () {start_title_music()});
 				// shows the correct background
 				document.getElementById("title_div").children[index].hidden = false;
-				// alert("WARNING: the beginning of the game is slated for a major change when saving functionality is introduced")
+				//  alert("WARNING: This game is not ready yet! Please return in 24 hours. Sorry for the inconvenience! :(")
 			</script>
 		</div>
 		<!-- combat screen -->
-		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<iframe id="combat_screen" src="./combat.html" sandbox="allow-same-origin allow-scripts"></iframe>
 		<!-- shop screen -->
-		<iframe id="shop_screen" src="./shop.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<iframe id="shop_screen" src="./shop.html" sandbox="allow-same-origin allow-scripts"></iframe>
 		<!-- equip screen -->
-		<iframe id="equip_screen" src="./equip.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<iframe id="equip_screen" src="./equip.html" sandbox="allow-same-origin allow-scripts"></iframe>
 		<!-- promo screen -->
-		<iframe id="promo_screen" src="./promo.html" sandbox="allow-same-origin allow-scripts" style="z-index:5;"></iframe>
+		<iframe id="promo_screen" src="./promo.html" sandbox="allow-same-origin allow-scripts"></iframe>
+		<!-- gacha screen -->
+		<iframe id="gacha_screen" src="./gacha.html" sandbox="allow-same-origin allow-scripts"></iframe>
+		<!-- change log -->
+		<dialog id="game-changelog" class="nsb">
+			<div id="game-changelog-changes">
+				<h3>Stuff For Artists (artists are allowed to make additions here, please sign your addition with ur name or user name, newer additions go on top of older additions)</h3>
+				<ul>
+					<li>Added "sprites.txt" (8-11-2021), Tristan</li>
+				</ul>
+				<h3>Stuff For Programmers</h3>
+				<ul>
+					<li>Removed "specifications.txt" from the project (8-11-2021)</li>
+					<li>Removed spawn tiles from chapter two (8-11-2021)</li>
+					<li>Removed chunks from chapter two (8-10-2021)</li>
+					<li>Created a new specifications project in the team repls {the specifications text document is now out of date} (8-9-2021)</li>
+					<li>Created a new specifications text document (7-28-2021)</li>
+				</ul>
+				<br>
+				<h3>New Content</h3>
+				<ul>
+					<li>Added combat functionality to chapter two {needs art} (8-24-2021)</li>
+					<li>Added tab buttons to the inventory {not functional currently} (8-11-2021)</li>
+					<li>Added functionality for keys and doors to chapter two (8-11-2021)</li>
+					<li>Added the ablility for the player to move around in chapter two (7-29-2021)</li>
+					<li>Put in proper sprite for the text shown in the main menu (7-28-2021)</li>
+					<li>Added new main menu (7-26-2021)</li>
+				</ul>
+				<br>
+				<h3>New Saving Features</h3>
+				<ul>
+					<li>Added the saving of the current background music to the save files (7-28-2021)</li>
+				</ul>
+				<br>
+				<h3>Bug Fixes / Cleanup</h3>
+				<ul>
+					<li>BugFix: fixed issue where input wouldn't be shown for options</li>
+					<li>BugFix: fixed issue where game wouldn't load</li>
+					<li>Cleanup: got rid of the chapter prefix for story files (7-28-2021)</li>
+					<li>BugFix: Fixed the color of the text in the name enterer and the overwrite save confirm being the same as the background (7-28-2021)</li>
+					<li>Cleanup: moved the audio system from multiple elements to a single element that has it's src attribute updated (7-27-2021)</li>
+					<li>BugFix: Fixed an issue where the game always sent you down the path with the "Lumen Orb" item, regardless of if the player actually had it (unknown date)</li>
+				</ul>
+				<br>
+				<h3>Infrastructure</h3>
+				<ul>
+					<li>Created decoder for rendering levels in chapter two (7-27-2021)</li>
+					<li>Created new content format for chapter two (7-27-2021)</li>
+				</ul>
+			</div>
+			<br><br>
+			<input type="button" class="bb" value="back" onclick="document.getElementById('game-changelog').close()">
+		</dialog>
+		<!-- options menu -->
+		<dialog id="options-menu" class="wbord nsb">
+			<p>work in progress</p>
+			<br>
+			<input type="button" class="bb" value="back" onclick="document.getElementById('options-menu').close()">
+		</dialog>
+		<!-- save/load menu for use when the user isn't playing -->
+		<dialog id="l1m-sl-menu" class="nsb">
+			<div class="centered-list">
+				<input type="button" value="new" onclick="document.getElementById('new_game_dialog').showModal()">
+				<input type="button" value="load" onclick="document.getElementById('load_save_dialog').showModal()">
+				<input type="button" value="back" onclick="document.getElementById('l1m-sl-menu').close()">
+			</div>
+		</dialog>
+		<!-- top menu -->
+		<dialog id="l1m" class="nsb">
+			<!-- name of the game -->
+			<img id="l1m-title-img" src="sprites/title_name.png">
+			<!-- <p id="l1m-title-text">The Ancient Temple</p> -->
+			<!-- buttons -->
+			<div class="centered-list">
+				<!-- play the game -->
+				<input type="button" value="play" onclick="document.getElementById('l1m-sl-menu').showModal()">
+				<!-- credits -->
+				<input type="button" value="credits" onclick="document.getElementById('main_credits').showModal()">
+				<!-- options -->
+				<input type="button" value="options" onclick="document.getElementById('options-menu').showModal()">
+				<!-- redeem promo codes -->
+				<input type="button" value="promo" onclick="open_promo()">
+				<!-- gacha button -->
+				<input type="button" value="gacha" onclick="gachaRunner.open()">
+				<!-- opens the change log -->
+				<input type="button" value="change log" onclick="document.getElementById('game-changelog').showModal()">
+			</div>
+		</dialog>
+		<div id="c2-help-text" hidden></div>
+		<!-- used to display the game when in chapter two -->
+		<div id="c2-game-tiles" style="--size:1;" hidden><img class="c2-board-img" src="sprites/goawaylol.gif"></div>
 		<!-- displays the selected character's icon in the lower right -->
     	<img id="char_display" src="" style="position:absolute;right:15%;bottom:0%;width:37vmin">
 		<!-- coins and stats -->
-		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:8%;position:absolute;right:0%;top:11%">
-		<!-- counter for the coin -->
-		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:8%;top:15.5%;">0</label>
+		<span id="coin_count" style="font-family:monospace;color:yellow;position:absolute;right:8%;top:15.5%;"><img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:35px;vertical-align:middle;"> <span>0</span></span>
 		<!-- character stats -->
 		<p id="stats" style="font-size:3vh;position:absolute;left:2%;bottom:3%;">ATK: <span id="att_stat" style="color:crimson;">1/10</span><br>DEF: <span id="def_stat" style="color:aquamarine;width:100px;">1/10</span><br> CHA: <span id="per_stat" style="color:violet;">1/10</span><br><br><br>HEALTH: <span id="health_stat" style="color:springGreen;">20/20</span><br>SHIELD: <span id="shield_stat" style="color:cyan;">0</span></p>
 		<!-- all audio elements -->
 		<div>
-			<audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio>
-			<audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio>
-			<audio id="namey" src="audios/namey.mp3" loop></audio>
+			<audio id="game-music-audio" src="" loop></audio>
+			<audio id="game-sfx-audio" src=""></audio>
+			<!-- <audio id="boss_theme_1" src="audios/bossfight.mp3" loop></audio> -->
+			<!-- <audio id="stage_3" src="audios/adventuremusic.mp3" loop volume="0.1"></audio> -->
+			<!-- <audio id="namey" src="audios/namey.mp3" loop></audio> -->
 			<!-- used whenever the background music needs to be stopped -->
-			<audio id="silence" src="audios/silence.mp3" loop></audio>
-			<audio id="youwin" src="audios/sfx/youwin.mp3"></audio>
-			<audio id="adventure2" src="audios/adventure2.mp3" loop></audio>
-			<audio id="adventure3" src="audios/adventure3.mp3" loop></audio>
-            <audio id="battle" src="audios/battle.mp3" loop></audio>
-			<audio id="shop" src="audios/shop.mp3" loop></audio>
-			<audio id="equip" src="audios/equip.mp3" loop></audio>
-			<audio id="demonbream" src="audios/demonbream.mp3" loop></audio>
+			<!-- <audio id="silence" src="audios/silence.mp3" loop></audio> -->
+			<!-- <audio id="youwin" src="audios/sfx/youwin.mp3"></audio> -->
+			<!-- <audio id="adventure2" src="audios/adventure2.mp3" loop></audio> -->
+			<!-- <audio id="adventure3" src="audios/adventure3.mp3" loop></audio> -->
+            <!-- <audio id="battle" src="audios/battle.mp3" loop></audio> -->
+			<audio id="shop_theme" src="audios/shop.mp3" loop></audio>
+			<audio id="equip_theme" src="audios/equip.mp3" loop></audio>
+			<!-- <audio id="demonbream" src="audios/demonbream.mp3" loop></audio> -->
+			<audio id="gacha_battle_theme" src="audios/gacha.mp3" loop></audio>
             <!--<audio id="attack" src="audios/sfx/slash.wav"></audio>-->
 		</div>
 		<!-- all sound credits -->
 		<dialog id="sound_credits">
-			<p class="black">Sound Credits:<br>4 music tracks:<br>sawsquarenoise - Song Name(s)<br> - Stage 3<br> - Boss Battle<br> - Stage 1<br> - Stage 2<br> - not commercially used<br> - fade out at end of Stage 3 was cropped<br> - License here:<br><a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by/4.0/legalcode</a><br><br>1 music track:<br>Eric Skiff - Song Name<br> - Behind the waterfall lies the beginning<br> - Available at <a href="http://EricSkiff.com/music" target="_blank">http://EricSkiff.com/music</a><br><br>1 music track:<br>Derris-Kharlan - Song Name<br>- Prism Stars<br>- License here:<br><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/"
-            target="_blank">https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/</a><br><br>2 music tracks:<br>Damiano Baldoni - Song Name(s)<br> - sport.mp3<br> - Chillout Loop.mp3<br> - not commercially used<br> - License here:<br><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode</a><br><br></p>
-			<br>
-			<input type="button" class="wb" value="back" onclick="document.getElementById('sound_credits').close()">
+			<p>Sound Credits:<br>4 music tracks:<br>sawsquarenoise - Song Name(s)<br> - Stage 3<br> - Boss Battle<br> - Stage 1<br> - Stage 2<br> - not commercially used<br> - fade out at end of Stage 3 was cropped<br> - License here:<br><a href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by/4.0/legalcode</a><br><br>1 music track:<br>Eric Skiff - Song Name<br> - Behind the waterfall lies the beginning<br> - Available at <a href="http://EricSkiff.com/music" target="_blank">http://EricSkiff.com/music</a><br><br>1 music track:<br>Derris-Kharlan - Song Name<br>- Prism Stars<br>- License here:<br><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/"
+            target="_blank">https://creativecommons.org/licenses/by-nc-nd/3.0/https://creativecommons.org/licenses/by-nc-nd/3.0/</a><br><br>2 music tracks:<br>Damiano Baldoni - Song Name(s)<br> - sport.mp3<br> - Chillout Loop.mp3<br> - not commercially used<br> - License here:<br><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" target="_blank">https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode</a><br><br>1 music track:<br>Seventh Gear - Song Name<br>- Neon Rain<br>- License here:<br><a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">https://creativecommons.org/licenses/by-sa/3.0/</a><br><br>
+		 	Song: NIVIRO - Demons [NCS Release]<br>
+			Music provided by NoCopyrightSounds<br>
+			Free Download/Stream: http://ncs.io/NDemons<br>
+			Watch: http://youtu.be/PbEGWtcUnK0<br>
+			</p>
+			<input type="button" class="bb" value="back" onclick="document.getElementById('sound_credits').close()">
 		</dialog>
 		<!-- most of the credits -->
-		<dialog id="main_credits">
-			<p class="black">Major Programming:<br>@tristans2<br><br>Major Graphic Design:<br>@JohnHalvorson<br><br>Story:<br>@JohnHalvorson<br><br>Playtesting:<br>@KaiWilhelm<br>@KaiJusuf</p>
-			<input class="wb" type="button" value="sounds" onclick="document.getElementById('sound_credits').showModal()">
+		<dialog id="main_credits" class="nsb">
+			<p> Programming:<br>@tristans2<br><br>Major Graphic Design:<br>@Alfaheimr<br><br>Minor Graphic Design:<br>Asya Morozov<br><br>Story:<br>@Alfaheimr<br><br>Playtesting:<br>@LOLLER322<br>@KaiJusuf</p>
+			<input class="bb" type="button" value="sounds" onclick="document.getElementById('sound_credits').showModal()">
 			<br>
-			<input class="wb" type="button" value="back" onclick="document.getElementById('main_credits').close()">
+			<br>
+			<input class="bb" type="button" value="back" onclick="document.getElementById('main_credits').close()">
 		</dialog>
 		<!-- main menu -->
-		<dialog id="main_menu">
+		<dialog id="main_menu" class="nsb">
 			<label for="toggle_sounds" class="black">mute sounds:</label>
 			<input type="checkbox" onchange="toggleAudio()">
 			<br>
@@ -196,12 +298,51 @@
 			<br>
 			<input class="wb" type="button" value="close" onclick="document.getElementById('main_menu').close()">
 		</dialog>
+		<!-- for the user to enter a name -->
+		<dialog id="name_input">
+			<p style="font-family:monospace;">Enter your adventurer's name...</p>
+			<input type="text" id="name-enterer" style="color:white;" autocomplete="off">
+		</dialog>
+		<!-- save menu -->
+		<dialog id="save_menu">
+			<div style="background:#00000088;position:absolute;left:0%;top:0%;border:none;width:15vw;height:100vh;"></div>
+			<div id="save-button-container">
+				<input type="button" class="save-button" value="new game" onclick="document.getElementById('new_game_dialog').showModal()">
+				<br><br>
+				<input type="button" class="save-button" value="save" onclick="if(first_choice){return}save.save()">
+				<br><br>
+				<input type="button" class="save-button" value="load" onclick="document.getElementById('load_save_dialog').showModal()">
+				<br><br>
+				<input type="button" class="save-button" value="resume" onclick="if(first_choice){return}document.getElementById('save_menu').close()">
+			</div>
+		</dialog>
+		<dialog id="load_save_dialog">
+			<div id="load_save_slots">
+				<input type="button" value="1" onclick="loadsave(1)">
+				<input type="button" value="2" onclick="loadsave(2)">
+				<input type="button" value="3" onclick="loadsave(3)">
+			</div>
+			<br>
+			<input type="button" value="back" onclick="document.getElementById('load_save_dialog').close()">
+		</dialog>
+		<dialog id="new_game_dialog">
+			<div id="new_game_slots">
+				<input type="button" value="1" onclick="confirm_ng(1)">
+				<input type="button" value="2" onclick="confirm_ng(2)">
+				<input type="button" value="3" onclick="confirm_ng(3)">
+			</div>
+			<br>
+			<input type="button" value="back" onclick="document.getElementById('new_game_dialog').close()">
+			<dialog id="overwrite_save_confirm">
+				<p>WARNING: You are about to overwrite a save file! Doing so will result in the preview data being lost forever as this action cannot be undone. Are you sure you want to overwrite your save?</p>
+				<input type="button" value="Yes" onclick="newgame(chosen_slot)">
+				<input type="button" value="No" onclick="document.getElementById('overwrite_save_confirm').close()">
+			</dialog>
+		</dialog>
 		<!-- buttons -->
 		<div style="position:absolute;right:0%;bottom:30%;display:grid;row-gap:1vh;">
 			<!-- more accessable mute button -->
 			<input type="image" id="mute_sounds" src="sprites/icons/unmuted_icon.svg" onclick="toggleAudio();document.getElementById('mute_sounds').src=(sound_disabled?'sprites/icons/muted_icon.svg':'sprites/icons/unmuted_icon.svg')" style="width:7.5vmin;height:7.5vmin;margin-left:auto;">
-			<!-- redeem promo codes -->
-			<input class="bb" type="button" value="promo" onclick="open_promo()">
 			<!-- shop button -->
 			<input class="bb" type="button" value="shop" onclick="shopRunner.open()">
 			<!-- equip button -->
@@ -209,7 +350,7 @@
 			<!-- menu button -->
 			<input class="bb" type="button" value="menu" onclick="document.getElementById('main_menu').showModal()">
 			<!-- saves -->
-			<input class="bb" type="button" value="save" onclick="">
+			<input class="bb" type="button" value="save" onclick="document.getElementById('save_menu').showModal()">
 		</div>
 		<!-- header text -->
 		<h4 id="header_text">TUTORIAL</h4>
@@ -253,6 +394,7 @@
 			<script src="chapter_1/temple.js"></script>
 			<script src="chapter_1/illuminated.js"></script>
 			<script src="chapter_1/unilluminated.js"></script>
+			<script src="chapter_2/c2_utils.js"></script>
 			<script src="chapter_2/labyrinth1.js"></script>
 			<!-- the above scripts hold the data for the story -->
 			<script src="char_data.js"></script>
@@ -266,6 +408,8 @@
 			<script src="interactions/combat.js"></script>
 			<!-- runs the shop -->
 			<script src="interactions/shop.js"></script>
+			<!-- runs the gacha -->
+			<script src="interactions/gacha.js"></script>
 			<!-- above scripts handle interactions -->
 			<!-- main script -->
 			<script src="script.js"></script>

@@ -29,4 +29,10 @@ function update_item_info (args) {
 	document.getElementById("item_info_cha").textContent = (args[5][0] === "-" ? args[5] : "+"+args[5]);
 	document.getElementById("item_info_shield").textContent = (args[6][0] === "-" ? args[6] : "+"+args[6]);
 	document.getElementById("price_tag").textContent = args[7];
+	const pre = document.getElementById("item_preview").children[0].children[0];
+	pre.className = "content "+args[2];
+	const s = pre.children;
+	c[0].src = args[8];
+	c[1].className = "fore1 display "+args[2];
+	c[2].className = "fore2 display "+args[2];
 }

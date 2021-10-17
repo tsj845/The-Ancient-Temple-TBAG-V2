@@ -1,0 +1,33 @@
+div#c2-game-tiles {
+	position : absolute;
+	width : 50vmin;
+	height : 50vmin;
+	left : calc(50vw - 25vmin);
+	top : calc(50vh - 25vmin);
+	--w : calc(50vmin / var(--size));
+	border : solid gray;
+}
+
+div#c2-game-tiles > img.c2-board-img {
+	--w : inherit;
+	position : absolute;
+	width : var(--w);
+	height : var(--w);
+	left : calc(var(--w) * var(--x));
+	top : calc(var(--w) * var(--y));
+}
+
+#c2-help-text {
+	position : absolute;
+	width : 50vmin;
+	left : calc(50vw - 25vmin);
+	top : 5vh;
+	color : white;
+	text-align : center;
+}
+
+kbd {
+	padding : 2px;
+	border-radius : 3px;
+	border : 1px solid white;
+}

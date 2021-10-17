@@ -1,4 +1,4 @@
-let lfins = [0,0,0,0,0];
+let lfins = [0,0,0,0,0,0];
 
 // closes the loading screen
 function closeLoadingScreen () {
@@ -25,7 +25,7 @@ function onLoadHandler (e) {
 }
 
 // used to get the id of the iframe that a message was sent from
-const locs = {"LS":"loading_screen","CB":"combat_screen", "SH":"shop_screen","EQ":"equip_screen", "PS":"promo_screen"};
+const locs = {"LS":"loading_screen","CB":"combat_screen", "SH":"shop_screen","EQ":"equip_screen", "PS":"promo_screen", "GS":"gacha_screen"};
 
 // established origin, used to block incoming messages from other origins
 let est_or = null;
@@ -85,6 +85,9 @@ function interperet_message (raw_message) {
 					case "PS":
 						lfins[4] = 1;
 						document.getElementById("promo_screen").hidden = true;
+					case "GS":
+						lfins[5] = 1;
+						document.getElementById("gacha_screen").hidden = true;
 				}
 				// checks if the title screen should be displayed
 				onLoadHandler();
@@ -96,6 +99,12 @@ function interperet_message (raw_message) {
 						break;
 					case "SH":
 						shopRunner.close();
+						break;
+					case "GS":
+						gachaRunner.close();
+						break;
+					case "PS":
+						close_promo();
 						break;
 				}
 				return;
@@ -142,6 +151,13 @@ function interperet_message (raw_message) {
 							}
 							shopRunner.buy_item(args);
 							return;
+						case "CHAR.UNLOCK":
+							if (o !== "PS") {
+								runerror_invalid_origin(fname, o);
+								return;
+							}
+							unlockChar(args);
+							return;
 						default:
 							throw ("ERROR, INVALID FUNC NAME: "+fname);
 							return;
@@ -178,24 +194,25 @@ window.addEventListener("messageerror",function () {throw ("error receiving mess
 
 // these two functions are modified versions of an MDN example on the javascript await keyword
 // supporting function for execAfterDelay
-async function resolveAfterDelay (delay) {
-	return new Promise(resolve => {
-		setTimeout(() => {
-			resolve(delay);
-		}, delay);
-	});
-}
+// async function resolveAfterDelay (delay) {
+// 	return new Promise(resolve => {
+// 		setTimeout(() => {
+// 			resolve(delay);
+// 		}, delay);
+// 	});
+// }
 
 // used to create a time.sleep equivalent
-async function execAfterDelay (f, d) {
-	await resolveAfterDelay(d);
-	f();
+function execAfterDelay (f, d) {
+	// await resolveAfterDelay(d);
+	// f();
+	return setTimeout(f, d);
 }
 
 // sets up the event listener
 window.addEventListener("load", onLoadHandler);
 
 function exec (l,code) {
-	const command = "O:IN,R:CB,M:!send('O:CB,R:IN,M:$'+String("+code+"))";
+	const command = "O:IN,R:"+l+",M:!send('O:CB,R:IN,M:$'+String("+code+"))";
 	send(locs[l],command);
 }

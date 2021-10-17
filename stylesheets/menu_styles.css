@@ -1,0 +1,70 @@
+#l1m::backdrop {
+	background : #222222;
+}
+
+#l1m {
+	background : #222222;
+	border : none;
+}
+
+#l1m > div.centered-list {
+	transform : translate(0, -2em);
+}
+
+.nsb {
+	scrollbar-width : 0px;
+}
+
+.nsb::-webkit-scrollbar {
+	display : none;
+}
+
+dialog.wbord {
+	border : solid white;
+}
+
+#sound_credits a:link {
+	color : gainsboro;
+	transition : color 0.5s;
+}
+
+#sound_credits a:link:hover {
+	color : gray;
+}
+
+#sound_credits a:visited {
+	color : #cc2288;
+	transition : color 0.5s;
+}
+
+#sound_credits a:visited:hover {
+	color : #aa0066;
+}
+
+.centered-list {
+	text-align : center;
+	display : grid;
+	row-gap : 10%;
+}
+
+.centered-list > input[type="button"] {
+	border : solid white;
+	background : black;
+	outline : none;
+}
+
+/* #l1m-title-text {
+	font-size : 300%;
+	text-align : center;
+	color : cyan;
+	transform : translate(0px, -1em);
+} */
+
+#l1m-title-img {
+	text-align : center;
+	transform : translate(0px, -1em);
+}
+
+#game-changelog * {
+	color : white;
+}

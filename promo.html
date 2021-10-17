@@ -14,7 +14,9 @@
 	<body>
 		<!-- cross window messaging -->
 		<script src="messages/common_messages.js"></script>
-		<!-- I didn't make this, John copy pasted it in from the internet with a few modifications -->
+		<!-- closes the promo screen -->
+		<input type="image" src="sprites/icons/close_button_1.svg" height="15vh" style="position:absolute;right:0%;top:0%;" onclick="send('O:PS,R:IN,M:close')">
+		<!-- I didn't make this, Alfaheimr copy pasted it in from the internet with a few modifications -->
 		<div class="p">
     		<label for="pswd" style="font-family:monospace;color:lemonchiffon;">Enter promotion code: </label>
     		<input type="text" id="pswd" style="font-family:monospace;" autocomplete="off">
@@ -32,17 +34,10 @@
 		</dialog>
 		<!--Function to check password the already set password is admin-->
 		<script>
-			/**
-			 * CODES:
-			 * pastry code: EMuj0IsP27NuT5hK
-			 * raspberry code: 8vjhaY5SamBkcFxR
-			 * shroom code: op3cpFghTYdMXOCE
-			 **/
-			// special characters DENIED
 			const regex = new RegExp("[^0-9^a-z^A-Z]+");
 			let invalid = false;
 			const codes = [-67676733,-631449788,480995631];
-			const lst = [["sprites/chars/pastry.gif","Pastry"],["sprites/chars/raspberry.gif","Raspberry"],["sprites/chars/shroom.gif","Shroom"]];
+			const lst = [["sprites/chars/pastry.gif","Pastry"],["sprites/chars/raspberry.gif","Raspberry"],["sprites/chars/jellyfrog.png","Jelly Frog"]];
 			// finishes the fading animation
 			function finish_fade () {
 				document.getElementById("code-feedback").className = "faded";
@@ -77,6 +72,7 @@
 					document.getElementById("unlock_img").src = lst[ind][0];
 					document.getElementById("unlock_name").textContent = lst[ind][1];
 					document.getElementById("unlocked_char").showModal();
+					send("O:PS,R:IN,M:*CHAR.UNLOCK-"+ind.toString());
 				// code is invalid
 				} else {
 					invalid_code();

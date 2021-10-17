@@ -18,91 +18,80 @@
             <p>The name, price, and stats are listed underneath the picture of an item. Make sure to look at the stats before buying something!
             <p>If you don't have any gold, you won't be abltory! 
             <p>Anyway, happy shopping! Please do buy something... please?! !-->
-		<img src="sprites/chars/shopvendor.png" style="position:absolute;left:-20%;top:15%;width:80vmin;z-index:-5;">
+		<img src="sprites/chars/shopvendor.png" style="position:absolute;left:-10%;top:15%;width:80vmin;z-index:-5;">
 		<input type="image" id="shop_close_btn" src="sprites/icons/close_button_1.svg" height="15vh" style="position:absolute;right:0%;top:0%;" onclick="send('O:SH,R:IN,M:close')">
+		<!-- <input type="button" id="items_tab" value="items" onclick="switch_shop_tab(1)"> -->
 		<span id="shop_dialog" style="position:absolute;left:25vw;bottom:5%;width:50vw;text-align:center;color:white;"></span>
-		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:8%;position:absolute;right:0%;top:11%">
+		<img id="coin_icon" src="sprites/icons/coin_2_electric_boogaloo.png" style="width:35px;position:absolute;right:0%;top:11%">
 		<label id="coin_count" for="coin_icon" style="font-family:monospace;color:yellow;position:absolute;right:8%;top:15.5%;">0</label>
-		<div id="shop_slots">
-			<div class="table_item">
-				<div style="background:white;">
-					<div class="content empty">
-						<img src="sprites/chars/shopvendor.png">
-						<div class="fore1 display empty"></div>
-						<div class="fore2 display empty"></div>
-					</div>
-				</div>
+		<div id="ss_bord">
+			<div id="shop_slots">
+				<div id="item_lst"></div>
 			</div>
-			<div class="table_item">
-				<div style="background:white;">
-					<div class="content empty">
-						<img src="sprites/chars/shopvendor.png">
-						<div class="fore1 display empty"></div>
-						<div class="fore2 display empty"></div>
-					</div>
-				</div>
-			</div>
-			<div class="table_item">
-				<div style="background:white;">
-					<div class="content empty">
-						<img src="sprites/chars/shopvendor.png">
-						<div class="fore1 display empty"></div>
-						<div class="fore2 display empty"></div>
+		</div>
+		<div id="sdb_bord">
+			<div id="shop_description_background">
+				<div id="pre" class="table_item" style="position:absolute;top:0%;right:0%;width:10vw;height:10vw;">
+					<div style="background:white;">
+						<div class="content empty">
+							<img src="">
+							<div class="fore1 display empty"></div>
+							<div class="fore2 display empty"></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div id="item_info_container" class="hide_scrollbar" hidden style="font-family:monospace;">
-			<p>Item Name:<br><span id="item_info_name">Uh oh, something went wrong when displaying the item information!</span><br><br>Item Type:<br><span id="item_info_type">placeholder</span><br><br>Item Rarity:<br><span id="item_info_rarity">placeholder</span><br></p><p>Stats:<br><span id="item_info_stats">ATK: <span id="item_info_atk" style="color:crimson;">+1</span><br>DEF: <span id="item_info_def" style="color:aquamarine;">+0</span><br>CHA: <span id="item_info_cha" style="color:violet;">+0</span><br>Shield: <span id="item_info_shield" style="color:cyan;">+0</span><br>Cost: <span id="price_tag" style="color:yellow;">0</span></p>
-			<span><input type="button" id="buy_btn" style="color:black;" value="buy item" onclick="buy_item()"></span>
+		<div id="item_info_container" class="hide_scrollbar" style="font-family:monospace;">
+			<p>Item Name:<br><span id="item_info_name">Uh oh, something went wrong when displaying the item information!</span><br><br>Item Type:<br><span id="item_info_type">placeholder</span><br><br>Item Rarity:<br><span id="item_info_rarity">placeholder</span><br><br>Stats:<br><div id="item_info_stats" style="background:black;color:white;">ATK: <span id="item_info_atk" style="color:crimson;">+1</span><br>DEF: <span id="item_info_def" style="color:aquamarine;">+0</span><br>CHA: <span id="item_info_cha" style="color:violet;">+0</span><br>Shield: <span id="item_info_shield" style="color:cyan;">+0</span><br>Cost: <span id="price_tag" style="color:yellow;">0</span></div></p>
+			<input type="button" id="buy_btn" style="color:black;" value="buy item" onclick="buy_item()">
 		</div>
 		<script src="messages/common_messages.js"></script>
 		<script src="interactions/shop_support.js"></script>
 		<script>
 			function spec_mess (m) {
 				switch (m[0]) {
-					case "=":
-						const s2 = m.slice(1,m.indexOf(","));
-						m = m.slice(m.indexOf(",")+1);
-						const ind = m.slice(0,m.indexOf(","));
-						m = m.slice(m.indexOf(",")+1);
-						let rc = m;
-						if (m.indexOf(",") !== -1) {
-							rc = m.slice(0,m.indexOf(","));
-							m = m.slice(m.indexOf(",")+1);
-						} else {
-							m = "0";
-						}
-						set_slot(s2,Number(ind),rc,Number(m));
-						break;
 					case "^":
 						m = m.slice(1);
-						const args = m.split("+");
-						update_item_info(args);
+						update_item_info(m.split("+"));
+					case "%":
+						m = m.slice(1);
+						const l = m.split("|");
+						let lst = [];
+						const item_lst = document.getElementById("item_lst");
+						item_lst.replaceChildren();
+						for (let i = 0; i < l.length; i ++) {
+							const text = l[i];
+							const d = document.createElement("div");
+							d.className = "item_back";
+							d.appendChild(document.createElement("div"));
+							d.children[0].className = "item";
+							d.children[0].textContent = text;
+							d.onclick = function(){slot_click(i)}
+							lst.push(d);
+						}
+						item_lst.replaceChildren(...lst);
+					case "&":
+						slot_click(0);
 						break;
+					default:
+						return;
 				}
+			}
+			function switch_shop_tab (tab) {
+				//
 			}
 			let current_slot = 0;
 			function slot_click (index) {
+				const il = document.getElementById("item_lst").children;
+				il[current_slot].className = "item_back";
+				il[index].className = "item_back selected";
 				current_slot = index;
 				send("O:SH,R:IN,M:*SHRUN.SLOTCLICK-"+index.toString());
 			}
 			function buy_item () {
 				send("O:SH,R:IN,M:*SHRUN.SHBUY-"+current_slot.toString());
 			}
-			const slots = document.getElementById("shop_slots").children;
-			slots[0].addEventListener("click",function(){slot_click(0)});
-			slots[1].addEventListener("click",function(){slot_click(1)});
-			slots[2].addEventListener("click",function(){slot_click(2)});
-			let item_click = true;
-			function handleBodyClick () {
-				if (item_click) {
-					document.getElementById("item_info_container").hidden = true;
-				} else {
-					item_click = true;
-				}
-			}
-			document.addEventListener("click",function(){execAfterDelay(handleBodyClick,50)});
 			function lfinmessage (e) {
 				send("O:SH,R:IN,M:lfin");
 			}

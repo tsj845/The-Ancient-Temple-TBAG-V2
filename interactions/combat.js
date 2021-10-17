@@ -1,4 +1,5 @@
 let player_coins = 0;
+let stick_durability = 2;
 
 function randrange (min, max) {
 	min = Math.ceil(min);
@@ -23,6 +24,8 @@ class Entity {
 		this.dodge = 1;
 		this.maxHealth = 10;
 		this.is_player = false;
+		this.type = "null";
+		this.special_attack_counter = 0
 	}
 	get_stat (stat_name) {
 		// const eq = equipRunner.get_stat_boosts()[{"attack":0,"defend":1,"charisma":2,"shield":3,"health":0}[stat_name]];
@@ -79,6 +82,9 @@ class Entity {
 		return 20 * ((this.health/this.maxHealth)*100 <= 30);
 	}
 	isPersuaded (cha) {
+		if (this.cha === -1) {
+			return false;
+		}
 		// console.log(cha);
 		if (cha >= 10) {
 			return true;
@@ -90,11 +96,60 @@ class Entity {
 	}
 }
 
-const mobs = {"test":[{"h":10,"d":0,"a":1,"c":0,"s":4},"John, but really really evil","sprites/enemies/bosses/book.png",2],"statue":[{"h":15,"a":4,"d":4,"c":0,"s":0},"Mysterious Statue","sprites/enemies/basic/statue.png",0], "book":[{"h":17,"d":1,"a":4,"c":0,"s":4},"Book of the Seas","sprites/enemies/bosses/book.png",-1]};
+const mobs = {
+	"test":[
+		{"h":1,"d":0,"a":0,"c":0,"s":0},
+		"John, but really really evil",
+		"sprites/enemies/bosses/book.png",
+		2,
+	],
+	"statue":[
+		{"h":20,"a":4,"d":4,"c":0,"s":0},
+		"Mysterious Statue",
+		"sprites/enemies/basic/statue.png",
+		0,
+	],
+	"book":[
+		{"h":17,"d":1,"a":4,"c":0,"s":6},
+		"Book of the Seas",
+		"sprites/enemies/bosses/book.png",
+		-1,
+	],
+	"dragonfruit":[
+		{"h":33,"d":4,"a":3,"c":0,"s":10},
+		"Dragonfruit",
+		"sprites/chars/dragonfruit.gif",
+		2,
+	],
+	"slime":[
+		{"h":5,"d":0,"a":1,"c":0,"s":0},
+		"Slime",
+		"sprites/c2sprites/tiles/enemies/tile_enemy.png",
+		0,
+	],
+	"wolf":[
+		{"h":10,"d":2,"a":5,"c":-1,"s":0},
+		"Wolf",
+		"sprites/c2sprites/tiles/enemies/tile_enemy.png",
+		0,
+	],
+	"skeleton":[
+		{"h":10,"d":0,"a":3,"c":2,"s":0},
+		"Skeleton",
+		"sprites/c2sprites/tiles/enemies/tile_enemy.png",
+		0,
+	],
+	"zombie":[
+		{"h":7,"d":0,"a":2,"c":-1,"s":0},
+		"Zombie",
+		"sprites/c2sprites/tiles/enemies/tile_enemy.png",
+		0,
+	],
+};
 
 const player = new Entity();
 player.is_player = true;
-player.setStats({"h":20,"d":1,"a":5,"c":1,"s":0});
+player.setStats({"h":20,"d":1,"a":1,"c":1,"s":0});
 
 function endFight () {
 	combatRunner.end();
@@ -112,6 +167,8 @@ class CombatRunner {
 		this.over = false;
 		this.turn = false;
 		this.player_won = true;
+		this.operations = [];
+		this.timekeep = [];
 	}
 	getArmorBonus (stat_name) {
 		return equipRunner.get_stat_boosts()[{"attack":0,"defend":1,"charisma":2,"shield":3}[stat_name]];
@@ -141,13 +198,20 @@ class CombatRunner {
 		player.health = player.maxHealth;
 		update_combat();
 		if (this.player_won) {
+			if (equipRunner.body_slots["sword"][0] === "Coin On A Stick") {
+				stick_durability -= 1;
+				if (stick_durability === 0) {
+					player_coins += 50000;
+					equipRunner.body_slots["sword"] = no_sword;
+				}
+			}
 			// console.log("player won");
 			// handle enemy loot
 			const loot = this.getLoot();
 			let drops = [];
 			player_coins += loot[0];
 			console.log("Loot:\n", loot);
-			document.getElementById("coin_count").textContent = player_coins.toString();
+			document.getElementById("coin_count").children[1].textContent = player_coins.toString();
 			const d1 = Math.floor(Math.random() * 10);
 			const d2 = Math.floor(Math.random() * 10);
 			const d3 = Math.floor(Math.random() * 10);
@@ -190,7 +254,7 @@ class CombatRunner {
 		}
 	}
 	checkDead () {
-		if (this.enemy.health <= 0) {
+		if (this.enemy.health+this.enemy.abs <= 0) {
 			this.over = true;
 		}
 		if (player.health <= 0) {
@@ -225,6 +289,7 @@ class CombatRunner {
 			if (this.enemy.isPersuaded(Math.round((player.get_stat("charisma"))/pr))) {
 				send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=You successfully persuaded the enemy to join you!");
 				this.enemy.health = 0;
+				this.enemy.abs = 0;
 			} else {
 				send("combat_screen","O:IN,R:CB,M:#combat_dialog?text=You attempted to persuade the enemy, but they wouldn't listen to you!");
 			}
@@ -238,19 +303,47 @@ class CombatRunner {
 		send("combat_screen","O:IN,R:CB,M:#enemy_health?html_attr=value:="+this.enemy.health.toString()+";O:IN,R:CB,M:#en_shield_1?html_attr=value:="+this.enemy.abs.toString());
 		this.checkDead();
 		if (!this.over) {
-			execAfterDelay(enTurn, 2500);
+			this.operations.push("et");
 		} else {
-			execAfterDelay(endFight, 2500);
+			this.operations.push("ef");
 		}
-
+		this.timekeep.push(execAfterDelay(function(){combatRunner.doOp()}, 2500));
+	}
+	click () {
+		console.log("click");
+		if (this.operations.length > 0) {
+			this.doOp();
+		}
+	}
+	doOp () {
+		const op = this.operations[0];
+		this.operations.splice(0,1);
+		clearTimeout(this.timekeep[0]);
+		this.timekeep.splice(0,1);
+		if (op === "et") {
+			if (!this.over) {
+				this.takeEnemyTurn();
+			}
+		} else if (this.over) {
+			for (let i = 0; i < this.timekeep.length; i ++) {
+				clearInterval(this.timekeep[i]);
+			}
+			this.operations = [];
+			this.timekeep = [];
+			this.end();
+		}
 	}
 	takeEnemyTurn () {
 		if (this.turn) {
 			return;
 		}
-		const dmg = player.takeDamage(this.enemy.att);
+		this.enemy.special_attack_counter += 1;
+		this.enemy.special_attack_counter = this.enemy.special_attack_counter % 3;
+		let mult = (this.enemy.special_attack_counter === 0 ? 3 : 1);
+		if (player.tempD >= player.def) {player.tempD -= player.def;mult = 1}
+		const dmg = player.takeDamage(this.enemy.att*mult);
 		update_combat();
-		send("combat_screen","O:IN,R:CB,M:#combat_dialog?text="+this.enName+" attacked you! It dealt you "+dmg.toString()+" damage!");
+		send("combat_screen","O:IN,R:CB,M:#combat_dialog?text="+this.enName+(mult>1?" did a special attack!":" attacked you!")+" It dealt you "+dmg.toString()+" damage!");
 		this.checkDead();
 		if (!this.over) {
 			this.turn = true;
@@ -262,3 +355,5 @@ class CombatRunner {
 }
 
 const combatRunner = new CombatRunner();
+
+document.getElementById("combat_screen").addEventListener("click", combatRunner.click);

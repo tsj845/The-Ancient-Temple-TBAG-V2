@@ -1,3 +1,20 @@
+/* menu stuff */
+.tab {
+	color : #888888;
+	outline : none;
+	transition : color 0.5s;
+	border : none;
+	background : #222222;
+}
+
+#item-tab:hover {
+	color : lime;
+}
+
+#equip-tab:hover {
+	color : red;
+}
+
 /* the player's inventory */
 #inventory {
 	display : grid;

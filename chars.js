@@ -40,8 +40,11 @@ function s_char () {
 	document.getElementById("char_select").close();
 	document.getElementById("char_display").src = char_lst[char][0];
 	player.setStats({"h":20,"a":char_lst[char][2],"d":char_lst[char][3],"c":char_lst[char][4],"s":0});
+	// saves which character was selected
+	save.setItem("char", char.toString());
 	if (badPerson) {
 		player.cha = -9999;
+	// the joke is that me, alfi, is a bad person. ha ha tristan, ha ha >:( 
 	}
 	game.hideInput();
 	update_combat();
